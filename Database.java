@@ -19,7 +19,7 @@ public class Database {
   /* Create a connection to the database */
   public void createConnection() {
     try {
-      dbConnect = DriverManager.getConnection("jdbc:mysql://localhost/ewr", "oop", "password");
+      dbConnect = DriverManager.getConnection("", "oop", "password");                    //Need to add proper URL to connect
     } 
     catch (SQLException e) {
       System.err.println("SQL Exception (File Not Found): " + e.getMessage());
