@@ -1,2 +1,5 @@
 # Ignore the 'MyData' folder
 MyData/
+
+# Ignore .gitignore file
+.gitignore
