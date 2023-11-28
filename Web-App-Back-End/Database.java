@@ -8,8 +8,9 @@ public class Database {
     private static Connection connection;
     // Define HashMaps to simulate database tables
     private static HashMap<Integer, User> usersTable = new HashMap<>();
-    private static HashMap<Integer, Flight> flightsTable = new HashMap<>();
-    private static HashMap<Integer, FlightAttendent> crewTable = new HashMap<>();
+    private static HashMap<Integer, RegisteredUser> registeredUserTable = new HashMap<>();
+    private static HashMap<Integer, FlightInfo> flightsTable = new HashMap<>();
+    private static HashMap<Integer, Crew> crewTable = new HashMap<>();
     private static HashMap<Integer, Aircraft> aircraftTable = new HashMap<>();
     private static HashMap<Integer, BookingInfo> bookingInfoTable = new HashMap<>();
     private static HashMap<Integer, Promotions> promotionsTable = new HashMap<>();
@@ -28,6 +29,7 @@ public class Database {
         closeDatabase();
     }
 
+    // Initialize the database connection
     public static void initializeDatabase() {
         // Database connection properties
         String url = "jdbc:mysql://localhost:3306/ewr";       // Change to your database URL
@@ -43,10 +45,12 @@ public class Database {
             connection = DriverManager.getConnection(url, properties);
             System.out.println("Database connection successful!");
         } catch (ClassNotFoundException | SQLException e) {
+            System.err.println("SQL Exception (File Not Found): " + e.getMessage());
             e.printStackTrace();
         }
     }
 
+    // Close the database connection
     public static void closeDatabase() {
         if (connection != null) {
             try {
@@ -58,7 +62,7 @@ public class Database {
         }
     }
 
-
+    // Initialize the database tables
     public static void initializeData() {
         // Initialize User data
         User user1 = new User(1, "username1", "email1@example.com", "123-456-7890", false);
@@ -66,16 +70,15 @@ public class Database {
         usersTable.put(1, user1);
         usersTable.put(2, user2);
 
-        // Initialize Registered User data
         // Initialize RegisteredUser data
-        RegisteredUser registeredUser1 = new RegisteredUser(1, "Registered User 1", "Address 1", "123-456-7890", "email1@example.com");
-        RegisteredUser registeredUser2 = new RegisteredUser(2, "Registered User 2", "Address 2", "987-654-3210", "email2@example.com");
+        RegisteredUser registeredUser1 = new RegisteredUser(1, "Registered User 1", "email1@example.com", "123-456-7890", false, "Address 1", "1234-5678-9012-3456");
+        RegisteredUser registeredUser2 = new RegisteredUser(2, "Registered User 2", "email2@example.com", "987-654-3210", true, "Address 2", "5678-9012-3456-7890");
         registeredUserTable.put(1, registeredUser1);
         registeredUserTable.put(2, registeredUser2);
 
         // Initialize Flight data
-        Flight flight1 = new Flight(1, "Flight 1", "Destination 1", "Origin 1", "2023-12-01");
-        Flight flight2 = new Flight(2, "Flight 2", "Destination 2", "Origin 2", "2023-12-02");
+        FlightInfo flight1 = new FlightInfo(1, "Flight 1", "Destination 1", "Origin 1", "2023-12-01");
+        FlightInfo flight2 = new FlightInfo(2, "Flight 2", "Destination 2", "Origin 2", "2023-12-02");
         flightsTable.put(1, flight1);
         flightsTable.put(2, flight2);
 
@@ -92,8 +95,8 @@ public class Database {
         aircraftTable.put(2, aircraft2);
 
         // Initialize BookingInfo data
-        BookingInfo bookingInfo1 = new BookingInfo(1, 1, 1, 100.0);
-        BookingInfo bookingInfo2 = new BookingInfo(2, 2, 2, 150.0);
+        BookingInfo bookingInfo1 = new BookingInfo(1, user1, flight1, 100.0);
+        BookingInfo bookingInfo2 = new BookingInfo(2, user2, flight2, 150.0);
         bookingInfoTable.put(1, bookingInfo1);
         bookingInfoTable.put(2, bookingInfo2);
 
@@ -110,8 +113,8 @@ public class Database {
         loungeAccessTable.put(2, loungeAccess2);
 
         // Initialize CompanionTicket data
-        CompanionTicket companionTicket1 = new CompanionTicket(1, 1, 2);
-        CompanionTicket companionTicket2 = new CompanionTicket(2, 2, 1);
+        CompanionTicket companionTicket1 = new CompanionTicket(1, user1, user2);
+        CompanionTicket companionTicket2 = new CompanionTicket(2, user2, user1);
         companionTicketTable.put(1, companionTicket1);
         companionTicketTable.put(2, companionTicket2);
     }

@@ -1,11 +1,13 @@
+import java.util.HashMap;
+
 public class User {
-    private int userId;
+    protected int userId;
     private String username;
     private String email;
     private String phoneNumber;
     private boolean hasCancellationInsurance;
 
-    // Constructors
+    // Constructor
     public User(int userId, String username, String email, String phoneNumber, boolean hasCancellationInsurance) {
         this.userId = userId;
         this.username = username;
@@ -17,10 +19,6 @@ public class User {
     // Getters and Setters
     public int getUserId() {
         return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public String getUsername() {
@@ -55,7 +53,7 @@ public class User {
         this.hasCancellationInsurance = hasCancellationInsurance;
     }
 
-    // toString method to display user information
+    // Override toString method to display user information
     @Override
     public String toString() {
         return "User{" +
@@ -65,5 +63,23 @@ public class User {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", hasCancellationInsurance=" + hasCancellationInsurance +
                 '}';
+    }
+
+    // Hash Map for Users
+    private static HashMap<Integer, User> usersMap = new HashMap<>();
+
+    // Add user to the HashMap
+    public static void addUser(User user) {
+        usersMap.put(user.getUserId(), user);
+    }
+
+    // Get user by ID from the HashMap
+    public static User getUserById(int userId) {
+        return usersMap.get(userId);
+    }
+
+    // Get all users from the HashMap
+    public static HashMap<Integer, User> getAllUsers() {
+        return usersMap;
     }
 }
