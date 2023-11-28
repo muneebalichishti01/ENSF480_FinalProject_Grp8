@@ -1,2 +1,4 @@
-# Ignore the 'MyData' folder
-# MyData/
+# Ignore all "class" files in 'Web-App-Back-End' folder
+Web-App-Back-End/**/*.class
+# Ignore all "class" files in 'Implementation' folder
+Implementation/**/*.class
