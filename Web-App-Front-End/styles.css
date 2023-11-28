@@ -51,3 +51,41 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
+
+.dashboard-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.dashboard-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.dashboard-options ul{
+    list-style: none; /* Remove bullet points */
+    padding: 0;
+}
+
+.dashboard-options li {
+    margin-bottom: 10px;
+}
+
+.dashboard-options a {
+    display: block;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    list-style: none; /* Remove bullet points */
+}
+
+.dashboard-options a:hover {
+    background-color: #0056b3;
+}

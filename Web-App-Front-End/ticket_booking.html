@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Ticket Booking</title>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Ticket Booking</h1>
+        <form id="ticketBookingForm">
+            <!-- Flight Details -->
+            <h2>Flight Details</h2>
+            <label for="departureLocation">Departure Location:</label>
+            <input type="text" id="departureLocation" name="departureLocation" readonly>
+            
+            <label for="destination">Destination:</label>
+            <input type="text" id="destination" name="destination" readonly>
+            
+            <label for="departureDate">Departure Date:</label>
+            <input type="text" id="departureDate" name="departureDate" readonly>
+            
+            <!-- Passenger Information -->
+            <h2>Passenger Information</h2>
+            <label for="passengerName">Passenger Name:</label>
+            <input type="text" id="passengerName" name="passengerName" required>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="seat">Selected Seat:</label>
+            <input type="text" id="seat" name="seat" readonly>
+            
+            <!-- Payment Information (You can expand this section for payment details) -->
+            <h2>Payment Information</h2>
+            <label for="creditCard">Credit Card Number:</label>
+            <input type="text" id="creditCard" name="creditCard" required>
+            
+            <label for="expirationDate">Expiration Date:</label>
+            <input type="text" id="expirationDate" name="expirationDate" required>
+            
+            <!-- Confirm Booking -->
+            <button type="submit">Confirm Booking</button>
+        </form>
+        
+        <!-- Confirmation Message -->
+        <p id="bookingConfirmationMessage"></p>
+        
+        <!-- Back to Flight Search -->
+        <a href="flight_search.html">Back to Flight Search</a>
+    </div>
+
+    <script src="ticket_booking.js"></script>
+</body>
+</html>
