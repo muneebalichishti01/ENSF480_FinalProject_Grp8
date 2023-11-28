@@ -32,10 +32,10 @@ public class Database {
     // Initialize the database connection
     public static void initializeDatabase() {
         // Database connection properties
-        String url = "jdbc:mysql://localhost:3306/ewr";       // Change to your database URL
-        Properties properties = new Properties();
-        properties.setProperty("user", "root");     // Change to your database username
-        properties.setProperty("password", "root"); // Change to your database password
+        String url = "jdbc:mysql://localhost:3306/flightappdatabase";         // Change to your database URL
+        Properties properties = new Properties();                             // Create properties object
+        properties.setProperty("user", "root");                     // Change to your database username
+        properties.setProperty("password", "root");                 // Change to your database password
 
         try {
             // Load the MySQL JDBC driver
