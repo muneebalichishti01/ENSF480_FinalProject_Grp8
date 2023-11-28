@@ -19,7 +19,9 @@ public class Database {
   /* Create a connection to the database */
   public void createConnection() {
     try {
-      dbConnect = DriverManager.getConnection("", "oop", "password");                    //Need to add proper URL to connect
+      // dbConnect = DriverManager.getConnection("", "oop", "password");                    //Need to add proper URL to connect
+      dbConnect = DriverManager.getConnection("jdbc:mysql://localhost/FlightAppData", "root", "root"); // pass: root for personal; 1234 for university
+
     } 
     catch (SQLException e) {
       System.err.println("SQL Exception (File Not Found): " + e.getMessage());
