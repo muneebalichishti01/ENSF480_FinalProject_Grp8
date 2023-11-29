@@ -1,9 +1,12 @@
+package edu.ucalgary.oop.flightapp.logic;
+
 import java.util.HashMap;
 
 public class BookingInfo {
+    // Instance variables
     private int bookingId;
-    private User user; // Change from int to User object
-    private FlightInfo flightInfo; // Change from int to FlightInfo object
+    private User user;
+    private FlightInfo flightInfo;
     private double ticketPrice;
 
     // Constructors
@@ -47,7 +50,7 @@ public class BookingInfo {
         this.ticketPrice = ticketPrice;
     }
 
-    // toString method to display booking information
+    // Override toString method to display booking information
     @Override
     public String toString() {
         return "BookingInfo{" +

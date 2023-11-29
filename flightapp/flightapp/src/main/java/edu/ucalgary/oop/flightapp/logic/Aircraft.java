@@ -1,6 +1,9 @@
+package edu.ucalgary.oop.flightapp.logic;
+
 import java.util.HashMap;
 
 public class Aircraft {
+    // Attributes
     private int aircraftId;
     private String name;
     private String type;
@@ -16,7 +19,6 @@ public class Aircraft {
     public int getAircraftId() {
         return aircraftId;
     }
-
     public void setAircraftId(int aircraftId) {
         this.aircraftId = aircraftId;
     }
@@ -24,7 +26,6 @@ public class Aircraft {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -32,12 +33,11 @@ public class Aircraft {
     public String getType() {
         return type;
     }
-
     public void setType(String type) {
         this.type = type;
     }
 
-    // toString method to display aircraft information
+    // Override toString method to display aircraft information
     @Override
     public String toString() {
         return "Aircraft{" +

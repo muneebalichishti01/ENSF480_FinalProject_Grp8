@@ -1,6 +1,9 @@
+package edu.ucalgary.oop.flightapp.logic;
+
 import java.util.HashMap;
 
 public class CompanionTicket {
+    // Instance variables
     private int ticketId;
     private User primaryUser;
     private User companionUser;
@@ -16,7 +19,6 @@ public class CompanionTicket {
     public int getTicketId() {
         return ticketId;
     }
-
     public void setTicketId(int ticketId) {
         this.ticketId = ticketId;
     }
@@ -24,7 +26,6 @@ public class CompanionTicket {
     public User getPrimaryUser() {
         return primaryUser;
     }
-
     public void setPrimaryUser(User primaryUser) {
         this.primaryUser = primaryUser;
     }
@@ -32,12 +33,11 @@ public class CompanionTicket {
     public User getCompanionUser() {
         return companionUser;
     }
-
     public void setCompanionUser(User companionUser) {
         this.companionUser = companionUser;
     }
 
-    // toString method to display companion ticket information
+    // Override toString method to display companion ticket information
     @Override
     public String toString() {
         return "CompanionTicket{" +
@@ -65,3 +65,4 @@ public class CompanionTicket {
         return companionTicketMap;
     }
 }
+

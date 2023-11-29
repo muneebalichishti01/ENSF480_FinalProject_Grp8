@@ -1,6 +1,9 @@
+package edu.ucalgary.oop.flightapp.logic;
+
 import java.util.HashMap;
 
 public class Promotions {
+    // Instance variables
     private int promotionId;
     private String promotionName;
 
@@ -11,11 +14,9 @@ public class Promotions {
     }
 
     // Getters and setters
-
     public int getPromotionId() {
         return promotionId;
     }
-
     public void setPromotionId(int promotionId) {
         this.promotionId = promotionId;
     }
@@ -23,13 +24,11 @@ public class Promotions {
     public String getPromotionName() {
         return promotionName;
     }
-
     public void setPromotionName(String promotionName) {
         this.promotionName = promotionName;
     }
 
-    // toString method
-
+    // Override toString method to display promotion information
     @Override
     public String toString() {
         return "Promotions{" +

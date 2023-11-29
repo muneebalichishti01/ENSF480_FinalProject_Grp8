@@ -1,6 +1,9 @@
+package edu.ucalgary.oop.flightapp.logic;
+
 import java.util.HashMap;
 
 public class LoungeAccess {
+    // Instance variables
     private int userId;
     private int flightId;
     private double cost;
@@ -13,11 +16,9 @@ public class LoungeAccess {
     }
 
     // Getters and setters
-
     public int getUserId() {
         return userId;
     }
-
     public void setUserId(int userId) {
         this.userId = userId;
     }
@@ -25,7 +26,6 @@ public class LoungeAccess {
     public int getFlightId() {
         return flightId;
     }
-
     public void setFlightId(int flightId) {
         this.flightId = flightId;
     }
@@ -33,13 +33,11 @@ public class LoungeAccess {
     public double getCost() {
         return cost;
     }
-
     public void setCost(double cost) {
         this.cost = cost;
     }
 
-    // toString method
-
+    // Override toString method to display lounge access information
     @Override
     public String toString() {
         return "LoungeAccess{" +
@@ -67,3 +65,4 @@ public class LoungeAccess {
         return loungeAccessTable;
     }
 }
+

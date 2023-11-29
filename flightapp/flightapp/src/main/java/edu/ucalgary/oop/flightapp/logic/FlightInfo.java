@@ -1,6 +1,9 @@
+package edu.ucalgary.oop.flightapp.logic;
+
 import java.util.HashMap;
 
 public class FlightInfo {
+    // Instance variables
     private int flightId;
     private String flightName;
     private String destination;
@@ -20,11 +23,13 @@ public class FlightInfo {
     public int getFlightId() {
         return flightId;
     }
+    public void setFlightId(int flightId) {
+        this.flightId = flightId;
+    }
 
     public String getFlightName() {
         return flightName;
     }
-
     public void setFlightName(String flightName) {
         this.flightName = flightName;
     }
@@ -32,7 +37,6 @@ public class FlightInfo {
     public String getDestination() {
         return destination;
     }
-
     public void setDestination(String destination) {
         this.destination = destination;
     }
@@ -40,7 +44,6 @@ public class FlightInfo {
     public String getOrigin() {
         return origin;
     }
-
     public void setOrigin(String origin) {
         this.origin = origin;
     }
@@ -48,7 +51,6 @@ public class FlightInfo {
     public String getDepartureDate() {
         return departureDate;
     }
-
     public void setDepartureDate(String departureDate) {
         this.departureDate = departureDate;
     }

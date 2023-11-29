@@ -1,6 +1,8 @@
+package edu.ucalgary.oop.flightapp.logic;
+
 import java.util.HashMap;
 
-public class User {
+public class User extends UserDashboard{
     protected int userId;
     private String username;
     private String email;
@@ -20,11 +22,13 @@ public class User {
     public int getUserId() {
         return userId;
     }
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
     public String getUsername() {
         return username;
     }
-
     public void setUsername(String username) {
         this.username = username;
     }
@@ -32,7 +36,6 @@ public class User {
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
@@ -40,7 +43,6 @@ public class User {
     public String getPhoneNumber() {
         return phoneNumber;
     }
-
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
@@ -48,7 +50,6 @@ public class User {
     public boolean hasCancellationInsurance() {
         return hasCancellationInsurance;
     }
-
     public void setHasCancellationInsurance(boolean hasCancellationInsurance) {
         this.hasCancellationInsurance = hasCancellationInsurance;
     }
@@ -81,5 +82,9 @@ public class User {
     // Get all users from the HashMap
     public static HashMap<Integer, User> getAllUsers() {
         return usersMap;
+    }
+
+    public Object getPassword() {
+        return null;
     }
 }
