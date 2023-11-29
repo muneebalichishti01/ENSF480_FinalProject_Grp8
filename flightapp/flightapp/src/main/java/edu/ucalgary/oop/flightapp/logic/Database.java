@@ -1,7 +1,7 @@
 package edu.ucalgary.oop.flightapp.logic;
 
 import java.sql.*;
-import java.util.Properties;
+import java.util.*;
 
 public class Database extends PopulatingDatabase {
     private static Database instance;
@@ -16,11 +16,17 @@ public class Database extends PopulatingDatabase {
         Database dbInstance = Database.getInstance();
         try {
             // Test 1: Add a new user and store password
-            User newUser1 = new User(Database.getNextUserId(), "testuser1", "testuser1@example.com", "123-456-7890", true);
+            User newUser1 = new User(Database.getNextUserId(), "Joanna", "joanna@burgur.com", "987-654-321", true);
             boolean userAdded1 = dbInstance.addUserWithValidation(newUser1);
+            
             if (userAdded1) {
                 Database.storeUserPassword(newUser1.getUserId(), "password123"); // Hash in production
                 System.out.println("New user added: " + newUser1);
+                
+                // Test addCreditCard
+                CreditCard creditCard = new CreditCard(newUser1.getUserId(), "123456789", "12/24", "123");
+                addCreditCard(creditCard);
+                System.out.println("Credit card added for user: " + newUser1.getUsername());
             } else {
                 System.out.println("User already exists and was not added: " + newUser1);
             }
@@ -204,6 +210,27 @@ public class Database extends PopulatingDatabase {
         return false;
     }
 
+    public static void addCreditCard(CreditCard creditCard) {
+        String sql = "INSERT INTO credit_cards (userId, cardNumber, expiryDate, cvv) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, creditCard.getUserId());
+            statement.setString(2, encryptCardNumber(creditCard.getCardNumber())); // Encrypt card number
+            statement.setString(3, creditCard.getExpiryDate());
+            statement.setString(4, creditCard.getCvv());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static String encryptCardNumber(String cardNumber) {
+        // Implement actual encryption logic here if needed
+        String temp;
+        temp = Base64.getEncoder().encodeToString(cardNumber.getBytes());
+        System.out.println("Encrypted card number: " + temp);
+        return temp;
+    }
+    
     // Other methods ...
 }
 
