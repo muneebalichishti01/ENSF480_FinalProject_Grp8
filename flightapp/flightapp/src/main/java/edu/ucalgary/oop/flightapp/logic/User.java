@@ -57,14 +57,24 @@ public class User extends UserDashboard{
     // Override toString method to display user information
     @Override
     public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", hasCancellationInsurance=" + hasCancellationInsurance +
-                '}';
+        return "User Details:\n" +
+            "User ID: " + userId + "\n" +
+            "Username: " + username + "\n" +
+            "Email: " + email + "\n" +
+            "Phone Number: " + phoneNumber + "\n" +
+            "Cancellation Insurance: " + (hasCancellationInsurance ? "Yes" : "No");
     }
+
+    // @Override
+    // public String toString() {
+    //     return "User{" +
+    //             "userId=" + userId +
+    //             ", username='" + username + '\'' +
+    //             ", email='" + email + '\'' +
+    //             ", phoneNumber='" + phoneNumber + '\'' +
+    //             ", hasCancellationInsurance=" + hasCancellationInsurance +
+    //             '}';
+    // }
 
     // Hash Map for Users
     private static HashMap<Integer, User> usersMap = new HashMap<>();
