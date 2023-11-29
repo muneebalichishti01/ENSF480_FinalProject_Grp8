@@ -9,6 +9,7 @@ public class RegisteredUser extends User {
     private Map<Integer, LoungeAccess> loungeAccesses;
     private Map<Integer, Promotions> promotions;
     private Map<Integer, CompanionTicket> companionTickets;
+    private CreditCard creditCard;
 
     // Constructor
     public RegisteredUser(int userId, String username, String email, String phoneNumber, boolean hasCancellationInsurance, 
@@ -62,6 +63,13 @@ public class RegisteredUser extends User {
     }
     public void setCompanionTickets(Map<Integer, CompanionTicket> companionTickets) {
         this.companionTickets = companionTickets;
+    }
+
+    public CreditCard getCreditCard() {
+        return creditCard;
+    }
+    public void setCreditCard(CreditCard creditCard) {
+        this.creditCard = creditCard;
     }
 
     // Methods to manage lounge access, promotions, and companion tickets

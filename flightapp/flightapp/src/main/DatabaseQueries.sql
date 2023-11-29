@@ -27,6 +27,15 @@ CREATE TABLE user_passwords (
     FOREIGN KEY (userId) REFERENCES users(userId)
 );
 
+-- Credit Cards Table: Stores credit card information
+CREATE TABLE credit_cards (
+    userId INT PRIMARY KEY,
+    cardNumber VARCHAR(19),
+    expiryDate VARCHAR(7),
+    cvv VARCHAR(4),
+    FOREIGN KEY (userId) REFERENCES users(userId)
+);
+
 -- Flights Table: Stores flight information
 CREATE TABLE flights (
     flightId INT AUTO_INCREMENT PRIMARY KEY,
