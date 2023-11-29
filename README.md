@@ -11,18 +11,18 @@ The Flight Reservation Web Application is a comprehensive online platform design
 
 ### Using the Program:
 1. To run the program, make sure the *keys* are right; changes to the keys can be done in **Database.java** file in the `initializeDatabase()` method
-2. Navigate to the directory: `ENSF480_FinalProject_Grp8/flightapp/flightapp/src/main/java/edu/ucalgary/oop/flightapp/logic`
+2. Navigate to the directory: `ENSF480_FinalProject_Grp8/flightapp/flightapp/src/main/java`
 ```terminal
-  cd flightapp/flightapp/src/main/java/edu/ucalgary/oop/flightapp/logic
+  cd flightapp/flightapp/src/main/java
 ```
 
 3. Type the following command in terminal to *compile*:
 ```terminal
-  javac -cp .;mysql-connector-java-8.0.23.jar Database.java
+  javac -cp .;mysql-connector-java-8.0.23.jar edu/ucalgary/oop/flightapp/logic/Database.java
 ```
 4. Finally, write the following command in terminal to *run the program*:
 ```terminal
-  java -cp .;mysql-connector-java-8.0.23.jar Database
+  java -cp .;mysql-connector-java-8.0.23.jar edu.ucalgary.oop.flightapp.logic.Database
 ```
 
 ### Product Features:
