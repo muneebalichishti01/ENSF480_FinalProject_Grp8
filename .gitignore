@@ -2,3 +2,5 @@
 Web-App-Back-End/**/*.class
 # Ignore all "class" files in 'Implementation' folder
 Implementation/**/*.class
+# Ignore all ".vscode" files
+.vscode/**
