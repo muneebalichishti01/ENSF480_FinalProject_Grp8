@@ -3,7 +3,8 @@ package edu.ucalgary.oop.flightapp.logic;
 import java.sql.*;
 import java.util.*;
 
-public class Database extends PopulatingDatabase {
+// public class Database extends PopulatingDatabase {
+public class Database {
     private static Database instance;
     private static Connection connection;
 

@@ -2,7 +2,8 @@ package edu.ucalgary.oop.flightapp.logic;
 
 import java.util.HashMap;
 
-public class User extends UserDashboard{
+// public class User extends UserDashboard{
+public class User {
     protected int userId;
     private String username;
     private String email;
