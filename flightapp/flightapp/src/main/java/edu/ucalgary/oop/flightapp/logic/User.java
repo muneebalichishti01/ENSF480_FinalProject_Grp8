@@ -117,9 +117,9 @@ public class User {
         return null;
     }
 
-    public void cancelFlight(int bookingId){
-        if (hasCancellationInsurance == True){
-            chargeCreditCard = False;
+    public void cancelFlight(int bookingId) throws SQLException {
+        if (hasCancellationInsurance == true){
+            chargeCreditCard = false;
         } else {
             chargeCreditCard = true;
         }
