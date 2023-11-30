@@ -1,6 +1,5 @@
 package edu.ucalgary.oop.flightapp.logic;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -29,6 +28,22 @@ public class FlightInfo {
         this.passengerBookings = new ArrayList<>();
         this.seat = new ArrayList<>();
         this.flightAttendant = new ArrayList<>();
+
+        // Initialize seats for this flight
+        initializeSeats();
+    }
+
+    // Method to initialize Seats
+    private void initializeSeats() {
+        for (int i = 0; i < 10; i++) {
+            seat.add(new OrdinarySeat());                   // Add ordinary seats
+        }
+        for (int i = 0; i < 5; i++) {
+            seat.add(new BusinessSeat(new OrdinarySeat())); // Add business seats
+        }
+        for (int i = 0; i < 5; i++) {
+            seat.add(new ComfortSeat(new OrdinarySeat()));  // Add comfort seats
+        }
     }
 
     // Getters and Setters
@@ -125,9 +140,5 @@ public class FlightInfo {
 
     public static HashMap<Integer, FlightInfo> getAllFlightInfo() {
         return flightInfoMap;
-    }
-
-    public Date getDeparture() {
-        return null;
     }
 }
