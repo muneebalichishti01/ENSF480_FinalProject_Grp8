@@ -393,6 +393,31 @@ public class Database {
     }
 //----------------------------------------Payment--------------------------------------------//
     // Other methods ...
+
+
+    public static List<String> browseCrew(int id) {
+        List<String> crewList = new ArrayList<>();
+        
+        String sql = "SELECT flightAttendants.name " + 
+                     "FROM flightAttendants " + 
+                     "JOIN flightinfo ON flightAttendants.name = flightinfo.name " +
+                     "WHERE flightinfo.flightId = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, id);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    String name = resultSet.getString("name");
+                    crewList.add(name);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return crewList;
+    }
 }
 
    

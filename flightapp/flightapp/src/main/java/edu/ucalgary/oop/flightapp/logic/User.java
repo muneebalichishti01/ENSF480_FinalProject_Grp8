@@ -9,6 +9,7 @@ public class User {
     private String email;
     private String phoneNumber;
     private boolean hasCancellationInsurance;
+    private boolean chargeCreditCard;
 
     // Constructor
     public User(int userId, String username, String email, String phoneNumber, boolean hasCancellationInsurance) {
@@ -105,5 +106,14 @@ public class User {
 
     public Object getPassword() {
         return null;
+    }
+
+    public void cancelFlight(int bookingId){
+        if (hasCancellationInsurance == True){
+            chargeCreditCard = False;
+        } else {
+            chargeCreditCard = True;
+        }
+        Database.cancelBooking(bookingId);
     }
 }
