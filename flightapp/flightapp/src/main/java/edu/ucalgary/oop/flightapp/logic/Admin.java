@@ -47,48 +47,48 @@ public class Admin {
     // Manage Aircrafts
     public void addAircraft(Aircraft aircraft) {
         aircrafts.add(aircraft);
-        // Database.addAircraft(aircraft); // Uncomment if needed
+        Database.addAircraft(aircraft);
     }
     public void removeAircraft(Aircraft aircraft) {
         aircrafts.remove(aircraft);
-        // Database.removeAircraft(aircraft.getAircraftId()); // Uncomment if needed
+        Database.removeAircraft(aircraft.getAircraftId());
     }
     public void updateAircraft(int index, Aircraft updatedAircraft) {
         if (index >= 0 && index < aircrafts.size()) {
             aircrafts.set(index, updatedAircraft);
-            // Database.editAircraft(updatedAircraft); // Uncomment if needed
+            Database.editAircraft(updatedAircraft);
         }
     }
 
     // Manage Flights
     public void addFlight(FlightInfo flight) {
         flights.add(flight);
-        // Database.addFlight(flight); // Uncomment if needed
+        Database.addFlight(flight);
     }
     public void removeFlight(FlightInfo flight) {
         flights.remove(flight);
-        // Database.removeFlight(flight.getFlightId()); // Uncomment if needed
+        Database.removeFlight(flight.getFlightId());
     }
     public void updateFlight(int index, FlightInfo updatedFlight) {
         if (index >= 0 && index < flights.size()) {
             flights.set(index, updatedFlight);
-            // Database.editFlight(updatedFlight); // Uncomment if needed
+            Database.editFlight(updatedFlight);
         }
     }
 
     // Manage Flight Attendants
     public void addFlightAttendant(FlightAttendant attendant) {
         flightAttendants.add(attendant);
-        // Database.addFlightAttendant(attendant); // Uncomment if needed
+        Database.addFlightAttendant(attendant);
     }
     public void removeFlightAttendant(FlightAttendant attendant) {
         flightAttendants.remove(attendant);
-        // Database.removeFlightAttendant(attendant.getFlightAttendantId()); // Uncomment if needed
+        Database.removeFlightAttendant(attendant.getFlightAttendantId());
     }
     public void updateFlightAttendant(int index, FlightAttendant updatedAttendant) {
         if (index >= 0 && index < flightAttendants.size()) {
             flightAttendants.set(index, updatedAttendant);
-            // Database.editCrew(updatedAttendant); // Uncomment if needed
+            Database.editCrew(updatedAttendant);
         }
     }
 

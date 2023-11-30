@@ -42,8 +42,7 @@ public class Database {
         }
     }
     
-    
-
+//-----------------------------------DATABSE-CONNECTION--------------------------------------//
     // Initialize database connection
     public static void initializeDatabase() {
         String url = "jdbc:mysql://localhost:3306/flightappdatabase";
@@ -76,6 +75,7 @@ public class Database {
             }
         }
     }
+//-----------------------------------DATABSE-CONNECTION--------------------------------------//
 //-----------------------------------------User----------------------------------------------//
     // Method to get User by username
     public User getUserByUsername(String username) {
@@ -111,26 +111,141 @@ public class Database {
     //     return 1; // Start from 1 if table is empty
     // }
 
+//---------------------------------------Aircraft--------------------------------------------//
+    // Method to add Aircraft
+    public static void addAircraft(Aircraft aircraft) {
+        String sql = "INSERT INTO aircrafts (aircraftId, name) VALUES (?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, aircraft.getAircraftId());
+            statement.setString(2, aircraft.getName());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Method to remove Aircraft
+    public static void removeAircraft(int aircraftId) {
+        String sql = "DELETE FROM aircrafts WHERE aircraftId = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, aircraftId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    // Method to update Aircraft
+    public static void editAircraft(Aircraft aircraft) {
+        String sql = "UPDATE aircrafts SET name = ? WHERE aircraftId = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, aircraft.getName());
+            statement.setInt(2, aircraft.getAircraftId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+//---------------------------------------Aircraft--------------------------------------------//
+//----------------------------------------Flight---------------------------------------------//
+    // Method to add Flight
+    public static void addFlight(FlightInfo flight) {
+        String sql = "INSERT INTO flightInfo (flightId, flightName, destination, origin, departureDate) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, flight.getFlightId());
+            statement.setString(2, flight.getFlightName());
+            statement.setString(3, flight.getDestination());
+            statement.setString(4, flight.getOrigin());
+            statement.setString(5, flight.getDepartureDate());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Method to remove Flight
+    public static void removeFlight(int flightId) {
+        String sql = "DELETE FROM flightInfo WHERE flightId = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, flightId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Method to update Flight
+    public static void editFlight(FlightInfo flight) {
+        String sql = "UPDATE flightInfo SET flightName = ?, destination = ?, origin = ?, departureDate = ? WHERE flightId = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, flight.getFlightName());
+            statement.setString(2, flight.getDestination());
+            statement.setString(3, flight.getOrigin());
+            statement.setString(4, flight.getDepartureDate());
+            statement.setInt(5, flight.getFlightId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }    
+//----------------------------------------Flight---------------------------------------------//
+//-----------------------------------Flight Attendant----------------------------------------//
+    // Method to add Flight Attendant
+    public static void addFlightAttendant(FlightAttendant attendant) {
+        String sql = "INSERT INTO flightAttendants (FlightAttendantId, name) VALUES (?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, attendant.getFlightAttendantId());
+            statement.setString(2, attendant.getName());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    // Method to remove Flight Attendant
+    public static void removeFlightAttendant(int attendantId) {
+        String sql = "DELETE FROM flightAttendants WHERE FlightAttendantId = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, attendantId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Method to update Flight Attendant
+    public static void editCrew(FlightAttendant attendant) {
+        String sql = "UPDATE flightAttendants SET name = ? WHERE FlightAttendantId = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, attendant.getName());
+            statement.setInt(2, attendant.getFlightAttendantId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }    
+//-----------------------------------Flight Attendant----------------------------------------//
+//-----------------------------------------User----------------------------------------------//
     // Method to add a new User
     public static void addUser(User newUser) {
-    String sql = "INSERT INTO users (username, email, phoneNumber, hasCancellationInsurance) VALUES (?, ?, ?, ?)";
-    try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-        statement.setString(1, newUser.getUsername());
-        statement.setString(2, newUser.getEmail());
-        statement.setString(3, newUser.getPhoneNumber());
-        statement.setBoolean(4, newUser.hasCancellationInsurance());
-        statement.executeUpdate();
+        String sql = "INSERT INTO users (username, email, phoneNumber, hasCancellationInsurance) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            statement.setString(1, newUser.getUsername());
+            statement.setString(2, newUser.getEmail());
+            statement.setString(3, newUser.getPhoneNumber());
+            statement.setBoolean(4, newUser.hasCancellationInsurance());
+            statement.executeUpdate();
 
-        // Retrieve the generated userId and set it to newUser
-        try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-            if (generatedKeys.next()) {
-                newUser.setUserId(generatedKeys.getInt(1));
+            // Retrieve the generated userId and set it to newUser
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    newUser.setUserId(generatedKeys.getInt(1));
+                }
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
     }
-}
 
     // Method to store User's password
     public static void storeUserPassword(int userId, String password) {
@@ -217,7 +332,6 @@ public class Database {
             return false;
         }
     }
-    
 //-----------------------------------------User----------------------------------------------//
 //--------------------------------------Credit Card------------------------------------------//
     // Method to add a new CreditCard
@@ -234,7 +348,7 @@ public class Database {
         }
     }
 //--------------------------------------Credit Card------------------------------------------//
-
+    
     // Other methods ...
 }
 
