@@ -10,6 +10,11 @@
 The Flight Reservation Web Application is a comprehensive online platform designed to streamline and enhance the air travel experience for various user roles within a single airline company. The goal of the system is to give travellers, flight crew and system administrators an easy to use and seamless platform for managing and booking flights. The system aims to optimise the reservation process and enhance the overall travel experience for all users involved.
 
 ### Using the Program:
+Start the front-end:
+```terminal
+  mvn spring-boot:run
+```
+
 1. To run the program, make sure the *keys* are right; changes to the keys can be done in **Database.java** file in the `initializeDatabase()` method
 2. Navigate to the directory: `ENSF480_FinalProject_Grp8/flightapp/flightapp/src/main/java`
 ```terminal
