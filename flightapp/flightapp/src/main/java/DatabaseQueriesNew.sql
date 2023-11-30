@@ -1,16 +1,19 @@
--- Test queries for vieing
+-- Test queries for viewing
 -- SELECT * FROM users;
--- SELECT * FROM user_passwords;
--- SELECT * FROM registered_users;
+-- SELECT * FROM userPasswords;
+-- SELECT * FROM registeredUsers;
+
+-- Create schema
+-- CREATE SCHEMA `flightappdatabase` ;
 
 -- Users Table: Stores general user information
 CREATE TABLE users (
-    userId INT PRIMARY KEY,
+    userId INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     phoneNumber VARCHAR(255),
     hasCancellationInsurance BOOLEAN
-); --done
+);
 
 -- Registered Users Table: Extends the users table with specific fields for registered users
 CREATE TABLE registeredUsers (
@@ -21,14 +24,14 @@ CREATE TABLE registeredUsers (
     promotionId INT,
     companionTicketId INT,
     FOREIGN KEY (userId) REFERENCES users(userId)
-); --done
+);
 
 -- User Passwords Table: Keeps user passwords. Ensure to store hashed passwords, not plain text
 CREATE TABLE userPasswords (
     userId INT PRIMARY KEY,
     passwordHash VARCHAR(255),
     FOREIGN KEY (userId) REFERENCES users(userId)
-); --done
+);
 
 -- Credit Cards Table: Stores credit card information
 CREATE TABLE creditCards (
@@ -37,7 +40,7 @@ CREATE TABLE creditCards (
     expiryDate VARCHAR(255) NOT NULL,
     cvv VARCHAR(255) NOT NULL,
     FOREIGN KEY (userId) REFERENCES users(userId)
-); --done
+);
 
 -- Flights Table: Stores flight information
 CREATE TABLE flightInfo (
@@ -46,19 +49,19 @@ CREATE TABLE flightInfo (
     destination VARCHAR(255) NOT NULL,
     origin VARCHAR(255) NOT NULL,
     departureDate DATE NOT NULL
-); --done
+);
 
 -- Aircraft Table: Information about aircrafts
 CREATE TABLE aircrafts (
     aircraftId INT PRIMARY KEY,
     name VARCHAR(255) NOT NULL
-); --done
+);
 
 -- Flight Attendants Table: Stores flight attendant information
 CREATE TABLE flightAttendants (
     FlightAttendantId INT PRIMARY KEY,
     name VARCHAR(255) NOT NULL
-); --done
+);
 
 -- Booking information table: Stores booking information
 CREATE TABLE bookingInfo (
@@ -68,7 +71,7 @@ CREATE TABLE bookingInfo (
     ticketPrice DECIMAL(10, 2),
     FOREIGN KEY (userId) REFERENCES users(userId),
     FOREIGN KEY (flightId) REFERENCES flightInfo(flightId)
-); --done
+);
 
 -- Payment Table: Stores payment information
 CREATE TABLE payments (
@@ -82,11 +85,11 @@ CREATE TABLE payments (
     FOREIGN KEY (userId) REFERENCES users(userId),
     FOREIGN KEY (primaryUserId) REFERENCES users(userId),
     FOREIGN KEY (companionUserId) REFERENCES users(userId)
-); --done
+);
 
 -- Seat Types Table: Represents different seat types
 CREATE TABLE seatTypes (
     seatTypeId INT PRIMARY KEY,
     description VARCHAR(255),
     cost DECIMAL(10, 2)
-); --done
+);

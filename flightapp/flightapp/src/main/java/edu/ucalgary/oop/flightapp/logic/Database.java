@@ -13,58 +13,6 @@ public class Database {
         initializeDatabase();  // Initialize database connection
     }
 
-    public static void main(String[] args) {
-        Database dbInstance = Database.getInstance();
-        try {
-            // Test 1: Add a new user and store password
-            User newUser1 = new User(Database.getNextUserId(), "BIGMAN", "bigman@bigman.com", "123-654-321", true);
-            boolean userAdded1 = dbInstance.addUserWithValidation(newUser1);
-            
-            if (userAdded1) {
-                Database.storeUserPassword(newUser1.getUserId(), "password567"); // Hash in production
-                System.out.println("New user added: " + newUser1);
-                
-                // Test addCreditCard
-                CreditCard creditCard = new CreditCard(newUser1.getUserId(), "123456789", "12/24", "123");
-                addCreditCard(creditCard);
-                System.out.println("Credit card added for user: " + newUser1.getUsername());
-            } else {
-                System.out.println("User already exists and was not added: " + newUser1);
-            }
-
-            // // Test 2: Attempt to add a duplicate user
-            // User newUser2 = new User(Database.getNextUserId(), "testuser1", "testuser1@example.com", "123-456-7890", true);
-            // boolean userAdded2 = dbInstance.addUserWithValidation(newUser2);
-            // if (userAdded2) {
-            //     Database.storeUserPassword(newUser2.getUserId(), "password123"); // Hash in production
-            //     System.out.println("New user added: " + newUser2);
-            // } else {
-            //     System.out.println("User already exists and was not added: " + newUser2);
-            // }
-
-            // // Test 3: Fetch and print the first user to confirm insertion
-            // User fetchedUser = dbInstance.getUserByUsername("testuser1");
-            // System.out.println("Fetched user: " + fetchedUser);
-
-            // // Test 4: Add another unique user
-            // User newUser3 = new User(Database.getNextUserId(), "testuser2", "testuser2@example.com", "987-654-3210", false);
-            // boolean userAdded3 = dbInstance.addUserWithValidation(newUser3);
-            // if (userAdded3) {
-            //     Database.storeUserPassword(newUser3.getUserId(), "password456"); // Hash in production
-            //     System.out.println("New user added: " + newUser3);
-            // } else {
-            //     System.out.println("User already exists and was not added: " + newUser3);
-            // }
-
-            // Additional tests can be added here
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            Database.closeDatabase();
-        }
-    }
-    
     // Static method to get the single instance of the class
     public static synchronized Database getInstance() {
         if (instance == null) {
@@ -72,6 +20,29 @@ public class Database {
         }
         return instance;
     }
+
+    public static void main(String[] args) {
+        Database dbInstance = Database.getInstance();
+        try {
+            User newUser1 = new User("ali", "ali@bigman.com", "888-654-321", true);
+            boolean userAdded1 = dbInstance.addUserWithValidation(newUser1);
+            
+            if (userAdded1) {
+                Database.storeUserPassword(newUser1.getUserId(), "password888");
+                System.out.println("New user added: " + newUser1);
+    
+                // Rest of your testing code...
+            } else {
+                System.out.println("User already exists and was not added: " + newUser1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            Database.closeDatabase();
+        }
+    }
+    
+    
 
     // Initialize database connection
     public static void initializeDatabase() {
@@ -105,7 +76,7 @@ public class Database {
             }
         }
     }
-
+//-----------------------------------------User----------------------------------------------//
     // Method to get User by username
     public User getUserByUsername(String username) {
         String sql = "SELECT * FROM users WHERE username = ?";
@@ -127,37 +98,43 @@ public class Database {
     }
 
     // Method to get the next User ID
-    public static int getNextUserId() {
-        String sql = "SELECT MAX(userId) AS maxId FROM users";
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
-            if (resultSet.next()) {
-                return resultSet.getInt("maxId") + 1;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return 1; // Start from 1 if table is empty
-    }
+    // public static int getNextUserId() {
+    //     String sql = "SELECT MAX(userId) AS maxId FROM users";
+    //     try (Statement statement = connection.createStatement();
+    //          ResultSet resultSet = statement.executeQuery(sql)) {
+    //         if (resultSet.next()) {
+    //             return resultSet.getInt("maxId") + 1;
+    //         }
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //     }
+    //     return 1; // Start from 1 if table is empty
+    // }
 
     // Method to add a new User
     public static void addUser(User newUser) {
-        String sql = "INSERT INTO users (userId, username, email, phoneNumber, hasCancellationInsurance) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, newUser.getUserId());
-            statement.setString(2, newUser.getUsername());
-            statement.setString(3, newUser.getEmail());
-            statement.setString(4, newUser.getPhoneNumber());
-            statement.setBoolean(5, newUser.hasCancellationInsurance());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    String sql = "INSERT INTO users (username, email, phoneNumber, hasCancellationInsurance) VALUES (?, ?, ?, ?)";
+    try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        statement.setString(1, newUser.getUsername());
+        statement.setString(2, newUser.getEmail());
+        statement.setString(3, newUser.getPhoneNumber());
+        statement.setBoolean(4, newUser.hasCancellationInsurance());
+        statement.executeUpdate();
+
+        // Retrieve the generated userId and set it to newUser
+        try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                newUser.setUserId(generatedKeys.getInt(1));
+            }
         }
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+}
 
     // Method to store User's password
     public static void storeUserPassword(int userId, String password) {
-        String sql = "INSERT INTO user_passwords (userId, passwordHash) VALUES (?, ?)";
+        String sql = "INSERT INTO userPasswords (userId, passwordHash) VALUES (?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, userId);
             statement.setString(2, password); // Hash the password in production
@@ -167,22 +144,36 @@ public class Database {
         }
     }    
 
+    // Method to get User's password hash
+    public String getUserPasswordHash(int userId) {
+        String sql = "SELECT passwordHash FROM userPasswords WHERE userId = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getString("passwordHash");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // Return null if password hash not found or error occurred
+    }
+
     // Method to add a new User with validation
     public boolean addUserWithValidation(User newUser) {
         if (userExists(newUser.getUsername(), newUser.getEmail())) {
             return false; // User already exists, do not add
         }
-
-        try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO users (username, email, phoneNumber, hasCancellationInsurance) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
-            
+    
+        String sql = "INSERT INTO users (username, email, phoneNumber, hasCancellationInsurance) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, newUser.getUsername());
             statement.setString(2, newUser.getEmail());
             statement.setString(3, newUser.getPhoneNumber());
             statement.setBoolean(4, newUser.hasCancellationInsurance());
             statement.executeUpdate();
-
-            // Get the generated user ID and set it to newUser
+    
+            // Retrieve the generated userId and set it to newUser
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     newUser.setUserId(generatedKeys.getInt(1));
@@ -194,7 +185,7 @@ public class Database {
         }
         return true;
     }
-
+    
     // Method to check if a user already exists
     private boolean userExists(String username, String email) {
         try (PreparedStatement statement = connection.prepareStatement(
@@ -211,11 +202,30 @@ public class Database {
         return false;
     }
 
+    // Method to update a User
+    public boolean updateUser(User user) {
+        String sql = "UPDATE users SET email = ?, phoneNumber = ?, hasCancellationInsurance = ? WHERE userId = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, user.getEmail());
+            statement.setString(2, user.getPhoneNumber());
+            statement.setBoolean(3, user.hasCancellationInsurance());
+            statement.setInt(4, user.getUserId());
+            int rowsAffected = statement.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+//-----------------------------------------User----------------------------------------------//
+//--------------------------------------Credit Card------------------------------------------//
+    // Method to add a new CreditCard
     public static void addCreditCard(CreditCard creditCard) {
-        String sql = "INSERT INTO credit_cards (userId, cardNumber, expiryDate, cvv) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO creditCards (userId, cardNumber, expiryDate, cvv) VALUES (?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, creditCard.getUserId());
-            statement.setString(2, encryptCardNumber(creditCard.getCardNumber())); // Encrypt card number
+            statement.setString(2, creditCard.getCardNumber());
             statement.setString(3, creditCard.getExpiryDate());
             statement.setString(4, creditCard.getCvv());
             statement.executeUpdate();
@@ -223,15 +233,8 @@ public class Database {
             e.printStackTrace();
         }
     }
+//--------------------------------------Credit Card------------------------------------------//
 
-    private static String encryptCardNumber(String cardNumber) {
-        // Implement actual encryption logic here if needed
-        String temp;
-        temp = Base64.getEncoder().encodeToString(cardNumber.getBytes());
-        System.out.println("Encrypted card number: " + temp);
-        return temp;
-    }
-    
     // Other methods ...
 }
 

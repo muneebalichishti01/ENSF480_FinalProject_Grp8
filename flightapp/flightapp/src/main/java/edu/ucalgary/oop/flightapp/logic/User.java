@@ -19,6 +19,14 @@ public class User {
         this.hasCancellationInsurance = hasCancellationInsurance;
     }
 
+    // New Constructor for UserLogin witoout userId
+    public User(String username, String email, String phoneNumber, boolean hasCancellationInsurance) {
+        this.username = username;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.hasCancellationInsurance = hasCancellationInsurance;
+    }
+
     // Getters and Setters
     public int getUserId() {
         return userId;
