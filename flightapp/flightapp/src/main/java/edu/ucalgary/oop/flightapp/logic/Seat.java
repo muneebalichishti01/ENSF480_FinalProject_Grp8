@@ -10,7 +10,7 @@ public abstract class Seat {
     public abstract String getDescription();
     public abstract double getCost();
 
-    // Might messup needs to be tested
+    // Might mess up needs to be tested
     public int getSeatID() {
         return seatID;
     }
