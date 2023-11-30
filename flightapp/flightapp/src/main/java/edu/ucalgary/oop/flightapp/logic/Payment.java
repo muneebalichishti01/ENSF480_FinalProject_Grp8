@@ -78,10 +78,14 @@ public class Payment {
 
     // Process payment method
     public void processPayment() {
-        // Logic to process the payment
-        // For now, let's assume all payments are successful
-        this.paymentStatus = "Successful";
-        // Integrate with a payment gateway
+        try {
+            // Successful payment process
+            this.paymentStatus = "Successful";
+            Database.updatePaymentStatus(this.paymentId, this.paymentStatus);
+        } catch (Exception e) {
+            this.paymentStatus = "Failed";
+            Database.updatePaymentStatus(this.paymentId, this.paymentStatus);
+        }
     }
 
     // Update payment details

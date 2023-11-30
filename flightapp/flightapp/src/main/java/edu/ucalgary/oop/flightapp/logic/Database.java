@@ -378,6 +378,20 @@ public class Database {
     }
 
 //--------------------------------------Booking Info-----------------------------------------//
+//----------------------------------------Payment--------------------------------------------//
+    // Method to update payment status
+    public static void updatePaymentStatus(int paymentId, String status) {
+        String sql = "UPDATE payments SET paymentStatus = ? WHERE paymentId = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, status);
+            statement.setInt(2, paymentId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+//----------------------------------------Payment--------------------------------------------//
     // Other methods ...
 }
 
