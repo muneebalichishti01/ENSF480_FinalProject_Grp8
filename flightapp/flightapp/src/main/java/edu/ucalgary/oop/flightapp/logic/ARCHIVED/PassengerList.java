@@ -1,4 +1,4 @@
-package edu.ucalgary.oop.flightapp.logic.Removed;
+package edu.ucalgary.oop.flightapp.logic.ARCHIVED;
 //remove this file
 import java.util.HashMap;
 import java.util.Map;
