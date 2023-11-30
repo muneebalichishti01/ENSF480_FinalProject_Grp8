@@ -51,6 +51,13 @@ public class User {
         this.email = email;
     }
 
+    public boolean getChargeCreditCard() {
+        return chargeCreditCard;
+    }
+    public void setChargeCreditCard(boolean bool) {
+        this.chargeCreditCard = bool;
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
