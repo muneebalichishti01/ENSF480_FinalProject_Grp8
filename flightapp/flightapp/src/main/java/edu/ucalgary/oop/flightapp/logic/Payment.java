@@ -3,14 +3,14 @@ package edu.ucalgary.oop.flightapp.logic;
 public class Payment {
     // Instance variables
     private int paymentId;
-    private User user; // The user making the payment
+    private User user;
     private double amount;
     private String paymentStatus;
 
     // Attributes from CompanionTicket
-    private int companionTicketId;
-    private User primaryUser; // The primary user for the companion ticket
-    private User companionUser; // The companion user for the companion ticket
+    private int companionTicketId;      // The companion ticket ID
+    private User primaryUser;           // The primary user for the companion ticket
+    private User companionUser;         // The companion user for the companion ticket
 
     // Constructor
     public Payment(int paymentId, User user, double amount, int companionTicketId, User primaryUser, User companionUser) {
@@ -54,6 +54,7 @@ public class Payment {
         this.paymentStatus = paymentStatus;
     }
 
+    // Getters and setters for the new attributes
     public int getCompanionTicketId() {
         return companionTicketId;
     }

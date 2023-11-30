@@ -21,7 +21,6 @@ public class BookingInfo {
     public int getBookingId() {
         return bookingId;
     }
-
     public void setBookingId(int bookingId) {
         this.bookingId = bookingId;
     }
@@ -29,7 +28,6 @@ public class BookingInfo {
     public User getUser() {
         return user;
     }
-
     public void setUser(User user) {
         this.user = user;
     }
@@ -37,7 +35,6 @@ public class BookingInfo {
     public FlightInfo getFlightInfo() {
         return flightInfo;
     }
-
     public void setFlightInfo(FlightInfo flightInfo) {
         this.flightInfo = flightInfo;
     }
@@ -45,7 +42,6 @@ public class BookingInfo {
     public double getTicketPrice() {
         return ticketPrice;
     }
-
     public void setTicketPrice(double ticketPrice) {
         this.ticketPrice = ticketPrice;
     }

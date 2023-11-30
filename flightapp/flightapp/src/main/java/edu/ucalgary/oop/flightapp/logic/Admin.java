@@ -1,11 +1,9 @@
 package edu.ucalgary.oop.flightapp.logic;
 
-import java.util.Map;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Admin {
-    // Instance variables // changed from map to arraylist
+    // Instance variables changed to ArrayLists
     private ArrayList<Aircraft> aircrafts;
     private ArrayList<FlightInfo> flights;
     private ArrayList<FlightAttendant> flightAttendants;
@@ -13,86 +11,91 @@ public class Admin {
 
     // Constructor
     public Admin() {
-        this.aircrafts = new HashMap<>();
-        this.flights = new HashMap<>();
-        this.flightAttendants = new HashMap<>();
-        this.users = User.getAllUsers();  // Assuming User class has a method to return all users
+        this.aircrafts = new ArrayList<>();
+        this.flights = new ArrayList<>();
+        this.flightAttendants = new ArrayList<>();
+        this.users = new ArrayList<>(User.getAllUsers().values());
     }
 
     // Getters and Setters
-    public Map<Integer, Aircraft> getAircrafts() {
+    public ArrayList<Aircraft> getAircrafts() {
         return aircrafts;
     }
-    public Map<Integer, FlightInfo> getFlights() {
+    public ArrayList<FlightInfo> getFlights() {
         return flights;
     }
-    public Map<Integer, FlightAttendant> getFlightAttendants() {
+    public ArrayList<FlightAttendant> getFlightAttendants() {
         return flightAttendants;
     }
-    public Map<Integer, User> getUsers() {
+    public ArrayList<User> getUsers() {
         return users;
     }
 
-    public void setAircrafts(Map<Integer, Aircraft> aircrafts) {
+    public void setAircrafts(ArrayList<Aircraft> aircrafts) {
         this.aircrafts = aircrafts;
     }
-    public void setFlights(Map<Integer, FlightInfo> flights) {
+    public void setFlights(ArrayList<FlightInfo> flights) {
         this.flights = flights;
     }
-    public void setFlightAttendants(Map<Integer, FlightAttendant> flightAttendants) {
+    public void setFlightAttendants(ArrayList<FlightAttendant> flightAttendants) {
         this.flightAttendants = flightAttendants;
     }
-    public void setUsers(Map<Integer, User> users) {
+    public void setUsers(ArrayList<User> users) {
         this.users = users;
     }
 
     // Manage Aircrafts
     public void addAircraft(Aircraft aircraft) {
-        aircrafts.put(aircraft.getAircraftId(), aircraft);
+        aircrafts.add(aircraft);
+        // Database.addAircraft(aircraft); // Uncomment if needed
     }
-
-    public void removeAircraft(int aircraftId) {
-        aircrafts.remove(aircraftId);
+    public void removeAircraft(Aircraft aircraft) {
+        aircrafts.remove(aircraft);
+        // Database.removeAircraft(aircraft.getAircraftId()); // Uncomment if needed
     }
-
-    public void updateAircraft(int aircraftId, Aircraft updatedAircraft) {
-        aircrafts.put(aircraftId, updatedAircraft);
+    public void updateAircraft(int index, Aircraft updatedAircraft) {
+        if (index >= 0 && index < aircrafts.size()) {
+            aircrafts.set(index, updatedAircraft);
+            // Database.editAircraft(updatedAircraft); // Uncomment if needed
+        }
     }
 
     // Manage Flights
     public void addFlight(FlightInfo flight) {
-        flights.put(flight.getFlightId(), flight);
+        flights.add(flight);
+        // Database.addFlight(flight); // Uncomment if needed
     }
-
-    public void removeFlight(int flightId) {
-        flights.remove(flightId);
+    public void removeFlight(FlightInfo flight) {
+        flights.remove(flight);
+        // Database.removeFlight(flight.getFlightId()); // Uncomment if needed
     }
-
-    public void updateFlight(int flightId, FlightInfo updatedFlight) {
-        flights.put(flightId, updatedFlight);
+    public void updateFlight(int index, FlightInfo updatedFlight) {
+        if (index >= 0 && index < flights.size()) {
+            flights.set(index, updatedFlight);
+            // Database.editFlight(updatedFlight); // Uncomment if needed
+        }
     }
 
     // Manage Flight Attendants
     public void addFlightAttendant(FlightAttendant attendant) {
-        flightAttendants.put(attendant.getFlightAttendantId(), attendant);
+        flightAttendants.add(attendant);
+        // Database.addFlightAttendant(attendant); // Uncomment if needed
     }
-
-    public void removeFlightAttendant(int crewId) {
-        flightAttendants.remove(crewId);
+    public void removeFlightAttendant(FlightAttendant attendant) {
+        flightAttendants.remove(attendant);
+        // Database.removeFlightAttendant(attendant.getFlightAttendantId()); // Uncomment if needed
     }
-
-    public void updateFlightAttendant(int crewId, FlightAttendant updatedAttendant) {
-        flightAttendants.put(crewId, updatedAttendant);
+    public void updateFlightAttendant(int index, FlightAttendant updatedAttendant) {
+        if (index >= 0 && index < flightAttendants.size()) {
+            flightAttendants.set(index, updatedAttendant);
+            // Database.editCrew(updatedAttendant); // Uncomment if needed
+        }
     }
 
     // Print User Registration List
     public void printUserRegistrationList() {
-        for (User user : users.values()) {
+        for (User user : users) {
             System.out.println(user);
         }
     }
-
-    
 }
-
-

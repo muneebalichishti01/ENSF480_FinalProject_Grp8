@@ -46,7 +46,9 @@ public class UserDashboard {
         "12345",
         true,
         "12 3 avenue NW",
-        "222-222-2222");
+        "222-222-2222",
+        0, 0, 0);
+        
         addUser(regUser);                                              // Add the registered user to the HashMap                
         RegisteredUser regUser1 = (RegisteredUser) getUser(1);  // Get the registered user from the HashMap by userId
         System.out.println(regUser1.toString());                       // Print the registered user information

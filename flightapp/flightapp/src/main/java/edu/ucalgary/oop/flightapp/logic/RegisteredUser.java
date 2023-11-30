@@ -1,39 +1,29 @@
 package edu.ucalgary.oop.flightapp.logic;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import edu.ucalgary.oop.flightapp.logic.Removed.CompanionTicket;
-import edu.ucalgary.oop.flightapp.logic.Removed.LoungeAccess;
-import edu.ucalgary.oop.flightapp.logic.Removed.Promotions;
-
 public class RegisteredUser extends User {
     private String address;
     private String creditCardNumber;
-    private Map<Integer, LoungeAccess> loungeAccesses;
-    private Map<Integer, Promotions> promotions;
-    private Map<Integer, CompanionTicket> companionTickets;
     private CreditCard creditCard;
+
+    // New attributes
+    private int loungeAccessId;     // ID for lounge access
+    private int promotionId;        // ID for promotion
+    private int companionTicketId;  // ID for companion ticket
 
     // Constructor
     public RegisteredUser(int userId, String username, String email, String phoneNumber, boolean hasCancellationInsurance, 
-                          String address, String creditCardNumber) {
+                          String address, String creditCardNumber, int loungeAccessId, int promotionId, int companionTicketId) {
         super(userId, username, email, phoneNumber, hasCancellationInsurance);
         this.address = address;
         this.creditCardNumber = creditCardNumber;
-        this.loungeAccesses = new HashMap<>();
-        this.promotions = new HashMap<>();
-        this.companionTickets = new HashMap<>();
-    }
-    
-    // Getters and setters
-    public int getUserId() {
-        return userId;
-    }
-    public void setUserId(int userId) {
-        this.userId = userId;
+        
+        // Initialize new variables
+        this.loungeAccessId = loungeAccessId;
+        this.promotionId = promotionId;
+        this.companionTicketId = companionTicketId;
     }
 
+    // Getters and setters
     public String getAddress() {
         return address;
     }
@@ -48,27 +38,6 @@ public class RegisteredUser extends User {
         this.creditCardNumber = creditCardNumber;
     }
 
-    public Map<Integer, LoungeAccess> getLoungeAccesses() {
-        return loungeAccesses;
-    }
-    public void setLoungeAccesses(Map<Integer, LoungeAccess> loungeAccesses) {
-        this.loungeAccesses = loungeAccesses;
-    }
-
-    public Map<Integer, Promotions> getPromotions() {
-        return promotions;
-    }
-    public void setPromotions(Map<Integer, Promotions> promotions) {
-        this.promotions = promotions;
-    }
-
-    public Map<Integer, CompanionTicket> getCompanionTickets() {
-        return companionTickets;
-    }
-    public void setCompanionTickets(Map<Integer, CompanionTicket> companionTickets) {
-        this.companionTickets = companionTickets;
-    }
-
     public CreditCard getCreditCard() {
         return creditCard;
     }
@@ -76,42 +45,26 @@ public class RegisteredUser extends User {
         this.creditCard = creditCard;
     }
 
-    // Methods to manage lounge access, promotions, and companion tickets
-    public void addLoungeAccess(LoungeAccess access) {
-        loungeAccesses.put(access.getUserId(), access);
+    // Getters and setters for the new attributes
+    public int getLoungeAccessId() {
+        return loungeAccessId;
+    }
+    public void setLoungeAccessId(int loungeAccessId) {
+        this.loungeAccessId = loungeAccessId;
     }
 
-    public void addPromotion(Promotions promotion) {
-        promotions.put(promotion.getPromotionId(), promotion);
+    public int getPromotionId() {
+        return promotionId;
+    }
+    public void setPromotionId(int promotionId) {
+        this.promotionId = promotionId;
     }
 
-    public void addCompanionTicket(CompanionTicket ticket) {
-        companionTickets.put(ticket.getTicketId(), ticket);
+    public int getCompanionTicketId() {
+        return companionTicketId;
     }
-
-    public void removeLoungeAccess(int id) {
-        loungeAccesses.remove(id);
-    }
-    public void removePromotion(int id) {
-        promotions.remove(id);
-    }
-    public void removeCompanionTicket(int id) {
-        companionTickets.remove(id);
-    }
-    public void removeAllLoungeAccesses() {
-        loungeAccesses.clear();
-    }
-    public void removeAllPromotions() {
-        promotions.clear();
-    }
-    public void removeAllCompanionTickets() {
-        companionTickets.clear();
-    }
-
-    public void removeAll() {
-        removeAllLoungeAccesses();
-        removeAllPromotions();
-        removeAllCompanionTickets();
+    public void setCompanionTicketId(int companionTicketId) {
+        this.companionTicketId = companionTicketId;
     }
 
     // Override toString method to display registered user information
@@ -125,6 +78,9 @@ public class RegisteredUser extends User {
                 ", hasCancellationInsurance=" + hasCancellationInsurance() +
                 ", address='" + address + '\'' +
                 ", creditCardNumber='" + creditCardNumber + '\'' +
+                ", loungeAccessId=" + loungeAccessId +
+                ", promotionId=" + promotionId +
+                ", companionTicketId=" + companionTicketId +
                 '}';
     }
 }

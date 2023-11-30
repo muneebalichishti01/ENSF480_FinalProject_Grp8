@@ -1,18 +1,15 @@
 package edu.ucalgary.oop.flightapp.logic;
 
-import java.util.HashMap;
-
 public class Aircraft {
-    // Attributes
+    // Instance variables
     private int aircraftId;
     private String name;
-    private String type; // not needed
+    // String type is removed
 
     // Constructors
-    public Aircraft(int aircraftId, String name, String type) {
+    public Aircraft(int aircraftId, String name) {
         this.aircraftId = aircraftId;
         this.name = name;
-        this.type = type;
     }
 
     // Getters and Setters
@@ -30,23 +27,18 @@ public class Aircraft {
         this.name = name;
     }
 
-    public String getType() {
-        return type;
-    }
-    public void setType(String type) {
-        this.type = type;
-    }
-
     // Override toString method to display aircraft information
     @Override
     public String toString() {
         return "Aircraft{" +
                 "aircraftId=" + aircraftId +
                 ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
                 '}';
     }
 
+    // Aircraft information is managed through a database rather than in-memory with a HashMap
+
+    /*
     // Hash Map for Aircraft Information
     private static HashMap<Integer, Aircraft> aircraftMap = new HashMap<>();
 
@@ -64,4 +56,5 @@ public class Aircraft {
     public static HashMap<Integer, Aircraft> getAllAircraft() {
         return aircraftMap;
     }
+    */
 }

@@ -6,13 +6,12 @@ public class FlightAttendant {
     // Instance variables
     private int FlightAttendantId;
     private String name;
-    private String role;
+    // String role is removed
 
     // Constructor
     public FlightAttendant(int FlightAttendantId, String name, String role) {
         this.FlightAttendantId = FlightAttendantId;
         this.name = name;
-        this.role = role; // remove this
     }
 
     // Getters and Setters
@@ -30,20 +29,12 @@ public class FlightAttendant {
         this.name = name;
     }
 
-    public String getRole() {
-        return role;
-    }
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     // Override toString method to display FlightAttendant information
     @Override
     public String toString() {
         return "FlightAttendant{" +
                 "FlightAttendantId=" + FlightAttendantId +
                 ", name='" + name + '\'' +
-                ", role='" + role + '\'' +
                 '}';
     }
 

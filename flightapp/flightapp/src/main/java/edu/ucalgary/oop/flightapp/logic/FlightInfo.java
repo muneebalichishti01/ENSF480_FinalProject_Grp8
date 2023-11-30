@@ -1,5 +1,6 @@
 package edu.ucalgary.oop.flightapp.logic;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -10,10 +11,11 @@ public class FlightInfo {
     private String destination;
     private String origin;
     private String departureDate;
-    // Added by me
-    ArrayList<BookingInfo> BookingInfo;
-    ArrayList<Seat> Seat;
-    ArrayList<FlightAttendant> FlightAttendant;
+
+    // Added new variables
+    private ArrayList<BookingInfo> passengerBookings;   // Track passengers for this flight
+    private ArrayList<Seat> seat;                       // Track seats for this flight
+    private ArrayList<FlightAttendant> flightAttendant; // Track flight attendants for this flight
 
     // Constructor
     public FlightInfo(int flightId, String flightName, String destination, String origin, String departureDate) {
@@ -22,6 +24,11 @@ public class FlightInfo {
         this.destination = destination;
         this.origin = origin;
         this.departureDate = departureDate;
+
+        // Initialize new variables
+        this.passengerBookings = new ArrayList<>();
+        this.seat = new ArrayList<>();
+        this.flightAttendant = new ArrayList<>();
     }
 
     // Getters and Setters
@@ -60,6 +67,38 @@ public class FlightInfo {
         this.departureDate = departureDate;
     }
 
+    // Getters and setters for the new attributes
+    public ArrayList<BookingInfo> getPassengerBookings() {
+        return passengerBookings;
+    }
+    public void setPassengerBookings(ArrayList<BookingInfo> passengerBookings) {
+        this.passengerBookings = passengerBookings;
+    }
+
+    public ArrayList<Seat> getSeat() {
+        return seat;
+    }
+    public void setSeat(ArrayList<Seat> seat) {
+        this.seat = seat;
+    }
+
+    public ArrayList<FlightAttendant> getFlightAttendant() {
+        return flightAttendant;
+    }
+    public void setFlightAttendant(ArrayList<FlightAttendant> flightAttendant) {
+        this.flightAttendant = flightAttendant;
+    }
+
+    // Methods to add or remove a booking to the flight
+    public void addBooking(BookingInfo booking) {
+        if (booking != null && booking.getFlightInfo().getFlightId() == this.flightId) {
+            passengerBookings.add(booking);
+        }
+    }
+    public void removeBooking(BookingInfo booking) {
+        passengerBookings.remove(booking);
+    }
+
     // Override toString method to display flight information
     @Override
     public String toString() {
@@ -69,24 +108,26 @@ public class FlightInfo {
                 ", destination='" + destination + '\'' +
                 ", origin='" + origin + '\'' +
                 ", departureDate='" + departureDate + '\'' +
+                ", passengerBookings=" + passengerBookings +
                 '}';
     }
 
-    // Hash Map for FlightInfo
+    // Static methods for flight info map
     private static HashMap<Integer, FlightInfo> flightInfoMap = new HashMap<>();
 
-    // Add flight info to the HashMap
     public static void addFlightInfo(FlightInfo flightInfo) {
         flightInfoMap.put(flightInfo.getFlightId(), flightInfo);
     }
 
-    // Get flight info by flight ID from the HashMap
     public static FlightInfo getFlightInfoByFlightId(int flightId) {
         return flightInfoMap.get(flightId);
     }
 
-    // Get all flight info entries from the HashMap
     public static HashMap<Integer, FlightInfo> getAllFlightInfo() {
         return flightInfoMap;
+    }
+
+    public Date getDeparture() {
+        return null;
     }
 }
