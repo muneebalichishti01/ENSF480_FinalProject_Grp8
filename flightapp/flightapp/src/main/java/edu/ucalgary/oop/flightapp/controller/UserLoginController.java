@@ -23,7 +23,7 @@ public class UserLoginController {
         User user = userLoginService.login(username, password);
         if (user != null) {
             model.addAttribute("user", user);
-            return "redirect:/user_dashboard.html"; // Redirect to user dashboard
+            return "redirect:/user_dashboard.html"; // Redirect to user dashboard on successful login
         } else {
             model.addAttribute("loginError", "Invalid username or password");
             return "login.html";
@@ -42,11 +42,25 @@ public class UserLoginController {
                                @RequestParam boolean hasCancellationInsurance, Model model) {
         boolean registered = userLoginService.register(username, email, phoneNumber, password, hasCancellationInsurance);
         if (registered) {
-            return "redirect:/login.html"; // Redirect to login page after successful registration
+            // Assuming the user is logged in immediately after registration
+            User user = userLoginService.login(username, password);
+            if (user != null) {
+                model.addAttribute("user", user);
+                return "redirect:/user_dashboard.html"; // Redirect to user dashboard
+            } else {
+                model.addAttribute("registrationError", "Registration successful, but login failed");
+                return "login.html"; // Redirect back to login if auto-login fails
+            }
         } else {
             model.addAttribute("registrationError", "User already exists or invalid data");
             return "register.html";
         }
     }
-}
 
+    // Method for the user dashboard
+    @GetMapping("/userDashboard.html")
+    public String userDashboard(Model model) {
+        // Add logic to pass any necessary data to the user dashboard, fetching user-specific details, booking info, etc
+        return "userDashboard.html";
+    }
+}

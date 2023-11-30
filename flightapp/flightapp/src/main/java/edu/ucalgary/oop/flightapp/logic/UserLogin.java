@@ -1,13 +1,16 @@
 package edu.ucalgary.oop.flightapp.logic;
 
 public class UserLogin {
+    // Instance variables
     private static UserLogin instance = new UserLogin();
     private Database database;
 
+    // Constructor
     private UserLogin() {
         this.database = Database.getInstance();
     }
 
+    // Singleton
     public static UserLogin getInstance() {
         return instance;
     }
@@ -20,7 +23,7 @@ public class UserLogin {
             boolean userAdded = database.addUserWithValidation(newUser);
             if (userAdded) {
                 // After adding, newUser's userId will be set by the database
-                Database.storeUserPassword(newUser.getUserId(), password); // Store password
+                Database.storeUserPassword(newUser.getUserId(), password);
                 return true;
             }
         }
@@ -33,10 +36,10 @@ public class UserLogin {
         if (user != null) {
             String storedPassword = database.getUserPasswordHash(user.getUserId());
             if (storedPassword != null && storedPassword.equals(password)) {
-                return user; // Return the user object upon successful login
+                return user;
             }
         }
-        return null; // Return null if login fails
+        return null;
     }
 
     // Method for user logout - might not need database interaction

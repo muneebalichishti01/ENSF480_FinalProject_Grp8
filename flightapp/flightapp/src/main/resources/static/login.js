@@ -17,7 +17,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     xhr.onreadystatechange = function() {
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
             // Redirect to user dashboard on successful login
-            window.location.href = "/userDashboard";
+            window.location.href = "/userDashboard.html";
         } else if (this.readyState === XMLHttpRequest.DONE) {
             // Handle login failure
             alert('Login failed: Invalid username or password');
