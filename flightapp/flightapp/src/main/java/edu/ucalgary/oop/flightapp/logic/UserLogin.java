@@ -27,18 +27,16 @@ public class UserLogin {
         return false;
     }
 
-
-    // Method for user login
-    public boolean login(String username, String password) {
+    // Modified method for user login
+    public User login(String username, String password) {
         User user = database.getUserByUsername(username);
         if (user != null) {
             String storedPassword = database.getUserPasswordHash(user.getUserId());
             if (storedPassword != null && storedPassword.equals(password)) {
-                // Successful login
-                return true;
+                return user; // Return the user object upon successful login
             }
         }
-        return false;
+        return null; // Return null if login fails
     }
 
     // Method for user logout - might not need database interaction
