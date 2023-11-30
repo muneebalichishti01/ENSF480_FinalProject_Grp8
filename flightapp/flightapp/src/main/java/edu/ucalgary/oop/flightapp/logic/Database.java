@@ -348,7 +348,36 @@ public class Database {
         }
     }
 //--------------------------------------Credit Card------------------------------------------//
-    
+//--------------------------------------Booking Info-----------------------------------------//
+    // Method to create a new booking
+    public static void createBooking(BookingInfo bookingInfo) throws SQLException {
+        String sql = "INSERT INTO bookingInfo (userId, flightId, ticketPrice, seatType) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+            statement.setInt(1, bookingInfo.getUser().getUserId());
+            statement.setInt(2, bookingInfo.getFlightInfo().getFlightId());
+            statement.setDouble(3, bookingInfo.getTicketPrice());
+            statement.setString(4, bookingInfo.getSeatType());
+            statement.executeUpdate();
+
+            // Retrieve the generated bookingId
+            try (ResultSet resultSet = statement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    bookingInfo.setBookingId(resultSet.getInt(1));
+                }
+            }
+        }
+    }
+
+    // Method to cancel a booking
+    public static void cancelBooking(int bookingId) throws SQLException {
+        String sql = "DELETE FROM bookingInfo WHERE bookingId = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, bookingId);
+            statement.executeUpdate();
+        }
+    }
+
+//--------------------------------------Booking Info-----------------------------------------//
     // Other methods ...
 }
 

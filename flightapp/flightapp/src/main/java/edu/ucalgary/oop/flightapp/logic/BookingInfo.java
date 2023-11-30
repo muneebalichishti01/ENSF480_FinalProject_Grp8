@@ -8,13 +8,15 @@ public class BookingInfo {
     private User user;
     private FlightInfo flightInfo;
     private double ticketPrice;
+    private Seat seat; // optional
 
     // Constructors
-    public BookingInfo(int bookingId, User user, FlightInfo flightInfo, double ticketPrice) {
+    public BookingInfo(int bookingId, User user, FlightInfo flightInfo, double ticketPrice, Seat seat) {
         this.bookingId = bookingId;
         this.user = user;
         this.flightInfo = flightInfo;
         this.ticketPrice = ticketPrice;
+        this.seat = seat; // optional
     }
 
     // Getters and Setters
@@ -46,6 +48,14 @@ public class BookingInfo {
         this.ticketPrice = ticketPrice;
     }
 
+    // Optional
+    public Seat getSeat() {
+        return seat;
+    }
+    public void setSeat(Seat seat) {
+        this.seat = seat;
+    }
+
     // Override toString method to display booking information
     @Override
     public String toString() {
@@ -74,4 +84,31 @@ public class BookingInfo {
     public static HashMap<Integer, BookingInfo> getAllBookingInfo() {
         return bookingInfoMap;
     }
+
+    // optional - Get seat type
+    public String getSeatType() {
+        return seat.getDescription();
+    }
+
+    // // Static method to create a new booking
+    // public static BookingInfo createBooking(User user, FlightInfo flightInfo, double ticketPrice, String seatType) {
+    //     BookingInfo newBooking = new BookingInfo(0, user, flightInfo, ticketPrice);
+    //     try {
+    //         Database.createBooking(newBooking);
+    //         bookingInfoMap.put(newBooking.getBookingId(), newBooking);
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //     }
+    //     return newBooking;
+    // }
+
+    // // Static method to cancel a booking
+    // public static void cancelBooking(int bookingId) {
+    //     try {
+    //         Database.cancelBooking(bookingId);
+    //         bookingInfoMap.remove(bookingId);
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //     }
+    // }
 }
