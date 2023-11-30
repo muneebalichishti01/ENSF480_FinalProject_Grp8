@@ -17,8 +17,14 @@ public class Database {
     public static synchronized Database getInstance() {
         if (instance == null) {
             instance = new Database();
+            connection = instance.getConnection();
         }
         return instance;
+    }
+
+    // get connection
+    public Connection getConnection() {
+        return connection;
     }
 
     public static void main(String[] args) {
