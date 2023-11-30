@@ -1,7 +1,11 @@
 -- Test queries for viewing
 -- SELECT * FROM users;
 -- SELECT * FROM userPasswords;
--- SELECT * FROM registeredUsers;
+-- SELECT * FROM registeredUsers;\
+
+-- SELECT u.userId, u.username, u.email, u.phoneNumber, u.hasCancellationInsurance, up.passwordHash
+-- FROM users u
+-- JOIN userPasswords up ON u.userId = up.userId;
 
 -- Create schema
 -- CREATE SCHEMA `flightappdatabase` ;
@@ -94,11 +98,4 @@ CREATE TABLE seatTypes (
     seatTypeId INT PRIMARY KEY,
     description VARCHAR(255),
     cost DECIMAL(10, 2)
-);
-
-CREATE TABLE seats (
-    seatId INT PRIMARY KEY,
-    type INT,
-    occupancy INT,
-    flightId INT
 );

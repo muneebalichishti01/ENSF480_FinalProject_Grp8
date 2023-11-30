@@ -1,6 +1,7 @@
 package edu.ucalgary.oop.flightapp.logic;
 
 import java.sql.SQLException;
+import java.sql.SQLException;
 import java.util.HashMap;
 
 // public class User extends UserDashboard{
@@ -49,6 +50,13 @@ public class User {
     }
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean getChargeCreditCard() {
+        return chargeCreditCard;
+    }
+    public void setChargeCreditCard(boolean bool) {
+        this.chargeCreditCard = bool;
     }
 
     public String getPhoneNumber() {
@@ -109,9 +117,9 @@ public class User {
         return null;
     }
 
-    public void cancelFlight(int bookingId) throws SQLException{
-        if (hasCancellationInsurance == true){
-            chargeCreditCard = false;
+    public void cancelFlight(int bookingId){
+        if (hasCancellationInsurance == True){
+            chargeCreditCard = False;
         } else {
             chargeCreditCard = true;
         }

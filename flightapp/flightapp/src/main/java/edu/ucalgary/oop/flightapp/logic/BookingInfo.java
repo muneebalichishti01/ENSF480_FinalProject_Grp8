@@ -17,7 +17,7 @@ public class BookingInfo {
         this.flightInfo = flightInfo;
         this.ticketPrice = ticketPrice;
         this.seat = seat; // optional
-        this.user.chargeCreditCard = true;
+        this.user.setChargeCreditCard(true);
     }
 
     // Getters and Setters

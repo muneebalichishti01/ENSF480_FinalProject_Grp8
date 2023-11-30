@@ -20,8 +20,14 @@ public class Database {
     public static synchronized Database getInstance() {
         if (instance == null) {
             instance = new Database();
+            connection = instance.getConnection();
         }
         return instance;
+    }
+
+    // get connection
+    public Connection getConnection() {
+        return connection;
     }
 
     public static void main(String[] args) {
@@ -190,8 +196,36 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }    
+    }
 //----------------------------------------Flight---------------------------------------------//
+//-----------------------------------------Seat----------------------------------------------//
+    // Method to add Seats
+    public static void addSeat(Seat seat) {
+        String sql = "INSERT INTO seats (seatId, type, occupancy, flightId) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, seat.getSeatID());
+            statement.setInt(2, seat.getType());
+            statement.setInt(3, seat.getBooked());
+            statement.setInt(3, seat.getFlightID());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Method to update Seats
+    public static void editSeat(Seat seat) {
+        String sql = "UPDATE seats SET occupancy = ? WHERE flightId = ? AND seatId = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, seat.getBooked());
+            statement.setInt(2, seat.getFlightID());
+            statement.setInt(3, seat.getSeatID());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }    
+//-----------------------------------------seat----------------------------------------------//
 //-----------------------------------Flight Attendant----------------------------------------//
     // Method to add Flight Attendant
     public static void addFlightAttendant(FlightAttendant attendant) {

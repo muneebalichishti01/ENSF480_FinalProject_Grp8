@@ -54,14 +54,14 @@ public class UserDashboard {
         System.out.println(regUser1.toString());                       // Print the registered user information
         
         // Decorator Pattern
-        Seat ordinarySeat = new OrdinarySeat();                        // Create a seat
-        Seat comfortSeat = new ComfortSeat(new OrdinarySeat());        // Create a comfort seat
-        Seat businessSeat = new BusinessSeat(new OrdinarySeat());      // Create a business seat
-        System.out.println(ordinarySeat.getDescription() +             // Print the ordinary seat description and cost
-        ": $" + ordinarySeat.getCost());
-        System.out.println(comfortSeat.getDescription() +              // Print the comfort seat description and cost
-        ": $" + comfortSeat.getCost());
-        System.out.println(businessSeat.getDescription() +             // Print the business seat description and cost
-        ": $" + businessSeat.getCost());
+        // Seat ordinarySeat = new OrdinarySeat();                        // Create a seat
+        // Seat comfortSeat = new ComfortSeat(new OrdinarySeat());        // Create a comfort seat
+        // Seat businessSeat = new BusinessSeat(new OrdinarySeat());      // Create a business seat
+        // System.out.println(ordinarySeat.getDescription() +             // Print the ordinary seat description and cost
+        // ": $" + ordinarySeat.getCost());
+        // System.out.println(comfortSeat.getDescription() +              // Print the comfort seat description and cost
+        // ": $" + comfortSeat.getCost());
+        // System.out.println(businessSeat.getDescription() +             // Print the business seat description and cost
+        // ": $" + businessSeat.getCost());
     }
 }
