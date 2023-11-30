@@ -1,27 +1,34 @@
 package edu.ucalgary.oop.flightapp.logic;
 
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.time.LocalDate;
+
 public class RegisteredUser extends User {
     private String address;
     private String creditCardNumber;
     private CreditCard creditCard;
-
     // New attributes
     private int loungeAccessId;     // ID for lounge access
     private int promotionId;        // ID for promotion
-    private int companionTicketId;  // ID for companion ticket
+    private boolean companionTicket;  // ID for companion ticket
+    private LocalDate lastCompanionTicketSetDate;
 
     // Constructor
     public RegisteredUser(int userId, String username, String email, String phoneNumber, boolean hasCancellationInsurance, 
-                          String address, String creditCardNumber, int loungeAccessId, int promotionId, int companionTicketId) {
+                          String address, String creditCardNumber, int loungeAccessId, int promotionId) {
         super(userId, username, email, phoneNumber, hasCancellationInsurance);
         this.address = address;
         this.creditCardNumber = creditCardNumber;
-        
         // Initialize new variables
         this.loungeAccessId = loungeAccessId;
         this.promotionId = promotionId;
-        this.companionTicketId = companionTicketId;
+        this.companionTicket = true;
+        this.lastCompanionTicketSetDate = LocalDate.now();
+        Database.updateCompanionTicketDatabase(lastCompanionTicketSetDate, userId);
     }
+
 
     // Getters and setters
     public String getAddress() {
@@ -60,12 +67,24 @@ public class RegisteredUser extends User {
         this.promotionId = promotionId;
     }
 
-    public int getCompanionTicketId() {
-        return companionTicketId;
+    public boolean getCompanionTicket() {
+        return companionTicket;
     }
-    public void setCompanionTicketId(int companionTicketId) {
-        this.companionTicketId = companionTicketId;
+    public void setCompanionTicket(boolean tf) {
+        this.companionTicket = tf;
     }
+
+    public void useCompanionTicket() {
+        LocalDate currentDate = LocalDate.now();
+        LocalDate lastDate = Database.getLastCompanionTicketDate(getUserId());
+    
+        // Check if a year has passed since the last companion ticket set
+        if (currentDate.isAfter(lastDate.plusYears(1))) {
+            companionTicket = false;
+            Database.updateCompanionTicketDatabase(currentDate, getUserId());
+        }
+    }
+    
 
     // Override toString method to display registered user information
     @Override
@@ -80,7 +99,7 @@ public class RegisteredUser extends User {
                 ", creditCardNumber='" + creditCardNumber + '\'' +
                 ", loungeAccessId=" + loungeAccessId +
                 ", promotionId=" + promotionId +
-                ", companionTicketId=" + companionTicketId +
+                ", companionTicketId=" + companionTicket +
                 '}';
     }
 }

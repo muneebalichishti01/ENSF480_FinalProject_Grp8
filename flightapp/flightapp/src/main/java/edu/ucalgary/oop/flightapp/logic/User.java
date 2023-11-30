@@ -1,5 +1,6 @@
 package edu.ucalgary.oop.flightapp.logic;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 
 // public class User extends UserDashboard{
@@ -9,7 +10,7 @@ public class User {
     private String email;
     private String phoneNumber;
     private boolean hasCancellationInsurance;
-    private boolean chargeCreditCard;
+    boolean chargeCreditCard;
 
     // Constructor
     public User(int userId, String username, String email, String phoneNumber, boolean hasCancellationInsurance) {
@@ -108,12 +109,24 @@ public class User {
         return null;
     }
 
-    public void cancelFlight(int bookingId){
-        if (hasCancellationInsurance == True){
-            chargeCreditCard = False;
+    public void cancelFlight(int bookingId) throws SQLException{
+        if (hasCancellationInsurance == true){
+            chargeCreditCard = false;
         } else {
-            chargeCreditCard = True;
+            chargeCreditCard = true;
         }
         Database.cancelBooking(bookingId);
+    }
+
+    public boolean getCompanionTicket() {
+        System.out.println("You must be a registered user");
+        return false;
+    }
+
+    // public void setCompanionTicket(boolean tf) {
+    // }
+
+    public void useCompanionTicket() {
+        System.out.println("You must be a registered user");
     }
 }

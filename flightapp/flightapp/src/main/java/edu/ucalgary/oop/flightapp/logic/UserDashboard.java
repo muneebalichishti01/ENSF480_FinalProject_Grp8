@@ -47,7 +47,7 @@ public class UserDashboard {
         true,
         "12 3 avenue NW",
         "222-222-2222",
-        0, 0, 0);
+        0, 0);
         
         addUser(regUser);                                              // Add the registered user to the HashMap                
         RegisteredUser regUser1 = (RegisteredUser) getUser(1);  // Get the registered user from the HashMap by userId

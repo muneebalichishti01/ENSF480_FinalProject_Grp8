@@ -23,7 +23,8 @@ CREATE TABLE registeredUsers (
     loungeAccessId INT,
     promotionId INT,
     companionTicketId INT,
-    FOREIGN KEY (userId) REFERENCES users(userId)
+    FOREIGN KEY (userId) REFERENCES users(userId),
+    lastCompanionTicketSetDate DATE
 );
 
 -- User Passwords Table: Keeps user passwords. Ensure to store hashed passwords, not plain text
@@ -88,8 +89,16 @@ CREATE TABLE payments (
 );
 
 -- Seat Types Table: Represents different seat types
-CREATE TABLE seatTypes (
+--Can remove this table
+CREATE TABLE seatTypes (        
     seatTypeId INT PRIMARY KEY,
     description VARCHAR(255),
     cost DECIMAL(10, 2)
+);
+
+CREATE TABLE seats (
+    seatId INT PRIMARY KEY,
+    type INT,
+    occupancy INT,
+    flightId INT
 );

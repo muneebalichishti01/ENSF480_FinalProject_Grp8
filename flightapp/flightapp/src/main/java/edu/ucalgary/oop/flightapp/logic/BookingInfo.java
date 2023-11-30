@@ -17,7 +17,7 @@ public class BookingInfo {
         this.flightInfo = flightInfo;
         this.ticketPrice = ticketPrice;
         this.seat = seat; // optional
-        this.user.chargeCreditCard = True;
+        this.user.chargeCreditCard = true;
     }
 
     // Getters and Setters
@@ -91,25 +91,10 @@ public class BookingInfo {
         return seat.getDescription();
     }
 
-    // // Static method to create a new booking
-    // public static BookingInfo createBooking(User user, FlightInfo flightInfo, double ticketPrice, String seatType) {
-    //     BookingInfo newBooking = new BookingInfo(0, user, flightInfo, ticketPrice);
-    //     try {
-    //         Database.createBooking(newBooking);
-    //         bookingInfoMap.put(newBooking.getBookingId(), newBooking);
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //     }
-    //     return newBooking;
-    // }
+    public void useCompanionTicket() {
+        if (user instanceof RegisteredUser) {
+            user.useCompanionTicket();
+        }
+    }
 
-    // // Static method to cancel a booking
-    // public static void cancelBooking(int bookingId) {
-    //     try {
-    //         Database.cancelBooking(bookingId);
-    //         bookingInfoMap.remove(bookingId);
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //     }
-    // }
 }

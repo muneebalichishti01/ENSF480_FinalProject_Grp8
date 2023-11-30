@@ -1,7 +1,10 @@
 package edu.ucalgary.oop.flightapp.logic;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
+import java.util.Date;
 
 // public class Database extends PopulatingDatabase {
 public class Database {
@@ -418,6 +421,37 @@ public class Database {
 
         return crewList;
     }
+
+    public static void updateCompanionTicketDatabase(LocalDate date, int userId) {
+        String sql = "UPDATE registeredUsers SET lastCompanionTicketSetDate = ? WHERE userId = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            Date sqlDate = java.sql.Date.valueOf(date);;
+            statement.setDate(1, (java.sql.Date) sqlDate);
+            statement.setInt(2, userId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static LocalDate getLastCompanionTicketDate(int userId) {
+        String sql = "SELECT lastCompanionTicketSetDate FROM registeredUsers WHERE userId = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, userId);
+    
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getDate("lastCompanionTicketSetDate").toLocalDate();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    
+        return null; 
+    }
+    
+    
 }
 
    
