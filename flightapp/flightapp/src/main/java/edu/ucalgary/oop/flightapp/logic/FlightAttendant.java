@@ -12,7 +12,7 @@ public class FlightAttendant {
     public FlightAttendant(int FlightAttendantId, String name, String role) {
         this.FlightAttendantId = FlightAttendantId;
         this.name = name;
-        this.role = role;
+        this.role = role; // remove this
     }
 
     // Getters and Setters

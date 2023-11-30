@@ -17,11 +17,11 @@ public class Database {
         Database dbInstance = Database.getInstance();
         try {
             // Test 1: Add a new user and store password
-            User newUser1 = new User(Database.getNextUserId(), "Joanna", "joanna@burgur.com", "987-654-321", true);
+            User newUser1 = new User(Database.getNextUserId(), "BIGMAN", "bigman@bigman.com", "123-654-321", true);
             boolean userAdded1 = dbInstance.addUserWithValidation(newUser1);
             
             if (userAdded1) {
-                Database.storeUserPassword(newUser1.getUserId(), "password123"); // Hash in production
+                Database.storeUserPassword(newUser1.getUserId(), "password567"); // Hash in production
                 System.out.println("New user added: " + newUser1);
                 
                 // Test addCreditCard
@@ -32,29 +32,29 @@ public class Database {
                 System.out.println("User already exists and was not added: " + newUser1);
             }
 
-            // Test 2: Attempt to add a duplicate user
-            User newUser2 = new User(Database.getNextUserId(), "testuser1", "testuser1@example.com", "123-456-7890", true);
-            boolean userAdded2 = dbInstance.addUserWithValidation(newUser2);
-            if (userAdded2) {
-                Database.storeUserPassword(newUser2.getUserId(), "password123"); // Hash in production
-                System.out.println("New user added: " + newUser2);
-            } else {
-                System.out.println("User already exists and was not added: " + newUser2);
-            }
+            // // Test 2: Attempt to add a duplicate user
+            // User newUser2 = new User(Database.getNextUserId(), "testuser1", "testuser1@example.com", "123-456-7890", true);
+            // boolean userAdded2 = dbInstance.addUserWithValidation(newUser2);
+            // if (userAdded2) {
+            //     Database.storeUserPassword(newUser2.getUserId(), "password123"); // Hash in production
+            //     System.out.println("New user added: " + newUser2);
+            // } else {
+            //     System.out.println("User already exists and was not added: " + newUser2);
+            // }
 
-            // Test 3: Fetch and print the first user to confirm insertion
-            User fetchedUser = dbInstance.getUserByUsername("testuser1");
-            System.out.println("Fetched user: " + fetchedUser);
+            // // Test 3: Fetch and print the first user to confirm insertion
+            // User fetchedUser = dbInstance.getUserByUsername("testuser1");
+            // System.out.println("Fetched user: " + fetchedUser);
 
-            // Test 4: Add another unique user
-            User newUser3 = new User(Database.getNextUserId(), "testuser2", "testuser2@example.com", "987-654-3210", false);
-            boolean userAdded3 = dbInstance.addUserWithValidation(newUser3);
-            if (userAdded3) {
-                Database.storeUserPassword(newUser3.getUserId(), "password456"); // Hash in production
-                System.out.println("New user added: " + newUser3);
-            } else {
-                System.out.println("User already exists and was not added: " + newUser3);
-            }
+            // // Test 4: Add another unique user
+            // User newUser3 = new User(Database.getNextUserId(), "testuser2", "testuser2@example.com", "987-654-3210", false);
+            // boolean userAdded3 = dbInstance.addUserWithValidation(newUser3);
+            // if (userAdded3) {
+            //     Database.storeUserPassword(newUser3.getUserId(), "password456"); // Hash in production
+            //     System.out.println("New user added: " + newUser3);
+            // } else {
+            //     System.out.println("User already exists and was not added: " + newUser3);
+            // }
 
             // Additional tests can be added here
 

@@ -6,7 +6,7 @@ public class Aircraft {
     // Attributes
     private int aircraftId;
     private String name;
-    private String type;
+    private String type; // not needed
 
     // Constructors
     public Aircraft(int aircraftId, String name, String type) {

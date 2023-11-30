@@ -1,5 +1,6 @@
 package edu.ucalgary.oop.flightapp.logic;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FlightInfo {
@@ -9,6 +10,10 @@ public class FlightInfo {
     private String destination;
     private String origin;
     private String departureDate;
+    // Added by me
+    ArrayList<BookingInfo> BookingInfo;
+    ArrayList<Seat> Seat;
+    ArrayList<FlightAttendant> FlightAttendant;
 
     // Constructor
     public FlightInfo(int flightId, String flightName, String destination, String origin, String departureDate) {

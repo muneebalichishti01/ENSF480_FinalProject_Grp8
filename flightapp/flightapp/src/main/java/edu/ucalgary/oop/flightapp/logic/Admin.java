@@ -1,14 +1,15 @@
 package edu.ucalgary.oop.flightapp.logic;
 
 import java.util.Map;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Admin {
-    // Instance variables
-    private Map<Integer, Aircraft> aircrafts;
-    private Map<Integer, FlightInfo> flights;
-    private Map<Integer, FlightAttendant> flightAttendants;
-    private Map<Integer, User> users;
+    // Instance variables // changed from map to arraylist
+    private ArrayList<Aircraft> aircrafts;
+    private ArrayList<FlightInfo> flights;
+    private ArrayList<FlightAttendant> flightAttendants;
+    private ArrayList<User> users;
 
     // Constructor
     public Admin() {

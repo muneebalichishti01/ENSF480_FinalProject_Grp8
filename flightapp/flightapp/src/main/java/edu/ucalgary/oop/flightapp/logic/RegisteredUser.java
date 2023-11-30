@@ -3,6 +3,10 @@ package edu.ucalgary.oop.flightapp.logic;
 import java.util.HashMap;
 import java.util.Map;
 
+import edu.ucalgary.oop.flightapp.logic.Removed.CompanionTicket;
+import edu.ucalgary.oop.flightapp.logic.Removed.LoungeAccess;
+import edu.ucalgary.oop.flightapp.logic.Removed.Promotions;
+
 public class RegisteredUser extends User {
     private String address;
     private String creditCardNumber;
