@@ -92,8 +92,17 @@ CREATE TABLE payments (
 );
 
 -- Seat Types Table: Represents different seat types
+-- Might be removed
 CREATE TABLE seatTypes (
     seatTypeId INT PRIMARY KEY,
     description VARCHAR(255),
     cost DECIMAL(10, 2)
+);
+
+-- Seat Table: Stores all seats in the system
+CREATE TABLE seats (
+    seatId INT PRIMARY KEY,
+    type INT,
+    occupancy INT,
+    flightId INT
 );

@@ -9,6 +9,7 @@ public class OrdinarySeat extends Seat {
         this.type = type;
     }
 
+    // Getters and Setters
     public String getDescription() {
         return "Ordinary Seat";
     }
