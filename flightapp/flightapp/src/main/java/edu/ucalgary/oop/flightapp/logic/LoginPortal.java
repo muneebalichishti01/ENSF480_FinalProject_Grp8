@@ -2,7 +2,7 @@ package edu.ucalgary.oop.flightapp.logic;
 
 import javax.swing.*;
 
-import jakarta.websocket.OnError;
+import jakarta.websocket.OnError; // ?? what is this
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,14 +14,15 @@ public class LoginPortal extends JFrame {
     private JPanel mainPanel = new JPanel(cardLayout);
     private JPanel loginPanel = new JPanel(new GridBagLayout());
     private JPanel signUpPanel = new JPanel(new GridBagLayout());
+    private JPanel adminLoginPanel; //added adminLogin
+    private JPanel crewLoginPanel;
     private GridBagConstraints constraints = new GridBagConstraints();
 
-    // private JPanel adminLoginPanel; // Add adminLoginPanel
-    // private JPanel crewLoginPanel;
-
     public LoginPortal() {
-        createLoginView();
-        createSignUpView();
+        initializeLoginPanel();
+        initiliazeSignUpPanel();
+        initializeAdminLoginPanel();
+        initializeCrewLoginPanel();
 
         mainPanel.add(loginPanel, "Login");
         mainPanel.add(signUpPanel, "SignUp");
@@ -34,6 +35,114 @@ public class LoginPortal extends JFrame {
         setResizable(false);
     }
 
+    private void initializeCrewLoginPanel(){
+        crewLoginPanel = new JPanel(new GridBagLayout());
+        JTextField crewUsernameField = new JTextField(20);
+        JPasswordField crewPasswordField = new JPasswordField(20);
+        JButton crewLoginButton = new JButton("Crew Login");
+        JButton switchToLogin = new JButton("Back to Login");
+
+        addToPanel(crewLoginPanel, new JLabel("Crew Username:"), 0, 0, 1, GridBagConstraints.WEST);
+        addToPanel(crewLoginPanel, crewUsernameField, 1, 0, 2, GridBagConstraints.CENTER);
+
+        addToPanel(crewLoginPanel, new JLabel("Crew Password:"), 0, 1, 1, GridBagConstraints.WEST);
+        addToPanel(crewLoginPanel, crewPasswordField, 1, 1, 2, GridBagConstraints.CENTER);
+
+        addToPanel(crewLoginPanel, crewLoginButton, 0, 2, 1, GridBagConstraints.CENTER);
+        addToPanel(crewLoginPanel, switchToLogin, 1, 2, 1, GridBagConstraints.CENTER);
+
+        switchToLogin.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(mainPanel, "Login");
+            }
+        });
+
+
+        crewLoginButton.addActionListener(new ActionListener() { //HERE IS THE IMPLEMENTATION TO CHECK TO CREW TABLE DB (same as the user)
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String crewUsername = crewUsernameField.getText();
+                String crewPassword = new String(crewPasswordField.getPassword());
+
+                // Authenticate the admin credentials here, e.g., by querying a database
+                if (crewUsername.equals("admin") && crewPassword.equals("admin123")) {
+                    JOptionPane.showMessageDialog(LoginPortal.this, "Crew Login Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    // Proceed with admin actions or dashboard
+                    AdminDashboard adminDashboard = new AdminDashboard();
+                    adminDashboard.setVisible(true);
+                    dispose(); // Close current frame
+                } else {
+                    JOptionPane.showMessageDialog(LoginPortal.this, "Crew Login Failed!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+    }
+
+    private void addCrewLoginPanel(){
+        mainPanel.add(crewLoginPanel, "CrewLogin");
+    }
+
+    private void initializeAdminLoginPanel() {
+        adminLoginPanel = new JPanel(new GridBagLayout());
+        JTextField adminUsernameField = new JTextField(20);
+        JPasswordField adminPasswordField = new JPasswordField(20);
+        JButton adminLoginButton = new JButton("Admin Login");
+        JButton switchToLogin = new JButton("Back to Login");
+
+        addToPanel(adminLoginPanel, new JLabel("Admin Username:"), 0, 0, 1, GridBagConstraints.WEST);
+        addToPanel(adminLoginPanel, adminUsernameField, 1, 0, 2, GridBagConstraints.CENTER);
+
+        addToPanel(adminLoginPanel, new JLabel("Admin Password:"), 0, 1, 1, GridBagConstraints.WEST);
+        addToPanel(adminLoginPanel, adminPasswordField, 1, 1, 2, GridBagConstraints.CENTER);
+
+        addToPanel(adminLoginPanel, adminLoginButton, 0, 2, 1, GridBagConstraints.CENTER);
+        addToPanel(adminLoginPanel, switchToLogin, 1, 2, 1, GridBagConstraints.CENTER);
+
+        switchToLogin.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(mainPanel, "Login");
+            }
+        });
+
+
+        adminLoginButton.addActionListener(new ActionListener() { ////HERE IS THE IMPLEMENTATION TO CHECK TO ADMIN TABLE DB (same as the user)
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String adminUsername = adminUsernameField.getText();
+                String adminPassword = new String(adminPasswordField.getPassword());
+
+                // Authenticate the admin credentials here, e.g., by querying a database
+                if (adminUsername.equals("admin") && adminPassword.equals("admin123")) {
+                    JOptionPane.showMessageDialog(LoginPortal.this, "Admin Login Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    // Proceed with admin actions or dashboard
+                    AdminDashboard adminDashboard = new AdminDashboard();
+                    adminDashboard.setVisible(true);
+                    dispose(); // Close current frame
+                } else {
+                    JOptionPane.showMessageDialog(LoginPortal.this, "Admin Login Failed!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+    }
+
+    private void addAdminLoginPanel(){
+        mainPanel.add(adminLoginPanel, "AdminLogin");
+    }
+
+    public class AdminDashboard extends JFrame { //either HERE within same file or we can add a separate class file.
+        public AdminDashboard() {
+            // Initialize components and layout for the admin dashboard
+            // Similar to UserDashboard, add menus, buttons, etc.
+            setTitle("Admin Dashboard");
+            setSize(400, 300);
+            setLocationRelativeTo(null);
+            setDefaultCloseOperation(EXIT_ON_CLOSE);
+            // Add components like menus, buttons, etc.
+        }
+    }
+
     private void addToPanel(JPanel panel, Component component, int gridx, int gridy, int gridwidth, int anchor) {
         constraints.gridx = gridx;
         constraints.gridy = gridy;
@@ -43,21 +152,16 @@ public class LoginPortal extends JFrame {
         panel.add(component, constraints);
     }
 
-    // private void initializeAdminLoginPanel(){
-    //     adminLoginPanel = new JPanel(new GridBagLayout());
-    // }
-
-    // private void initializeCrewLoginPanel(){
-    //     crewLoginPanel = new JPanel(new GridBagLayout());
-    // }
     
-    private void createLoginView() {
+    private void initializeLoginPanel() {
         JTextField usernameField = new JTextField(20);
         JPasswordField passwordField = new JPasswordField(20);
         JButton loginButton = new JButton("Login");
         JButton switchToSignUp = new JButton("Sign Up");
         JButton crewLogIn = new JButton("Crew Log In");
         JButton adminLogIn = new JButton("Admin Log In");
+        JButton continueAsGuest =new JButton("Continue as Guest");
+
     
         // Adding components to the panel with grid (x, y) positions
         addToPanel(loginPanel, new JLabel("Username:"), 0, 0, 1, GridBagConstraints.WEST);
@@ -72,9 +176,19 @@ public class LoginPortal extends JFrame {
         addToPanel(loginPanel, adminLogIn, 0, 3, 1, GridBagConstraints.CENTER);
         addToPanel(loginPanel, crewLogIn, 1, 3, 1, GridBagConstraints.CENTER);
     
+        addToPanel(loginPanel, continueAsGuest, 0, 4, 2, GridBagConstraints.CENTER);
+
         // Action listeners for the buttons
         // Add appropriate action listeners for loginButton, switchToSignUp, crewLogIn, adminLogIn
         // ...
+
+        continueAsGuest.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                initializeGuestDashboard();
+            }
+        });
+
         switchToSignUp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -120,15 +234,24 @@ public class LoginPortal extends JFrame {
 
         adminLogIn.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e){
-                cardLayout.show(mainPanel, "AdminLogIn");
+            public void actionPerformed(ActionEvent e) {
+                if (adminLoginPanel == null) {
+                    initializeAdminLoginPanel(); // Initialize adminLoginPanel if not already initialized
+                }
+                addAdminLoginPanel(); // Add adminLoginPanel to the mainPanel
+                cardLayout.show(mainPanel, "AdminLogin"); // Show the adminLoginPanel
             }
         });
 
         crewLogIn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                cardLayout.show(mainPanel, "CrewLogIn");
+                if (crewLoginPanel == null){
+                    initializeCrewLoginPanel();
+                }
+                addCrewLoginPanel();
+                cardLayout.show(mainPanel, "CrewLogin");
+ 
             }
         });
 
@@ -150,9 +273,9 @@ public class LoginPortal extends JFrame {
             // Add components like menus, buttons, etc.
         }
     }
-   
 
-    private void createSignUpView() {
+    private void initiliazeSignUpPanel() {
+
         signUpPanel.setLayout(new GridBagLayout());
     
         JTextField nameField = new JTextField(20);
@@ -187,6 +310,24 @@ public class LoginPortal extends JFrame {
         // Add sign-up logic here for signUpButton
         // ...
     }    
+
+    public class GuestDashboard extends JFrame{
+        public GuestDashboard(){
+            //initialize components we want the guest to access
+            setTitle("Guest Dashboard");
+            setSize(400,300);
+            setLocationRelativeTo(null);
+            setDefaultCloseOperation(EXIT_ON_CLOSE);
+        }
+    }
+
+    private void initializeGuestDashboard(){
+        GuestDashboard guestDashboard = new GuestDashboard();
+        guestDashboard.setVisible(true);
+        dispose();
+    }
+
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
