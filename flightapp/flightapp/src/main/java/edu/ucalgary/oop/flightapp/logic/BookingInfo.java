@@ -1,7 +1,5 @@
 package edu.ucalgary.oop.flightapp.logic;
 
-import java.util.HashMap;
-
 public class BookingInfo {
     // Instance variables
     private int bookingId;
@@ -66,24 +64,6 @@ public class BookingInfo {
                 ", flightInfo=" + flightInfo +
                 ", ticketPrice=" + ticketPrice +
                 '}';
-    }
-
-    // Hash Map for Booking Information
-    private static HashMap<Integer, BookingInfo> bookingInfoMap = new HashMap<>();
-
-    // Add booking information to the HashMap
-    public static void addBookingInfo(BookingInfo bookingInfo) {
-        bookingInfoMap.put(bookingInfo.getBookingId(), bookingInfo);
-    }
-
-    // Get booking information by booking ID from the HashMap
-    public static BookingInfo getBookingInfoByBookingId(int bookingId) {
-        return bookingInfoMap.get(bookingId);
-    }
-
-    // Get all booking information from the HashMap
-    public static HashMap<Integer, BookingInfo> getAllBookingInfo() {
-        return bookingInfoMap;
     }
 
     // optional - Get seat type

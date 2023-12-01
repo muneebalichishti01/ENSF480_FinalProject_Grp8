@@ -2,7 +2,7 @@ package edu.ucalgary.oop.flightapp.logic;
 
 public abstract class Seat {
     protected int seatID;
-    protected int booked;
+    protected boolean booked;
     protected int type;
     protected int flightID;
 
@@ -15,7 +15,7 @@ public abstract class Seat {
         return seatID;
     }
     
-    public int getBooked() {
+    public boolean getBooked() {
         return booked;
     }
 
@@ -31,8 +31,10 @@ public abstract class Seat {
         this.seatID = seatID;
     }
 
-    public void setBooked(int booked) {
-        this.booked = booked;
+    public void setBooked() {
+        boolean temp = getBooked();
+        if (temp == false) {booked = true;}
+        else {booked = false;};
     }
 
     public void setFlightID(int flightID) {
