@@ -483,9 +483,30 @@ public class Database {
         }
     
         return null; 
+    }    
+    
+    public static List<String> browsePassenger(int id) {
+        List<String> passengerList = new ArrayList<>();
+        
+        String sql = "SELECT users.username" +
+                     "FROM users" +
+                     "JOIN flightinfo ON users.username = flightinfo.name " +
+                     "WHERE flightinfo.flightId = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, id);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    String name = resultSet.getString("name");
+                    passengerList.add(name);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return passengerList;
     }
-    
-    
 }
 
    

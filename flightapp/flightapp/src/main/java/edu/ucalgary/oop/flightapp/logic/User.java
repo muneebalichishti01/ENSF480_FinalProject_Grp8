@@ -84,17 +84,6 @@ public class User {
             "Cancellation Insurance: " + (hasCancellationInsurance ? "Yes" : "No");
     }
 
-    // @Override
-    // public String toString() {
-    //     return "User{" +
-    //             "userId=" + userId +
-    //             ", username='" + username + '\'' +
-    //             ", email='" + email + '\'' +
-    //             ", phoneNumber='" + phoneNumber + '\'' +
-    //             ", hasCancellationInsurance=" + hasCancellationInsurance +
-    //             '}';
-    // }
-
     // Hash Map for Users
     private static HashMap<Integer, User> usersMap = new HashMap<>();
 
