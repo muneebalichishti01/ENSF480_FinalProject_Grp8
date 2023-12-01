@@ -1,7 +1,8 @@
-package edu.ucalgary.oop.flightapp.logic;
+package edu.ucalgary.oop.flightapp.logic.GUI.panels;
 
 import javax.swing.*;
 
+import edu.ucalgary.oop.flightapp.logic.Database;
 import jakarta.websocket.OnError; // ?? what is this
 
 import java.awt.*;
@@ -64,14 +65,14 @@ public class LoginPortal extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String crewUsername = crewUsernameField.getText();
                 String crewPassword = new String(crewPasswordField.getPassword());
-
-                // Authenticate the admin credentials here, e.g., by querying a database
-                if (crewUsername.equals("admin") && crewPassword.equals("admin123")) {
+        
+                // Authenticate the crew credentials here, e.g., by querying a database
+                if (crewUsername.equals("crew") && crewPassword.equals("crew123")) {
                     JOptionPane.showMessageDialog(LoginPortal.this, "Crew Login Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
                     // Proceed with admin actions or dashboard
-                    AdminDashboard adminDashboard = new AdminDashboard();
-                    adminDashboard.setVisible(true);
-                    dispose(); // Close current frame
+                    CrewDashboard crewDashboard = new CrewDashboard();
+                    crewDashboard.setVisible(true);
+                    dispose();
                 } else {
                     JOptionPane.showMessageDialog(LoginPortal.this, "Crew Login Failed!", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -107,19 +108,19 @@ public class LoginPortal extends JFrame {
         });
 
 
-        adminLoginButton.addActionListener(new ActionListener() { ////HERE IS THE IMPLEMENTATION TO CHECK TO ADMIN TABLE DB (same as the user)
+        adminLoginButton.addActionListener(new ActionListener() { //HERE IS WHERE AUTHENTICATION FOR ADMIN GOES
             @Override
             public void actionPerformed(ActionEvent e) {
                 String adminUsername = adminUsernameField.getText();
                 String adminPassword = new String(adminPasswordField.getPassword());
-
+        
                 // Authenticate the admin credentials here, e.g., by querying a database
                 if (adminUsername.equals("admin") && adminPassword.equals("admin123")) {
                     JOptionPane.showMessageDialog(LoginPortal.this, "Admin Login Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
                     // Proceed with admin actions or dashboard
                     AdminDashboard adminDashboard = new AdminDashboard();
                     adminDashboard.setVisible(true);
-                    dispose(); // Close current frame
+                    dispose();
                 } else {
                     JOptionPane.showMessageDialog(LoginPortal.this, "Admin Login Failed!", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -131,17 +132,6 @@ public class LoginPortal extends JFrame {
         mainPanel.add(adminLoginPanel, "AdminLogin");
     }
 
-    public class AdminDashboard extends JFrame { //either HERE within same file or we can add a separate class file.
-        public AdminDashboard() {
-            // Initialize components and layout for the admin dashboard
-            // Similar to UserDashboard, add menus, buttons, etc.
-            setTitle("Admin Dashboard");
-            setSize(400, 300);
-            setLocationRelativeTo(null);
-            setDefaultCloseOperation(EXIT_ON_CLOSE);
-            // Add components like menus, buttons, etc.
-        }
-    }
 
     private void addToPanel(JPanel panel, Component component, int gridx, int gridy, int gridwidth, int anchor) {
         constraints.gridx = gridx;
@@ -311,30 +301,18 @@ public class LoginPortal extends JFrame {
         // ...
     }    
 
-    public class GuestDashboard extends JFrame{
-        public GuestDashboard(){
-            //initialize components we want the guest to access
-            setTitle("Guest Dashboard");
-            setSize(400,300);
-            setLocationRelativeTo(null);
-            setDefaultCloseOperation(EXIT_ON_CLOSE);
-        }
-    }
-
     private void initializeGuestDashboard(){
         GuestDashboard guestDashboard = new GuestDashboard();
         guestDashboard.setVisible(true);
         dispose();
     }
 
-
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new LoginPortal().setVisible(true);
-            }
-        });
-    }
+    // public static void main(String[] args) {
+    //     SwingUtilities.invokeLater(new Runnable() {
+    //         @Override
+    //         public void run() {
+    //             new LoginPortal().setVisible(true);
+    //         }
+    //     });
+    // }
 }
