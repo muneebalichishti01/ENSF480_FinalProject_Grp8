@@ -507,6 +507,12 @@ public class Database {
         }
         return passengerList;
     }
+
+    public static ArrayList<Seat> browseSeats(int id){
+        ArrayList<Seat> seats = new ArrayList<>();
+
+        return seats;
+    }
 }
 
    

@@ -66,8 +66,13 @@ CREATE TABLE aircrafts (
 CREATE TABLE flightAttendants (
     FlightAttendantId INT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    username VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL
+    username VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE flightAttendantPasswords (
+    flightAttendantId INT PRIMARY KEY,
+    passwordHash VARCHAR(255),
+    FOREIGN KEY (flightAttendantId) REFERENCES flightAttendants(FlightAttendantId)
 );
 
 -- Booking information table: Stores booking information
@@ -99,5 +104,17 @@ CREATE TABLE payments (
 CREATE TABLE seatTypes (        
     seatTypeId INT PRIMARY KEY,
     description VARCHAR(255),
-    cost DECIMAL(10, 2)
+    cost DECIMAL(10, 2),
+    flightId INT
+);
+
+CREATE TABLE admins (
+    adminId INT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+);
+
+CREATE TABLE adminPasswords (
+    adminId INT PRIMARY KEY,
+    passwordHash VARCHAR(255),
+    FOREIGN KEY (adminId) REFERENCES admin(adminId)
 );
