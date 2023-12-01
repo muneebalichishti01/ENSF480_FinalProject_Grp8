@@ -131,9 +131,6 @@ public class User {
         return false;
     }
 
-    // public void setCompanionTicket(boolean tf) {
-    // }
-
     public void useCompanionTicket() {
         System.out.println("You must be a registered user");
     }
