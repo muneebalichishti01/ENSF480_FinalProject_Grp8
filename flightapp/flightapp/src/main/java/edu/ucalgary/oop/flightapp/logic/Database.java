@@ -54,10 +54,10 @@ public class Database {
 //-----------------------------------DATABSE-CONNECTION--------------------------------------//
     // Initialize database connection
     public static void initializeDatabase() {
-        String url = "jdbc:mysql://localhost:3306/flightappdatabase";
+        String url = "jdbc:mysql://localhost:3306/flightinfo";
         Properties properties = new Properties();
         properties.setProperty("user", "root");
-        properties.setProperty("password", "root");
+        properties.setProperty("password", "mOckingjay");
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
