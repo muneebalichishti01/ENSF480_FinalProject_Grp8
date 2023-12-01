@@ -365,6 +365,7 @@ public class LoginPortal extends JFrame {
                     emailField.setText("");
                     phoneField.setText("");
                     passwordField.setText("");
+                    //comment for push
         
                 } catch (SQLException ex) {
                     ex.printStackTrace();
