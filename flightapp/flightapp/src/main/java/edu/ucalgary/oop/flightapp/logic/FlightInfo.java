@@ -13,7 +13,6 @@ public class FlightInfo {
     private String departureDate;
 
     // Added new variables
-    private ArrayList<BookingInfo> passengerBookings;                                   // Track passengers for this flight
     private ArrayList<Seat> seats;                                                      // Track seats for this flight
     private static ArrayList<FlightInfo> flightInfoList;                                // Track all flights in the system
 
@@ -26,7 +25,6 @@ public class FlightInfo {
         this.departureDate = departureDate;
 
         // Initialize new variables
-        this.passengerBookings = new ArrayList<>();
         this.seats = new ArrayList<>();
 
         // Initialize ArrayLists
@@ -96,30 +94,11 @@ public class FlightInfo {
         return flightInfoList;
     }
 
-    public ArrayList<BookingInfo> getPassengerBookings() {
-        return passengerBookings;
-    }
-    public void setPassengerBookings(ArrayList<BookingInfo> passengerBookings) {
-        this.passengerBookings = passengerBookings;
-    }
-
     public ArrayList<Seat> getSeat() {
         return seats;
     }
     public void setSeat(ArrayList<Seat> seats) {
         this.seats = seats;
-    }
-
-    // Methods to add or remove a booking to the flight
-    public void addBooking(BookingInfo booking) throws SQLException {
-        if (booking != null && booking.getFlightInfo().getFlightId() == this.flightId) {
-            passengerBookings.add(booking);
-        }
-        Database.createBooking(booking);
-    }
-    public void removeBooking(BookingInfo booking) throws SQLException {
-        passengerBookings.remove(booking);
-        Database.cancelBooking(booking.getBookingId());
     }
 
     // Methods to add or remove FlightInfo to a list of all FlightInfo Objects
@@ -171,7 +150,6 @@ public class FlightInfo {
                 ", destination='" + destination + '\'' +
                 ", origin='" + origin + '\'' +
                 ", departureDate='" + departureDate + '\'' +
-                ", passengerBookings=" + passengerBookings +
                 '}';
     }
 }

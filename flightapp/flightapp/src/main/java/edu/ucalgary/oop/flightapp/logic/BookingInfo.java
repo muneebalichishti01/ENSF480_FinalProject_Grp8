@@ -4,7 +4,7 @@ public class BookingInfo {
     // Instance variables
     private int bookingId;
     private User user;
-    private FlightInfo flightInfo;
+    private int flightId;
     private double ticketPrice;
     private Seat seat; // optional
 
@@ -12,7 +12,7 @@ public class BookingInfo {
     public BookingInfo(int bookingId, User user, FlightInfo flightInfo, double ticketPrice, Seat seat) {
         this.bookingId = bookingId;
         this.user = user;
-        this.flightInfo = flightInfo;
+        this.flightId = flightInfo.getFlightId();
         this.ticketPrice = ticketPrice;
         this.seat = seat; // optional
         this.user.setChargeCreditCard(true);
