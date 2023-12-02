@@ -7,34 +7,15 @@ CREATE TABLE users (
     username VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     phoneNumber VARCHAR(255),
-    hasCancellationInsurance BOOLEAN
-);
-
--- Registered Users Table: Extends the users table with specific fields for registered users
-CREATE TABLE registeredUsers (
-    userId INT PRIMARY KEY,
-    address VARCHAR(255),
-    creditCardNumber VARCHAR(255),
-    loungeAccessId INT,
-    promotionId INT,
-    companionTicketId INT,
-    FOREIGN KEY (userId) REFERENCES users(userId),
-    lastCompanionTicketSetDate DATE
+    hasCreditCard BOOLEAN,
+    lastCompanionTicketSetDate DATE,
+    companionTicket boolean
 );
 
 -- User Passwords Table: Keeps user passwords. Ensure to store hashed passwords, not plain text
 CREATE TABLE userPasswords (
     userId INT PRIMARY KEY,
     passwordHash VARCHAR(255),
-    FOREIGN KEY (userId) REFERENCES users(userId)
-);
-
--- Credit Cards Table: Stores credit card information
-CREATE TABLE creditCards (
-    userId INT,
-    cardNumber VARCHAR(255) NOT NULL,
-    expiryDate VARCHAR(255) NOT NULL,
-    cvv VARCHAR(255) NOT NULL,
     FOREIGN KEY (userId) REFERENCES users(userId)
 );
 
@@ -55,7 +36,6 @@ CREATE TABLE aircrafts (
 -- Flight Attendants Table: Stores flight attendant information
 CREATE TABLE flightAttendants (
     FlightAttendantId INT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
     username VARCHAR(255) NOT NULL
 );
 
@@ -68,9 +48,9 @@ CREATE TABLE flightAttendantPasswords (
 -- Booking information table: Stores booking information
 CREATE TABLE bookingInfo (
     bookingId INT PRIMARY KEY,
-    userId INT,
     flightId INT,
     ticketPrice DECIMAL(10, 2),
+    cancellationInsurance boolean,
     FOREIGN KEY (userId) REFERENCES users(userId),
     FOREIGN KEY (flightId) REFERENCES flightInfo(flightId)
 );
@@ -87,15 +67,6 @@ CREATE TABLE payments (
     FOREIGN KEY (userId) REFERENCES users(userId),
     FOREIGN KEY (primaryUserId) REFERENCES users(userId),
     FOREIGN KEY (companionUserId) REFERENCES users(userId)
-);
-
--- Seat Types Table: Represents different seat types
---Can remove this table
-CREATE TABLE seatTypes (        
-    seatTypeId INT PRIMARY KEY,
-    description VARCHAR(255),
-    cost DECIMAL(10, 2),
-    flightId INT
 );
 
 CREATE TABLE admins (
