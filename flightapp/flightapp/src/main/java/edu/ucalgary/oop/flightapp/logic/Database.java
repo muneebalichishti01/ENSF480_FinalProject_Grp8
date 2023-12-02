@@ -551,7 +551,6 @@ public class Database {
                 String origin = resultSet.getString("origin");
                 String departureDate = resultSet.getString("departureDate");
 
-                // Assuming you have a FlightInfo constructor
                 FlightInfo flight = new FlightInfo(flightId, flightName, destination, origin, departureDate);
                 
                 flightList.add(flight);
