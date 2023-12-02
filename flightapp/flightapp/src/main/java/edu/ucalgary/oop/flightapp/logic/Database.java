@@ -142,6 +142,43 @@ public class Database {
         }
     }
 
+    // Method to retrieve passengers for a specific flight
+    public static ArrayList<String> getPassengersByFlightId(int flightId) {
+        ArrayList<String> passengerList = new ArrayList<>();
+        String sql = "SELECT name FROM passengers WHERE flightId = ?";
+
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
+            statement.setInt(1, flightId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    passengerList.add(resultSet.getString("name"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return passengerList;
+    }
+
+    // Method to retrieve available flights
+    public static ArrayList<String> retrieveAvailableFlights() {
+        ArrayList<String> availableFlights = new ArrayList<>();
+        String sql = "SELECT flightId, flightName FROM flightInfo";
+
+        Connection connection = getConnection(); // Ensure you have a method to get the DB connection
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    int flightId = resultSet.getInt("flightId");
+                    String flightName = resultSet.getString("flightName");
+                    availableFlights.add("Flight " + flightId + ": " + flightName);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return availableFlights;
+    }
 //----------------------------------------Flight---------------------------------------------//
 //-----------------------------------------Seat----------------------------------------------//
     // Method to add Seats
@@ -408,40 +445,13 @@ public class Database {
                 String departureDate = resultSet.getString("departureDate");
 
                 FlightInfo flight = new FlightInfo(flightId, flightName, destination, origin, departureDate);
-                
-                flightList.add(flight);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return flightList;
-    }
-
-    public static ArrayList<FlightInfo> getAllFlightsWithSeats() {
-        ArrayList<FlightInfo> flightList = new ArrayList<>();
-    
-        String sql = "SELECT * FROM flightinfo";
-    
-        try (PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet resultSet = statement.executeQuery()) {
-    
-            while (resultSet.next()) {
-                int flightId = resultSet.getInt("flightId");
-                String flightName = resultSet.getString("flightName");
-                String destination = resultSet.getString("destination");
-                String origin = resultSet.getString("origin");
-                String departureDate = resultSet.getString("departureDate");
-    
-                FlightInfo flight = new FlightInfo(flightId, flightName, destination, origin, departureDate);
-                // Fetch seats for this flight and add them to the flight
                 flight.getSeats().addAll(getSeatsForFlight(flightId));
                 flightList.add(flight);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    
+
         return flightList;
     }
     

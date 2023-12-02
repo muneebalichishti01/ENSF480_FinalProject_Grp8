@@ -69,7 +69,8 @@ public class BrowseFlights extends JFrame {
     }
 
     private void loadFlights() {
-        flights = Database.getAllFlightsWithSeats();
+        flights = Database.getAllFlights();
+        // flights = Database.getAllFlightsWithSeats();
         for (FlightInfo flight : flights) {
             Object[] row = new Object[]{
                     flight.getFlightId(),

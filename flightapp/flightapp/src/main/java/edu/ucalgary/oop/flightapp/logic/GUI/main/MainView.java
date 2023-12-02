@@ -1,6 +1,5 @@
 package edu.ucalgary.oop.flightapp.logic.GUI.main;
 
-// import edu.ucalgary.oop.flightapp.logic.FlightInfo;
 import edu.ucalgary.oop.flightapp.logic.GUI.panels.LoginPortal;
 
 import javax.swing.*;
