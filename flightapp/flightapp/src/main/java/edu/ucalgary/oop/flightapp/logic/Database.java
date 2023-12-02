@@ -1,6 +1,7 @@
 package edu.ucalgary.oop.flightapp.logic;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.Date;
@@ -67,7 +68,7 @@ public class Database {
 //---------------------------------------Aircraft--------------------------------------------//
     // Method to add Aircraft
     public static void addAircraft(Aircraft aircraft) {
-        String sql = "INSERT INTO aircrafts (aircraftId, name) VALUES (?)";
+        String sql = "INSERT INTO aircrafts (aircraftId) VALUES (?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, aircraft.getAircraftId());
             statement.executeUpdate();
@@ -88,15 +89,17 @@ public class Database {
     }
     
     // Method to update Aircraft
-    public static void editAircraft(int id) {
+    public static void editAircraft(int oldId, int newId) {
         String sql = "UPDATE aircrafts SET aircraftId = ? WHERE aircraftId = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(2, id);
+            statement.setInt(1, newId);
+            statement.setInt(2, oldId);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+    
 //---------------------------------------Aircraft--------------------------------------------//
 //----------------------------------------Flight---------------------------------------------//
     // Method to add Flight
@@ -149,7 +152,7 @@ public class Database {
             statement.setInt(1, seat.getSeatID());
             statement.setInt(2, seat.getType());
             statement.setBoolean(3, seat.getBooked());
-            statement.setInt(3, seat.getFlightID());
+            statement.setInt(4, seat.getFlightID());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -172,9 +175,10 @@ public class Database {
 //-----------------------------------Flight Attendant----------------------------------------//
     // Method to add Flight Attendant
     public static void addFlightAttendant(FlightAttendant attendant) {
-        String sql = "INSERT INTO flightAttendants (FlightAttendantId, name) VALUES (?)";
+        String sql = "INSERT INTO flightAttendants (FlightAttendantId, username) VALUES (?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, attendant.getFlightAttendantId());
+            statement.setString(2, attendant.getUsername());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -193,39 +197,44 @@ public class Database {
     }
 
     // Method to update Flight Attendant
-    public static void editCrew(int id) {
-        String sql = "UPDATE flightAttendants SET FlightAttendantId = ? WHERE FlightAttendantId = ?";
+    public static void editFlightAttendant(int id, String newUsername) {
+        String sql = "UPDATE flightAttendants SET username = ? WHERE FlightAttendantId = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, id);
+            statement.setString(1, newUsername);
+            statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }    
+    }
 //-----------------------------------Flight Attendant----------------------------------------//
 //-----------------------------------------User----------------------------------------------//
     // Method to add a new User
     public static void addUser(User newUser) {
-        String sql = "INSERT INTO users (username, email, phoneNumber, hasCancellationInsurance) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO users (username, email, phoneNumber, hasCreditCard, lastCompanionTicketSetDate, companionTicket) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, newUser.getUsername());
             statement.setString(2, newUser.getEmail());
             statement.setString(3, newUser.getPhoneNumber());
+            statement.setBoolean(4, newUser.getHasCreditCard());
+            statement.setDate(5, java.sql.Date.valueOf(newUser.getLastCompanionTicketSetDate()));
+            statement.setBoolean(6, newUser.getCompanionTicket());
             statement.executeUpdate();
-            }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
     }
     
-
     // Method to update a User
     public boolean updateUser(User user) {
-        String sql = "UPDATE users SET email = ?, phoneNumber = ?, hasCancellationInsurance = ? WHERE userId = ?";
+        String sql = "UPDATE users SET username = ?, email = ?, phoneNumber = ?, hasCreditCard = ?, lastCompanionTicketSetDate = ?, companionTicket = ? WHERE userId = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, user.getEmail());
             statement.setString(2, user.getPhoneNumber());
-            statement.setBoolean(3, user.hasCancellationInsurance());
-            statement.setInt(4, user.getUserId());
+            statement.setBoolean(3, user.getHasCreditCard());
+            statement.setDate(4, java.sql.Date.valueOf(user.getLastCompanionTicketSetDate()));
+            statement.setBoolean(5, user.getCompanionTicket());
+            statement.setInt(6, user.getUserId());
             int rowsAffected = statement.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
@@ -238,22 +247,17 @@ public class Database {
 //--------------------------------------Booking Info-----------------------------------------//
     // Method to create a new booking
     public static void createBooking(BookingInfo bookingInfo) throws SQLException {
-        String sql = "INSERT INTO bookingInfo (userId, flightId, ticketPrice, seatType) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO bookingInfo (flightId, ticketPrice, cancellationInsurance) VALUES (?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
-            statement.setInt(1, bookingInfo.getUser().getUserId());
-            // statement.setInt(2, bookingInfo.getFlightInfo().getFlightId());
-            statement.setDouble(3, bookingInfo.getTicketPrice());
-            // statement.setString(4, bookingInfo.getSeatType());
+            statement.setInt(1, bookingInfo.getFlightInfo().getFlightId());
+            statement.setDouble(2, bookingInfo.getTicketPrice());
+            statement.setBoolean(3, bookingInfo.getCancellationInsurance());
             statement.executeUpdate();
-
-            // Retrieve the generated bookingId
-            try (ResultSet resultSet = statement.getGeneratedKeys()) {
-                if (resultSet.next()) {
-                    bookingInfo.setBookingId(resultSet.getInt(1));
-                }
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
+    
 
     // Method to cancel a booking
     public static boolean cancelBooking(int bookingId) throws SQLException {

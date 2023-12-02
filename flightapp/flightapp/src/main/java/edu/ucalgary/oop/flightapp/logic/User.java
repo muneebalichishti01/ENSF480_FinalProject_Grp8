@@ -46,6 +46,19 @@ public class User {
         return phoneNumber;
     }
 
+    public boolean getHasCreditCard() {
+        return hasCreditCard;
+    }
+
+    public LocalDate getLastCompanionTicketSetDate() {
+        return lastCompanionTicketSetDate;
+    }
+
+    public boolean getCompanionTicket() {
+        return companionTicket;
+    }
+    
+
     public void useCompanionTicket() {
         LocalDate currentDate = LocalDate.now();
         LocalDate lastDate = Database.getLastCompanionTicketDate(getUserId());
