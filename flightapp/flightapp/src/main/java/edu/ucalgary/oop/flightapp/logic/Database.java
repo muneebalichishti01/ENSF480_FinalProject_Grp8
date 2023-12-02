@@ -20,13 +20,13 @@ public class Database {
     public static synchronized Database getInstance() {
         if (instance == null) {
             instance = new Database();
-            connection = instance.getConnection();
+            connection = Database.getConnection();
         }
         return instance;
     }
 
     // get connection
-    public Connection getConnection() {
+    public static Connection getConnection() {
         return connection;
     }
 
@@ -54,10 +54,10 @@ public class Database {
 //-----------------------------------DATABSE-CONNECTION--------------------------------------//
     // Initialize database connection
     public static void initializeDatabase() {
-        String url = "jdbc:mysql://localhost:3306/flightinfo";
+        String url = "jdbc:mysql://localhost:3306/flightappdatabase";
         Properties properties = new Properties();
         properties.setProperty("user", "root");
-        properties.setProperty("password", "mOckingjay");
+        properties.setProperty("password", "root");
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -197,6 +197,34 @@ public class Database {
             e.printStackTrace();
         }
     }
+
+    // Method to get all available flights
+    public static List<FlightInfo> getAvailableFlights() {
+        List<FlightInfo> availableFlights = new ArrayList<>();
+        String sql = "SELECT * FROM flightInfo WHERE /* your condition for available flights */";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                int flightId = resultSet.getInt("flightId");
+                String flightName = resultSet.getString("flightName");
+                String destination = resultSet.getString("destination");
+                String origin = resultSet.getString("origin");
+                String departureDate = resultSet.getString("departureDate");
+                // Add other fields as per your FlightInfo class
+
+                FlightInfo flight = new FlightInfo(flightId, flightName, destination, origin, departureDate);
+                // Adjust the constructor call as per your FlightInfo class
+                availableFlights.add(flight);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle exception appropriately
+        }
+
+        return availableFlights;
+    }
 //----------------------------------------Flight---------------------------------------------//
 //-----------------------------------------Seat----------------------------------------------//
     // Method to add Seats
@@ -205,7 +233,7 @@ public class Database {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, seat.getSeatID());
             statement.setInt(2, seat.getType());
-            statement.setInt(3, seat.getBooked());
+            statement.setBoolean(3, seat.getBooked());
             statement.setInt(3, seat.getFlightID());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -217,7 +245,7 @@ public class Database {
     public static void editSeat(Seat seat) {
         String sql = "UPDATE seats SET occupancy = ? WHERE flightId = ? AND seatId = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, seat.getBooked());
+            statement.setBoolean(1, seat.getBooked());
             statement.setInt(2, seat.getFlightID());
             statement.setInt(3, seat.getSeatID());
             statement.executeUpdate();
