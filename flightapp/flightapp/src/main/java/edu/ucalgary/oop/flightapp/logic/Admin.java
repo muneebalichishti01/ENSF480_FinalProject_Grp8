@@ -14,8 +14,8 @@ public class Admin {
     public void removeAircraft(Aircraft aircraft) {
         Database.removeAircraft(aircraft.getAircraftId());
     }
-    public void updateAircraft(int index) {
-        Database.editAircraft(index);
+    public void updateAircraft(int newID, int oldID) {
+        Database.editAircraft(newID, oldID);
     }
 
     // Manage Flights
@@ -37,8 +37,8 @@ public class Admin {
     public void removeFlightAttendant(FlightAttendant attendant) {
         Database.removeFlightAttendant(attendant.getFlightAttendantId());
     }
-    public void updateFlightAttendant(int index, FlightAttendant updatedAttendant) {
-        Database.editCrew(updatedAttendant);
+    public void updateFlightAttendant(int id, String username) {
+        Database.editFlightAttendant(id, username);
     }
 
     // Print User Registration List

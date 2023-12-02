@@ -47,26 +47,12 @@ CREATE TABLE flightAttendantPasswords (
 
 -- Booking information table: Stores booking information
 CREATE TABLE bookingInfo (
-    bookingId INT PRIMARY KEY,
+    bookingId INT AUTO_INCREMENT PRIMARY KEY,
     flightId INT,
     ticketPrice DECIMAL(10, 2),
     cancellationInsurance boolean,
     FOREIGN KEY (userId) REFERENCES users(userId),
     FOREIGN KEY (flightId) REFERENCES flightInfo(flightId)
-);
-
--- Payment Table: Stores payment information
-CREATE TABLE payments (
-    paymentId INT PRIMARY KEY,
-    userId INT,
-    amount DECIMAL(10, 2),
-    paymentStatus VARCHAR(255),
-    companionTicketId INT,
-    primaryUserId INT,
-    companionUserId INT,
-    FOREIGN KEY (userId) REFERENCES users(userId),
-    FOREIGN KEY (primaryUserId) REFERENCES users(userId),
-    FOREIGN KEY (companionUserId) REFERENCES users(userId)
 );
 
 CREATE TABLE admins (
@@ -79,3 +65,10 @@ CREATE TABLE adminPasswords (
     passwordHash VARCHAR(255),
     FOREIGN KEY (adminId) REFERENCES admins(adminId)
 );
+
+CREATE TABLE seats (
+    seatId INT,
+    type INT, 
+    occupancy BOOLEAN,
+    flightId INT
+)
