@@ -3,12 +3,17 @@ package edu.ucalgary.oop.flightapp.logic.GUI.panels;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.stream.Collectors;
+import java.sql.SQLException;
 
 import javax.swing.*;
 
 import edu.ucalgary.oop.flightapp.logic.Database;
 import edu.ucalgary.oop.flightapp.logic.FlightInfo;
 import java.util.List;
+
+import edu.ucalgary.oop.flightapp.logic.BookingInfo;
+import edu.ucalgary.oop.flightapp.logic.FlightInfo;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
