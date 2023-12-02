@@ -1,5 +1,6 @@
 package edu.ucalgary.oop.flightapp.logic;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -14,7 +15,6 @@ public class FlightInfo {
     // Added new variables
     private ArrayList<BookingInfo> passengerBookings;                                   // Track passengers for this flight
     private ArrayList<Seat> seat;                                                       // Track seats for this flight
-    private ArrayList<FlightAttendant> flightAttendant;                                 // Track flight attendants for this flight
     private static ArrayList<FlightInfo> flightInfoList = new ArrayList<FlightInfo>();  // Track all flights in the system
 
     // Constructor
@@ -28,7 +28,6 @@ public class FlightInfo {
         // Initialize new variables
         this.passengerBookings = new ArrayList<>();
         this.seat = new ArrayList<>();
-        this.flightAttendant = new ArrayList<>();
 
         // Initialize ArrayLists
         initializeSeats();
@@ -50,10 +49,6 @@ public class FlightInfo {
     }
 
     // Getters and Setters
-    public static ArrayList<FlightInfo> getAllFlightInfo() {
-        return flightInfoList;
-    }
-
     public static FlightInfo getFlightInfoByFlightId(int flightId) {
         return flightInfoList.get(flightId);
     }
@@ -94,6 +89,10 @@ public class FlightInfo {
     }
 
     // Getters and setters for the new attributes
+    public static ArrayList<FlightInfo> getAllFlightInfo() {
+        return flightInfoList;
+    }
+
     public ArrayList<BookingInfo> getPassengerBookings() {
         return passengerBookings;
     }
@@ -108,39 +107,30 @@ public class FlightInfo {
         this.seat = seat;
     }
 
-    public ArrayList<FlightAttendant> getFlightAttendant() {
-        return flightAttendant;
-    }
-    public void setFlightAttendant(ArrayList<FlightAttendant> flightAttendant) {
-        this.flightAttendant = flightAttendant;
-    }
-
     // Methods to add or remove a booking to the flight
-    public void addBooking(BookingInfo booking) {
+    public void addBooking(BookingInfo booking) throws SQLException {
         if (booking != null && booking.getFlightInfo().getFlightId() == this.flightId) {
             passengerBookings.add(booking);
         }
+        Database.createBooking(booking);
     }
-    public void removeBooking(BookingInfo booking) {
+    public void removeBooking(BookingInfo booking) throws SQLException {
         passengerBookings.remove(booking);
+        Database.cancelBooking(booking.getBookingId());
     }
 
-    // Methods to add or remove a FlightArrendant to the flight
-    public void addCrew(FlightAttendant crew) {
-        if (crew != null) {
-            flightAttendant.add(crew);
-        }
-    }
-    public void removeCrew(FlightAttendant crew) {
-        flightAttendant.remove(crew);
-    }
-
-    // Method to add FlightInfo to a list of all FlightInfo Objects
+    // Methods to add or remove FlightInfo to a list of all FlightInfo Objects
     public static void addFlightInfo(FlightInfo flightInfo) {
         if(flightInfoList.isEmpty()) {
-
+        // Work in progress
         }
-        flightInfoList.add(flightInfo.getFlightId(), flightInfo);
+        flightInfoList.add(flightInfo);
+        Database.addFlight(flightInfo);
+    }
+
+    public static void removeFlightInfo(FlightInfo flightInfo) {
+        flightInfoList.remove(flightInfo);
+        Database.removeFlight(flightInfo.getFlightId());
     }
 
     // Method to book or unbook seats
@@ -154,6 +144,7 @@ public class FlightInfo {
             if(item.getSeatID() == ID) {
                 item.setBooked();
             }
+            Database.editSeat(item);
         }
     }
 

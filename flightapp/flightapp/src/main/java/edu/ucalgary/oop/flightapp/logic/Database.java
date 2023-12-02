@@ -205,7 +205,7 @@ public class Database {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, seat.getSeatID());
             statement.setInt(2, seat.getType());
-            statement.setInt(3, seat.getBooked());
+            statement.setBoolean(3, seat.getBooked());
             statement.setInt(3, seat.getFlightID());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -217,7 +217,7 @@ public class Database {
     public static void editSeat(Seat seat) {
         String sql = "UPDATE seats SET occupancy = ? WHERE flightId = ? AND seatId = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, seat.getBooked());
+            statement.setBoolean(1, seat.getBooked());
             statement.setInt(2, seat.getFlightID());
             statement.setInt(3, seat.getSeatID());
             statement.executeUpdate();

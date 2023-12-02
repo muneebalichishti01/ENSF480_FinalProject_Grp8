@@ -5,14 +5,13 @@ import java.util.ArrayList;
 public class Admin {
     // Instance variables changed to ArrayLists
     private ArrayList<Aircraft> aircrafts;
-    private ArrayList<FlightInfo> flights;
+    private static FlightInfo flights;
     private ArrayList<FlightAttendant> flightAttendants;
     private ArrayList<User> users;
 
     // Constructor
     public Admin() {
         this.aircrafts = new ArrayList<>();
-        this.flights = new ArrayList<>();
         this.flightAttendants = new ArrayList<>();
         this.users = new ArrayList<>(User.getAllUsers().values());
     }
@@ -21,8 +20,8 @@ public class Admin {
     public ArrayList<Aircraft> getAircrafts() {
         return aircrafts;
     }
-    public ArrayList<FlightInfo> getFlights() {
-        return flights;
+    public static ArrayList<FlightInfo> getFlights() {
+        return flights.getAllFlightInfo();
     }
     public ArrayList<FlightAttendant> getFlightAttendants() {
         return flightAttendants;
@@ -33,9 +32,6 @@ public class Admin {
 
     public void setAircrafts(ArrayList<Aircraft> aircrafts) {
         this.aircrafts = aircrafts;
-    }
-    public void setFlights(ArrayList<FlightInfo> flights) {
-        this.flights = flights;
     }
     public void setFlightAttendants(ArrayList<FlightAttendant> flightAttendants) {
         this.flightAttendants = flightAttendants;
@@ -62,8 +58,7 @@ public class Admin {
 
     // Manage Flights
     public void addFlight(FlightInfo flight) {
-        flights.add(flight);
-        Database.addFlight(flight);
+        
     }
     public void removeFlight(FlightInfo flight) {
         flights.remove(flight);
