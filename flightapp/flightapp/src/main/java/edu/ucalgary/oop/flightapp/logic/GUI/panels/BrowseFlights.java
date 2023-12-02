@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import edu.ucalgary.oop.flightapp.logic.Database;
 import edu.ucalgary.oop.flightapp.logic.FlightInfo;
 import edu.ucalgary.oop.flightapp.logic.Seat;
 
@@ -25,8 +28,10 @@ public class BrowseFlights extends JFrame {
 
         ButtonGroup buttonGroup = new ButtonGroup();
 
+        ArrayList<FlightInfo> temp = Database.getAllFlights();
+
         // Display available flights as radio buttons
-        for (FlightInfo flight : FlightInfo.getAllFlightInfo()) {
+        for (FlightInfo flight : temp) {
             JRadioButton radioButton = new JRadioButton(
                 "Flight ID: " + flight.getFlightId() + " | Destination: " + flight.getDestination() + " | Departure: " + flight.getDepartureDate());
             radioButton.setActionCommand(String.valueOf(flight.getFlightId()));
