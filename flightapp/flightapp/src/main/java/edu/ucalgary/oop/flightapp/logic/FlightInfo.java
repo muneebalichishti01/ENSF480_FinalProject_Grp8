@@ -56,36 +56,21 @@ public class FlightInfo {
     public int getFlightId() {
         return flightId;
     }
-    public void setFlightId(int flightId) {
-        this.flightId = flightId;
-    }
 
     public String getFlightName() {
         return flightName;
-    }
-    public void setFlightName(String flightName) {
-        this.flightName = flightName;
     }
 
     public String getDestination() {
         return destination;
     }
-    public void setDestination(String destination) {
-        this.destination = destination;
-    }
 
     public String getOrigin() {
         return origin;
     }
-    public void setOrigin(String origin) {
-        this.origin = origin;
-    }
 
     public String getDepartureDate() {
         return departureDate;
-    }
-    public void setDepartureDate(String departureDate) {
-        this.departureDate = departureDate;
     }
 
     // Getters and setters for the new attributes
@@ -96,10 +81,8 @@ public class FlightInfo {
     public ArrayList<Seat> getSeats() {
         return seats;
     }
-    public void setSeats(ArrayList<Seat> seats) {
-        this.seats = seats;
-    }
 
+    //GONNA GET RID OF
     // Methods to add or remove FlightInfo to a list of all FlightInfo Objects
     public void addFlightInfo(FlightInfo flightInfo) {
         // flightInfoList.add(flightInfo);
@@ -139,16 +122,4 @@ public class FlightInfo {
     //         item.setSeats(Database.browseSeats(item.getFlightId()));
     //     }
     // }
-
-    // Override toString method to display flight information
-    @Override
-    public String toString() {
-        return "FlightInfo{" +
-                "flightId=" + flightId +
-                ", flightName='" + flightName + '\'' +
-                ", destination='" + destination + '\'' +
-                ", origin='" + origin + '\'' +
-                ", departureDate='" + departureDate + '\'' +
-                '}';
-    }
 }

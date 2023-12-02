@@ -10,7 +10,6 @@ public class MainView {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                // FlightInfo.initializeData(); // Error here
                 LoginPortal loginPortal = new LoginPortal();
                 loginPortal.setVisible(true);
             }

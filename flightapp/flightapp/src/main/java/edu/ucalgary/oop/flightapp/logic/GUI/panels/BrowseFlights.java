@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.*;
 import java.util.ArrayList;
 
 import edu.ucalgary.oop.flightapp.logic.Database;
@@ -28,23 +29,26 @@ public class BrowseFlights extends JFrame {
 
         ButtonGroup buttonGroup = new ButtonGroup();
 
+        Database.getInstance();
+        Connection conn = Database.getConnection();
+
         ArrayList<FlightInfo> temp = Database.getAllFlights();
 
-        // Display available flights as radio buttons
-        for (FlightInfo flight : temp) {
-            JRadioButton radioButton = new JRadioButton(
-                "Flight ID: " + flight.getFlightId() + " | Destination: " + flight.getDestination() + " | Departure: " + flight.getDepartureDate());
-            radioButton.setActionCommand(String.valueOf(flight.getFlightId()));
-            radioButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    selectedFlight = flight;
-                    displaySeatMap();
-                }
-            });
-            buttonGroup.add(radioButton);
-            panel.add(radioButton);
-        }
+        // // Display available flights as radio buttons
+        // for (FlightInfo flight : temp) {
+        //     JRadioButton radioButton = new JRadioButton(
+        //         "Flight ID: " + flight.getFlightId() + " | Destination: " + flight.getDestination() + " | Departure: " + flight.getDepartureDate());
+        //     radioButton.setActionCommand(String.valueOf(flight.getFlightId()));
+        //     radioButton.addActionListener(new ActionListener() {
+        //         @Override
+        //         public void actionPerformed(ActionEvent e) {
+        //             selectedFlight = flight;
+        //             displaySeatMap();
+        //         }
+        //     });
+        //     buttonGroup.add(radioButton);
+        //     panel.add(radioButton);
+        // }
 
         add(panel);
     }

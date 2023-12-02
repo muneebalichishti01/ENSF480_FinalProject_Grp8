@@ -50,7 +50,6 @@ CREATE TABLE flightInfo (
 -- Aircraft Table: Information about aircrafts
 CREATE TABLE aircrafts (
     aircraftId INT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL
 );
 
 -- Flight Attendants Table: Stores flight attendant information
