@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
 
 public class GuestDashboard extends JFrame {
   public GuestDashboard() {
-    initializeDatabaseConnection();
+    //initializeDatabaseConnection();
     //initialize components and layout for admin dashboard
     setTitle("Guest Dashboard");
     setSize(400, 300);
@@ -34,7 +34,8 @@ public class GuestDashboard extends JFrame {
     browseFlightsButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            browseFlights();
+            BrowseFlights browseFlights = new BrowseFlights();
+            browseFlights.setVisible(true);
         }
     });
     panel.add(browseFlightsButton);
@@ -91,12 +92,12 @@ public class GuestDashboard extends JFrame {
     add(panel);
   }
   
-  private void initializeDatabaseConnection() {
-    // Check if connection is already established
-    if (Database.getConnection() == null) {
-        Database.initializeDatabase();
-    }
-  }
+//   private void initializeDatabaseConnection() {
+//     // Check if connection is already established
+//     if (Database.getConnection() == null) {
+//         Database.initializeDatabase();
+//     }
+//   }
 
   private void backToLogin() {
     LoginPortal loginPortal = new LoginPortal();
@@ -104,17 +105,19 @@ public class GuestDashboard extends JFrame {
     dispose(); // Close the current window
   }
 
-  private void browseFlights() {
-        try {
-            List<FlightInfo> flights = Database.getAvailableFlights(); // Fetch flights from the database
-            // Display flights in a new window or a dialog
-            // For simplicity, let's just display flight IDs in a message dialog
-            String flightDetails = flights.stream()
-                .map(flight -> "Flight ID: " + flight.getFlightId() + ", Destination: " + flight.getDestination())
-                .collect(Collectors.joining("\n"));
-            JOptionPane.showMessageDialog(this, flightDetails);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error fetching flights: " + ex.getMessage());
-        }
-    }
+
+
+//   private void browseFlights() {
+//         try {
+//             List<FlightInfo> flights = Database.getAvailableFlights(); // Fetch flights from the database
+//             // Display flights in a new window or a dialog
+//             // For simplicity, let's just display flight IDs in a message dialog
+//             String flightDetails = flights.stream()
+//                 .map(flight -> "Flight ID: " + flight.getFlightId() + ", Destination: " + flight.getDestination())
+//                 .collect(Collectors.joining("\n"));
+//             JOptionPane.showMessageDialog(this, flightDetails);
+//         } catch (Exception ex) {
+//             JOptionPane.showMessageDialog(this, "Error fetching flights: " + ex.getMessage());
+//         }
+//     }
 }

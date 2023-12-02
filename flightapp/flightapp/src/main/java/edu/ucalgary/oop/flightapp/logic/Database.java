@@ -418,9 +418,9 @@ public class Database {
         String sql = "INSERT INTO bookingInfo (userId, flightId, ticketPrice, seatType) VALUES (?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, bookingInfo.getUser().getUserId());
-            statement.setInt(2, bookingInfo.getFlightInfo().getFlightId());
+            // statement.setInt(2, bookingInfo.getFlightInfo().getFlightId());
             statement.setDouble(3, bookingInfo.getTicketPrice());
-            statement.setString(4, bookingInfo.getSeatType());
+            // statement.setString(4, bookingInfo.getSeatType());
             statement.executeUpdate();
 
             // Retrieve the generated bookingId

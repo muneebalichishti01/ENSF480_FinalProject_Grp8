@@ -17,11 +17,11 @@ public class PassengerList {
     }
 
     // Add a passenger's booking to the list
-    public void addPassengerBooking(BookingInfo booking) {
-        if (booking.getFlightInfo().getFlightId() == this.flightId) {
-            passengerBookings.put(booking.getUser().getUserId(), booking);
-        }
-    }
+    // public void addPassengerBooking(BookingInfo booking) {
+    //     if (booking.getFlightInfo().getFlightId() == this.flightId) {
+    //         passengerBookings.put(booking.getUser().getUserId(), booking);
+    //     }
+    // }
 
     // Remove a passenger's booking from the list
     public void removePassengerBooking(int userId) {

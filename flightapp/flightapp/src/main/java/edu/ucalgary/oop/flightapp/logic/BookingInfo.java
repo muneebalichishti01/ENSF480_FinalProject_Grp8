@@ -33,12 +33,12 @@ public class BookingInfo {
         this.user = user;
     }
 
-    public FlightInfo getFlightInfo() {
-        return flightInfo;
-    }
-    public void setFlightInfo(FlightInfo flightInfo) {
-        this.flightInfo = flightInfo;
-    }
+    // public FlightInfo getFlightInfo() {
+    //     return flightInfo;
+    // }
+    // public void setFlightInfo(FlightInfo flightInfo) {
+    //     this.flightInfo = flightInfo;
+    // }
 
     public double getTicketPrice() {
         return ticketPrice;
@@ -48,12 +48,12 @@ public class BookingInfo {
     }
 
     // Optional
-    public Seat getSeat() {
-        return seat;
-    }
-    public void setSeat(Seat seat) {
-        this.seat = seat;
-    }
+    // public Seat getSeat() {
+    //     return seat;
+    // }
+    // public void setSeat(Seat seat) {
+    //     this.seat = seat;
+    // }
 
     // Override toString method to display booking information
     @Override
@@ -67,9 +67,9 @@ public class BookingInfo {
     }
 
     // optional - Get seat type
-    public String getSeatType() {
-        return seat.getDescription();
-    }
+    // public String getSeatType() {
+    //     return seat.getDescription();
+    // }
 
     public void useCompanionTicket() {
         if (user instanceof RegisteredUser) {
