@@ -75,5 +75,4 @@ public class User {
             Database.updateCompanionTicketDatabase(currentDate, getUserId());
         }
     }
-
 }
