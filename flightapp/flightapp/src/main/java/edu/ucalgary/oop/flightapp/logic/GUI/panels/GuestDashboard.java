@@ -47,11 +47,11 @@ public class GuestDashboard extends JFrame {
             if (input != null && !input.isEmpty()) {
                 try {
                     int bookingId = Integer.parseInt(input);
-                    FlightInfo temp = FlightInfo.getFlightInfoByFlightId(bookingId);
+                    FlightInfo temp = FlightInfo.getFlightInfoByFlightId(bookingId); // Error here
 
                     // Attempt to cancel the booking in the database
                     if (Database.cancelBooking(bookingId)) {
-                        temp.setAvailability(bookingId);
+                        temp.setAvailability(bookingId);                             // Error here
                         JOptionPane.showMessageDialog(GuestDashboard.this, "Booking canceled successfully.");
                     } else {
                         JOptionPane.showMessageDialog(GuestDashboard.this, "Booking ID not found or could not be canceled.", "Error", JOptionPane.ERROR_MESSAGE);
