@@ -275,7 +275,6 @@ public class LoginPortal extends JFrame {
                 }
                 addCrewLoginPanel();
                 cardLayout.show(mainPanel, "CrewLogin");
- 
             }
         });
 
@@ -314,7 +313,7 @@ public class LoginPortal extends JFrame {
                 cardLayout.show(mainPanel, "Login");
             }
         });
-    
+
         signUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -322,24 +321,24 @@ public class LoginPortal extends JFrame {
                 String email = emailField.getText();
                 String phoneNumber = phoneField.getText();
                 String password = new String(passwordField.getPassword());
-        
+
                 try {
                     Database.getInstance();
                     Connection conn = Database.getConnection();
-        
+
                     // Insert user details into the users table
                     String insertUserSQL = "INSERT INTO users (username, email, phoneNumber) VALUES (?, ?, ?)";
                     PreparedStatement userStatement = conn.prepareStatement(insertUserSQL, Statement.RETURN_GENERATED_KEYS);
                     userStatement.setString(1, username);
                     userStatement.setString(2, email);
                     userStatement.setString(3, phoneNumber);
-        
+
                     int affectedRows = userStatement.executeUpdate();
-        
+
                     if (affectedRows == 0) {
                         throw new SQLException("Creating user failed, no rows affected.");
                     }
-        
+
                     // Get the generated userId for the new user
                     ResultSet generatedKeys = userStatement.getGeneratedKeys();
                     int userId;
@@ -348,89 +347,26 @@ public class LoginPortal extends JFrame {
                     } else {
                         throw new SQLException("Creating user failed, no ID obtained.");
                     }
-        
+
                     // Insert user password into the userPasswords table
                     String insertPasswordSQL = "INSERT INTO userPasswords (userId, passwordHash) VALUES (?, ?)";
                     PreparedStatement passwordStatement = conn.prepareStatement(insertPasswordSQL);
                     passwordStatement.setInt(1, userId);
-                    passwordStatement.setString(2, password);
-        
+                    passwordStatement.setString(2, password); // Note: Password should be hashed
+
                     int insertedPasswordRows = passwordStatement.executeUpdate();
-        
+
                     if (insertedPasswordRows == 0) {
                         throw new SQLException("Creating password failed, no rows affected.");
                     }
-        
+
                     JOptionPane.showMessageDialog(LoginPortal.this, "Sign-up successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                    
-                    // Clear fields after successful sign-up
-                    usernameField.setText("");
-                    emailField.setText("");
-                    phoneField.setText("");
-                    passwordField.setText("");
-                    //comment for push
-        
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                    JOptionPane.showMessageDialog(LoginPortal.this, "Sign-up failed!", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
-        signUpButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
-                String email = emailField.getText();
-                String phoneNumber = phoneField.getText();
-                String password = new String(passwordField.getPassword());
-        
-                try {
-                    Database.getInstance();
-                    Connection conn = Database.getConnection();
-        
-                    // Insert user details into the users table
-                    String insertUserSQL = "INSERT INTO users (username, email, phoneNumber) VALUES (?, ?, ?)";
-                    PreparedStatement userStatement = conn.prepareStatement(insertUserSQL, Statement.RETURN_GENERATED_KEYS);
-                    userStatement.setString(1, username);
-                    userStatement.setString(2, email);
-                    userStatement.setString(3, phoneNumber);
-        
-                    int affectedRows = userStatement.executeUpdate();
-        
-                    if (affectedRows == 0) {
-                        throw new SQLException("Creating user failed, no rows affected.");
-                    }
-        
-                    // Get the generated userId for the new user
-                    ResultSet generatedKeys = userStatement.getGeneratedKeys();
-                    int userId;
-                    if (generatedKeys.next()) {
-                        userId = generatedKeys.getInt(1);
-                    } else {
-                        throw new SQLException("Creating user failed, no ID obtained.");
-                    }
-        
-                    // Insert user password into the userPasswords table
-                    String insertPasswordSQL = "INSERT INTO userPasswords (userId, passwordHash) VALUES (?, ?)";
-                    PreparedStatement passwordStatement = conn.prepareStatement(insertPasswordSQL);
-                    passwordStatement.setInt(1, userId);
-                    passwordStatement.setString(2, password);
-        
-                    int insertedPasswordRows = passwordStatement.executeUpdate();
-        
-                    if (insertedPasswordRows == 0) {
-                        throw new SQLException("Creating password failed, no rows affected.");
-                    }
-        
-                    JOptionPane.showMessageDialog(LoginPortal.this, "Sign-up successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                    
-                    // Clear fields after successful sign-up
-                    usernameField.setText("");
-                    emailField.setText("");
-                    phoneField.setText("");
-                    passwordField.setText("");
-                    //comment for push
-        
+
+                    // Transition directly to UserDashboard
+                    UserDashboard userDashboard = new UserDashboard();
+                    userDashboard.setVisible(true);
+                    dispose(); // Close the current LoginPortal window
+
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(LoginPortal.this, "Sign-up failed!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -444,5 +380,4 @@ public class LoginPortal extends JFrame {
         guestDashboard.setVisible(true);
         dispose();
     }
-
 }

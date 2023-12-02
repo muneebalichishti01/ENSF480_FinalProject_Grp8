@@ -80,5 +80,6 @@ CREATE TABLE seats (
     type INT, 
     occupancy BOOLEAN,
     flightId INT,
-    booked BOOLEAN NOT NULL DEFAULT FALSE
+    booked BOOLEAN NOT NULL DEFAULT FALSE,
+    FOREIGN KEY (flightId) REFERENCES flightInfo(flightId)
 );
