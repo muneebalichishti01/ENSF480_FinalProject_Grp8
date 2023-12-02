@@ -511,6 +511,29 @@ public class Database {
     public static ArrayList<Seat> browseSeats(int id){
         ArrayList<Seat> seats = new ArrayList<>();
 
+        String sql = "SELECT * FROM seats WHERE flightId = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, id);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    int seatId = resultSet.getInt("seatId");
+                    int type = resultSet.getInt("type");
+                    float cost = resultSet.getFloat("cost");
+                    boolean booked = resultSet.getBoolean("booked");
+
+                    if(type == 1){
+                        seats.add(new OrdinarySeat(seatId, booked, id, type));
+                    } else if(type == 2) {
+                        seats.add(new BusinessSeat(new OrdinarySeat(seatId, booked, id, type)));
+                    } else if (type == 3) {
+                        seats.add(new ComfortSeat(new OrdinarySeat(seatId, booked, id, type)));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return seats;
     }
 }
