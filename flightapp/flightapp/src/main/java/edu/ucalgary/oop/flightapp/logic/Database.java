@@ -229,7 +229,7 @@ public class Database {
     }
     
     // Method to update a User
-    public boolean updateUser(User user) {
+    public static void updateUser(User user) {
         String sql = "UPDATE users SET username = ?, email = ?, phoneNumber = ?, hasCreditCard = ?, lastCompanionTicketSetDate = ?, companionTicket = ? WHERE userId = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, user.getEmail());
@@ -238,11 +238,10 @@ public class Database {
             statement.setDate(4, java.sql.Date.valueOf(user.getLastCompanionTicketSetDate()));
             statement.setBoolean(5, user.getCompanionTicket());
             statement.setInt(6, user.getUserId());
-            int rowsAffected = statement.executeUpdate();
-            return rowsAffected > 0;
+            statement.executeUpdate();
+            
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
     }
 //-----------------------------------------User----------------------------------------------//
