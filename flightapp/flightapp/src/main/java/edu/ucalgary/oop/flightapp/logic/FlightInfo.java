@@ -127,7 +127,7 @@ public class FlightInfo {
     }
 
     // Method to initialize system's local storage
-    public void initializeData() {
+    public static void initializeData() {
         flightInfoList = Database.getAllFlights();
 
         // Getting an iterator for the ArrayList

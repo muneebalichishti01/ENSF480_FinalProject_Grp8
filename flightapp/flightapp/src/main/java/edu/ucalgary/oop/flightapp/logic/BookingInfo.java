@@ -6,7 +6,7 @@ public class BookingInfo {
     private User user;
     private int flightId;
     private double ticketPrice;
-    private Seat seat; // optional
+    private int seatId;
 
     // Constructors
     public BookingInfo(int bookingId, User user, FlightInfo flightInfo, double ticketPrice, Seat seat) {
@@ -14,7 +14,7 @@ public class BookingInfo {
         this.user = user;
         this.flightId = flightInfo.getFlightId();
         this.ticketPrice = ticketPrice;
-        this.seat = seat; // optional
+        this.seatId = seat.getSeatID(); // optional
         this.user.setChargeCreditCard(true);
     }
 
@@ -61,7 +61,7 @@ public class BookingInfo {
         return "BookingInfo{" +
                 "bookingId=" + bookingId +
                 ", user=" + user +
-                ", flightInfo=" + flightInfo +
+                ", flightId=" + flightId +
                 ", ticketPrice=" + ticketPrice +
                 '}';
     }
