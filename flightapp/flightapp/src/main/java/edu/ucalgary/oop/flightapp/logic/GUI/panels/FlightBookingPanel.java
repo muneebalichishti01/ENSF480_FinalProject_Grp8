@@ -20,8 +20,8 @@ public class FlightBookingPanel extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-        JPanel seatMapPanel = new JPanel(new GridLayout(0, 4)); // Adjust based on the actual seat layout
         ArrayList<Seat> seats = Database.browseSeats(selectedFlight.getFlightId()); // Fetch seats from the database
+        JPanel seatMapPanel = new JPanel(new GridLayout(0, 4)); // Adjust based on the actual seat layout
         ButtonGroup seatGroup = new ButtonGroup();
 
         for (Seat seat : seats) {
@@ -32,6 +32,12 @@ public class FlightBookingPanel extends JFrame {
             seatMapPanel.add(seatButton);
         }
 
+        // Check if there are no seats available and show a message
+        if (seats.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "There are no seats available for this flight.", "No Seats Available", JOptionPane.INFORMATION_MESSAGE);
+            dispose(); // Close the panel if no seats are available
+        }
+        
         JButton confirmBookingButton = new JButton("Confirm Booking");
         confirmBookingButton.addActionListener(e -> {
             if (selectedSeat == null) {
@@ -41,10 +47,26 @@ public class FlightBookingPanel extends JFrame {
             }
         });
 
-        add(seatMapPanel, BorderLayout.CENTER);
-        add(confirmBookingButton, BorderLayout.SOUTH);
-    }
+        // Create a back button
+        JButton backButton = new JButton("Back");
+        backButton.addActionListener(e -> {
+            // Close the current window
+            dispose();
+            // Open the BrowseFlights panel only if seats are available
+            if (!seats.isEmpty()) {
+                BrowseFlights browseFlights = new BrowseFlights();
+                browseFlights.setVisible(true);
+            }
+        });
 
+        // Add the buttons to the bottom of the panel
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.add(confirmBookingButton);
+        bottomPanel.add(backButton);
+        add(seatMapPanel, BorderLayout.CENTER);
+        add(bottomPanel, BorderLayout.SOUTH);
+    }
+    
     private void confirmBooking() {
         try {
             if (selectedSeat != null) {
