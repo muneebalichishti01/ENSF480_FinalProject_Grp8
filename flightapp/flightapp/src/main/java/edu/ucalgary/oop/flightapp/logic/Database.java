@@ -245,7 +245,7 @@ public class Database {
         }
     }
 //-----------------------------------------User----------------------------------------------//
-
+//
 //--------------------------------------Booking Info-----------------------------------------//
     // Method to create a new booking
     public static void createBooking(BookingInfo bookingInfo) throws SQLException {
