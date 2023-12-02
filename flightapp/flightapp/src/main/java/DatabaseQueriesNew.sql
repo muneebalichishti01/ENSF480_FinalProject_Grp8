@@ -104,7 +104,6 @@ CREATE TABLE payments (
 CREATE TABLE seats (        
     seatId INT PRIMARY KEY,
     type INT,
-    cost DECIMAL(10, 2),  //get rid 
     flightId INT,
     booked BOOLEAN
 );

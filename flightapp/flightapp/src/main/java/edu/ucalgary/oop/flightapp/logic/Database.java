@@ -519,7 +519,6 @@ public class Database {
                 while (resultSet.next()) {
                     int seatId = resultSet.getInt("seatId");
                     int type = resultSet.getInt("type");
-                    float cost = resultSet.getFloat("cost");
                     boolean booked = resultSet.getBoolean("booked");
 
                     if(type == 1){
@@ -536,6 +535,35 @@ public class Database {
         }
         return seats;
     }
+
+    public ArrayList<FlightInfo> getAllFlights() {
+        ArrayList<FlightInfo> flightList = new ArrayList<>();
+
+        String sql = "SELECT * FROM flightInfo";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                int flightId = resultSet.getInt("flightId");
+                String flightName = resultSet.getString("flightName");
+                String destination = resultSet.getString("destination");
+                String origin = resultSet.getString("origin");
+                String departureDate = resultSet.getString("departureDate");
+
+                // Assuming you have a FlightInfo constructor
+                FlightInfo flight = new FlightInfo(flightId, flightName, destination, origin, departureDate);
+                
+                flightList.add(flight);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return flightList;
+    }
+
+
 }
 
    
