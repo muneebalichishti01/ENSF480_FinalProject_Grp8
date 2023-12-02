@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import javax.swing.*;
 
-import edu.ucalgary.oop.flightapp.logic.BookingInfo;
 import edu.ucalgary.oop.flightapp.logic.Database;
 import edu.ucalgary.oop.flightapp.logic.FlightInfo;
 import java.util.List;

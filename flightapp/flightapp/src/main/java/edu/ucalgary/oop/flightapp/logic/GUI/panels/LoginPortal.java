@@ -286,7 +286,6 @@ public class LoginPortal extends JFrame {
         signUpPanel.setLayout(new GridBagLayout());
     
         JTextField usernameField = new JTextField(20);
-        JTextField usernameField = new JTextField(20);
         JTextField emailField = new JTextField(20);
         JPasswordField passwordField = new JPasswordField(20);
         JTextField phoneField = new JTextField(20);
