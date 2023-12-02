@@ -58,6 +58,15 @@ public class User {
         return companionTicket;
     }
     
+    public boolean applyForCreditCard() {
+        if(hasCreditCard == true) {
+            return false;                           // Return False if user already has credit card
+        } else {
+            hasCreditCard = true;                   // Return True if user gets a new card
+            Database.updateUser(this);
+            return true;
+        }
+    }
 
     public void useCompanionTicket() {
         LocalDate currentDate = LocalDate.now();
