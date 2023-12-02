@@ -485,8 +485,8 @@ public class Database {
         return null; 
     }    
     
-    public static List<String> browsePassenger(int id) {
-        List<String> passengerList = new ArrayList<>();
+    public static ArrayList<String> browsePassenger(int id) {
+        ArrayList<String> passengerList = new ArrayList<>();
         
         String sql = "SELECT users.username" +
                      "FROM users" +
@@ -536,7 +536,7 @@ public class Database {
         return seats;
     }
 
-    public ArrayList<FlightInfo> getAllFlights() {
+    public static ArrayList<FlightInfo> getAllFlights() {
         ArrayList<FlightInfo> flightList = new ArrayList<>();
 
         String sql = "SELECT * FROM flightInfo";
