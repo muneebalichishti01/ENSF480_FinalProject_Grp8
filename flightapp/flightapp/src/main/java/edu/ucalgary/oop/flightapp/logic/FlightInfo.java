@@ -1,6 +1,5 @@
 package edu.ucalgary.oop.flightapp.logic;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -94,10 +93,10 @@ public class FlightInfo {
         return flightInfoList;
     }
 
-    public ArrayList<Seat> getSeat() {
+    public ArrayList<Seat> getSeats() {
         return seats;
     }
-    public void setSeat(ArrayList<Seat> seats) {
+    public void setSeats(ArrayList<Seat> seats) {
         this.seats = seats;
     }
 
@@ -137,7 +136,7 @@ public class FlightInfo {
         while (iterator.hasNext()) {
             FlightInfo item = iterator.next();
 
-            seats = Database.browseSeats(item.getFlightId());
+            item.setSeats(Database.browseSeats(item.getFlightId()));
         }
     }
 
