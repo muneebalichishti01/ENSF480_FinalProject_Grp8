@@ -12,6 +12,7 @@ public class FlightBookingPanel extends JFrame {
 
     private FlightInfo selectedFlight;
     private Seat selectedSeat;
+    // private User selectedUser;  // User object (for PaymentInfoPanelUser)
     private JComboBox<String> seatTypeComboBox;
     private JPanel seatMapPanel;
     private ButtonGroup seatGroup;
@@ -109,6 +110,11 @@ public class FlightBookingPanel extends JFrame {
             // Transition to PaymentInfoPanel or other appropriate action
             PaymentInfoPanel paymentInfoPanel = new PaymentInfoPanel(selectedFlight, selectedSeat);
             paymentInfoPanel.setVisible(true);
+
+            // TODO: Uncomment this section for the User version of the panel
+            // Transition to PaymentInfoPanelUser
+            // PaymentInfoPanelUser paymentInfoPanelUser = new PaymentInfoPanelUser(selectedFlight, selectedSeat, selectedUser);
+            // paymentInfoPanelUser.setVisible(true);
     
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error confirming booking: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

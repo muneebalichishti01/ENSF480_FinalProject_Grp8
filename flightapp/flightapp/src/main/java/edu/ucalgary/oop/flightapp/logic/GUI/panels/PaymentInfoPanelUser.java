@@ -1,21 +1,18 @@
 package edu.ucalgary.oop.flightapp.logic.GUI.panels;
 
-import edu.ucalgary.oop.flightapp.logic.BookingInfo;
-import edu.ucalgary.oop.flightapp.logic.FlightInfo;
-import edu.ucalgary.oop.flightapp.logic.Payment;
-import edu.ucalgary.oop.flightapp.logic.Seat;
-import edu.ucalgary.oop.flightapp.logic.User;
+import edu.ucalgary.oop.flightapp.logic.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class PaymentInfoPanelUser extends JFrame {
     private FlightInfo selectedFlight;
     private Seat selectedSeat;
-    private User user;
+    private User user;  // User object
     private JTextField cardNumberField;
     private JTextField expiryDateField;
     private JTextField cvvField;
@@ -51,7 +48,6 @@ public class PaymentInfoPanelUser extends JFrame {
 
     private void setupUI() {
         setLayout(new GridLayout(7, 2));
-
         add(new JLabel("Card Number:"));
         add(cardNumberField);
         add(new JLabel("Expiry Date:"));
@@ -81,13 +77,21 @@ public class PaymentInfoPanelUser extends JFrame {
         if (validatePaymentInfo(cardNumber, expiryDate, cvv)) {
             try {
                 double price = Payment.calculatePrice(cancellationInsurance, selectedSeat);
-                BookingInfo bookingInfo = Payment.processPayment(selectedSeat, cancellationInsurance, selectedFlight, price, user, useCompanionTicket);
+                BookingInfo bookingInfo = Payment.processPayment(selectedSeat, cancellationInsurance, selectedFlight, price);
 
-                // Show ticket/receipt in a new popup window
-                showTicketReceipt(bookingInfo, useCompanionTicket);
+                Seat companionSeat = null;
+                if (useCompanionTicket) {
+                    companionSeat = findAvailableSeat(selectedFlight);
+                    if (companionSeat != null) {
+                        user.useCompanionTicket(); // Update the companion ticket status
+                        Database.updateUser(user); // Save changes to the user
+                    }
+                }
+
+                showTicketReceipt(bookingInfo, companionSeat);
 
                 JOptionPane.showMessageDialog(this, "Payment successful! Booking confirmed. Email notification sent.");
-                dispose(); // Close the panel
+                dispose();
 
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, "Error processing payment: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -98,35 +102,40 @@ public class PaymentInfoPanelUser extends JFrame {
     }
 
     private boolean validatePaymentInfo(String cardNumber, String expiryDate, String cvv) {
-        // Implement actual validation logic for payment information
+        // Validation logic here
         return !cardNumber.isEmpty() && !expiryDate.isEmpty() && !cvv.isEmpty();
     }
 
-    private void showTicketReceipt(BookingInfo bookingInfo, boolean useCompanionTicket) {
+    private Seat findAvailableSeat(FlightInfo flightInfo) {
+        // Implement logic to find an available seat
+        ArrayList<Seat> seats = Database.browseSeats(flightInfo.getFlightId());
+        for (Seat seat : seats) {
+            if (!seat.isBooked()) {
+                return seat;
+            }
+        }
+        return null; // or handle no available seats case
+    }
+
+    private void showTicketReceipt(BookingInfo bookingInfo, Seat companionSeat) {
+        // Create a new popup window to display the ticket/receipt
         JFrame receiptFrame = new JFrame("Ticket Receipt");
         receiptFrame.setSize(400, 300);
         receiptFrame.setLocationRelativeTo(null);
         receiptFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    
+
         JTextArea receiptTextArea = new JTextArea();
         receiptTextArea.setEditable(false);
         receiptTextArea.append("Booking ID: " + bookingInfo.getBookingId() + "\n");
-        receiptTextArea.append("Flight Name: " + bookingInfo.getFlightInfo().getFlightName() + "\n");
-        receiptTextArea.append("Departure Date: " + bookingInfo.getFlightInfo().getDepartureDate() + "\n");
-        receiptTextArea.append("Seat Type: " + bookingInfo.getSeat().getDescription() + "\n");
-        receiptTextArea.append("Ticket Price: $" + bookingInfo.getTicketPrice() + "\n");
-        receiptTextArea.append("Cancellation Insurance: " + (bookingInfo.getCancellationInsurance() ? "Yes" : "No") + "\n");
-
-        // Add companion ticket details if used
-        if (useCompanionTicket) {
-            Seat companionSeat = bookingInfo.getCompanionSeat();
+        // Add more details of bookingInfo
+        if (companionSeat != null) {
             receiptTextArea.append("\nCompanion Seat ID: " + companionSeat.getSeatID() + "\n");
-            receiptTextArea.append("Companion Seat Type: " + companionSeat.getDescription() + "\n");
+            // Add more details of companionSeat
         }
 
         JScrollPane scrollPane = new JScrollPane(receiptTextArea);
         receiptFrame.add(scrollPane);
-    
+
         receiptFrame.setVisible(true);
     }
 }
