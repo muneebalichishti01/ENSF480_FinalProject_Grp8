@@ -3,6 +3,7 @@ package edu.ucalgary.oop.flightapp.logic.GUI.panels;
 import javax.swing.*;
 
 import edu.ucalgary.oop.flightapp.logic.Database;
+import edu.ucalgary.oop.flightapp.logic.User;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -226,27 +227,31 @@ public class LoginPortal extends JFrame {
                 String password = new String(passwordField.getPassword());
         
                 // Hash the password before checking it against the database
-                String hashedPassword = password;
+                String hashedPassword = password; // Replace with actual hashing logic
         
                 try {
                     Database.getInstance();
                     Connection conn = Database.getConnection();
-                    // Adjusted SQL query to join the users and userPasswords tables
-                    String sql = "SELECT up.* FROM users u JOIN userPasswords up ON u.userId = up.userId WHERE u.username = ? AND up.passwordHash = ?";
+                    String sql = "SELECT * FROM users u JOIN userPasswords up ON u.userId = up.userId WHERE u.username = ? AND up.passwordHash = ?";
                     PreparedStatement statement = conn.prepareStatement(sql);
                     statement.setString(1, username);
                     statement.setString(2, hashedPassword);
                     
                     ResultSet resultSet = statement.executeQuery();
                     if (resultSet.next()) {
-                        // User exists, login successful
-                        JOptionPane.showMessageDialog(LoginPortal.this, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                        // Proceed to user dashboard or appropriate next step
-                        UserDashboard userDashboard = new UserDashboard();
+                        int userId = resultSet.getInt("userId");
+                        String email = resultSet.getString("email");
+                        String phoneNumber = resultSet.getString("phoneNumber");
+                        boolean hasCreditCard = resultSet.getBoolean("hasCreditCard");
+        
+                        // Create a User object with fetched details
+                        User authenticatedUser = new User(userId, username, email, phoneNumber, hasCreditCard);
+        
+                        // Open the UserDashboard with the authenticated user
+                        UserDashboard userDashboard = new UserDashboard(authenticatedUser);
                         userDashboard.setVisible(true);
-                        dispose();
+                        dispose(); // Close the current LoginPortal window
                     } else {
-                        // User does not exist, login failed
                         JOptionPane.showMessageDialog(LoginPortal.this, "Login failed!", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 } catch (SQLException ex) {
@@ -255,7 +260,7 @@ public class LoginPortal extends JFrame {
                 }
             }
         });
-
+        
         adminLogIn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -321,24 +326,27 @@ public class LoginPortal extends JFrame {
                 String email = emailField.getText();
                 String phoneNumber = phoneField.getText();
                 String password = new String(passwordField.getPassword());
-
+        
+                // Hash the password before storing it in the database
+                String hashedPassword = password; // Replace with actual hashing logic
+        
                 try {
                     Database.getInstance();
                     Connection conn = Database.getConnection();
-
+        
                     // Insert user details into the users table
                     String insertUserSQL = "INSERT INTO users (username, email, phoneNumber) VALUES (?, ?, ?)";
                     PreparedStatement userStatement = conn.prepareStatement(insertUserSQL, Statement.RETURN_GENERATED_KEYS);
                     userStatement.setString(1, username);
                     userStatement.setString(2, email);
                     userStatement.setString(3, phoneNumber);
-
+        
                     int affectedRows = userStatement.executeUpdate();
-
+        
                     if (affectedRows == 0) {
                         throw new SQLException("Creating user failed, no rows affected.");
                     }
-
+        
                     // Get the generated userId for the new user
                     ResultSet generatedKeys = userStatement.getGeneratedKeys();
                     int userId;
@@ -347,33 +355,29 @@ public class LoginPortal extends JFrame {
                     } else {
                         throw new SQLException("Creating user failed, no ID obtained.");
                     }
-
+        
                     // Insert user password into the userPasswords table
                     String insertPasswordSQL = "INSERT INTO userPasswords (userId, passwordHash) VALUES (?, ?)";
                     PreparedStatement passwordStatement = conn.prepareStatement(insertPasswordSQL);
                     passwordStatement.setInt(1, userId);
-                    passwordStatement.setString(2, password); // Note: Password should be hashed
-
-                    int insertedPasswordRows = passwordStatement.executeUpdate();
-
-                    if (insertedPasswordRows == 0) {
-                        throw new SQLException("Creating password failed, no rows affected.");
-                    }
-
+                    passwordStatement.setString(2, hashedPassword);
+        
+                    passwordStatement.executeUpdate();
+        
                     JOptionPane.showMessageDialog(LoginPortal.this, "Sign-up successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-
-                    // Transition directly to UserDashboard
-                    UserDashboard userDashboard = new UserDashboard();
+        
+                    // transition directly to UserDashboard
+                    UserDashboard userDashboard = new UserDashboard(new User(userId, username, email, phoneNumber, false));
                     userDashboard.setVisible(true);
                     dispose(); // Close the current LoginPortal window
-
+        
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(LoginPortal.this, "Sign-up failed!", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
-    }    
+        }    
 
     private void initializeGuestDashboard(){
         GuestDashboard guestDashboard = new GuestDashboard();

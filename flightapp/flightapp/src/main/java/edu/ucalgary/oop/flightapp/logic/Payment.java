@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 public class Payment {
     // Calculate price
-    public Double calculatePrice(boolean cancellationInsurance,Seat seat) {
+    public static Double calculatePrice(boolean cancellationInsurance,Seat seat) {
         double price;
         if (cancellationInsurance == true) {
             price = seat.getCost() + 50.0;
@@ -14,7 +14,7 @@ public class Payment {
     }
 
     // Process payment method
-    public BookingInfo processPayment(Seat seat, boolean cancellationInsurance, FlightInfo flightInfo, double price) throws SQLException {
+    public static BookingInfo processPayment(Seat seat, boolean cancellationInsurance, FlightInfo flightInfo, double price) throws SQLException {
         int bookingId = seat.getSeatID() + flightInfo.getFlightId();
         flightInfo.setAvailability(seat.getSeatID());
         BookingInfo temp = new BookingInfo(bookingId, flightInfo, price, seat, cancellationInsurance);

@@ -230,19 +230,21 @@ public class Database {
     // Method to update a User
     public static void updateUser(User user) {
         String sql = "UPDATE users SET username = ?, email = ?, phoneNumber = ?, hasCreditCard = ?, lastCompanionTicketSetDate = ?, companionTicket = ? WHERE userId = ?";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, user.getEmail());
-            statement.setString(2, user.getPhoneNumber());
-            statement.setBoolean(3, user.getHasCreditCard());
-            statement.setDate(4, java.sql.Date.valueOf(user.getLastCompanionTicketSetDate()));
-            statement.setBoolean(5, user.getCompanionTicket());
-            statement.setInt(6, user.getUserId());
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
+            statement.setString(1, user.getUsername());
+            statement.setString(2, user.getEmail());
+            statement.setString(3, user.getPhoneNumber());
+            statement.setBoolean(4, user.getHasCreditCard());
+            statement.setDate(5, java.sql.Date.valueOf(user.getLastCompanionTicketSetDate()));
+            statement.setBoolean(6, user.getCompanionTicket());
+            statement.setInt(7, user.getUserId()); // Ensure this line is present and correct
+    
             statement.executeUpdate();
-            
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+    
 //-----------------------------------------User----------------------------------------------//
 //
 //--------------------------------------Booking Info-----------------------------------------//
@@ -309,8 +311,9 @@ public class Database {
         return crewList;
     }
 
+    // Method to update companion ticket status
     public static void updateCompanionTicketDatabase(LocalDate date, int userId) {
-        String sql = "UPDATE registeredUsers SET lastCompanionTicketSetDate = ? WHERE userId = ?";
+        String sql = "UPDATE users SET lastCompanionTicketSetDate = ? WHERE userId = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             Date sqlDate = java.sql.Date.valueOf(date);;
             statement.setDate(1, (java.sql.Date) sqlDate);
@@ -321,6 +324,7 @@ public class Database {
         }
     }
 
+    // Method to get last companion ticket date
     public static LocalDate getLastCompanionTicketDate(int userId) {
         String sql = "SELECT lastCompanionTicketSetDate FROM users WHERE userId = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {

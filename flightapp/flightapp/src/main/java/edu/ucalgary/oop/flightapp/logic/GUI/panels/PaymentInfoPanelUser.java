@@ -2,8 +2,9 @@ package edu.ucalgary.oop.flightapp.logic.GUI.panels;
 
 import edu.ucalgary.oop.flightapp.logic.BookingInfo;
 import edu.ucalgary.oop.flightapp.logic.FlightInfo;
-import edu.ucalgary.oop.flightapp.logic.Seat;
 import edu.ucalgary.oop.flightapp.logic.Payment;
+import edu.ucalgary.oop.flightapp.logic.Seat;
+import edu.ucalgary.oop.flightapp.logic.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,18 +12,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
-public class PaymentInfoPanel extends JFrame {
+public class PaymentInfoPanelUser extends JFrame {
     private FlightInfo selectedFlight;
     private Seat selectedSeat;
+    private User user;
     private JTextField cardNumberField;
     private JTextField expiryDateField;
     private JTextField cvvField;
     private JCheckBox cancellationInsuranceCheckbox;
+    private JCheckBox useCompanionTicketCheckbox;
     private JButton confirmPaymentButton;
 
-    public PaymentInfoPanel(FlightInfo selectedFlight, Seat selectedSeat) {
+    public PaymentInfoPanelUser(FlightInfo selectedFlight, Seat selectedSeat, User user) {
         this.selectedFlight = selectedFlight;
         this.selectedSeat = selectedSeat;
+        this.user = user;
 
         setTitle("Payment Information");
         setSize(400, 300);
@@ -33,6 +37,7 @@ public class PaymentInfoPanel extends JFrame {
         expiryDateField = new JTextField(5);
         cvvField = new JTextField(3);
         cancellationInsuranceCheckbox = new JCheckBox("Cancellation Insurance");
+        useCompanionTicketCheckbox = new JCheckBox("Use Companion Ticket");
 
         setupUI();
 
@@ -45,7 +50,7 @@ public class PaymentInfoPanel extends JFrame {
     }
 
     private void setupUI() {
-        setLayout(new GridLayout(6, 2));
+        setLayout(new GridLayout(7, 2));
 
         add(new JLabel("Card Number:"));
         add(cardNumberField);
@@ -55,6 +60,8 @@ public class PaymentInfoPanel extends JFrame {
         add(cvvField);
         add(new JLabel("Add Cancellation Insurance:"));
         add(cancellationInsuranceCheckbox);
+        add(new JLabel("Use Companion Ticket:"));
+        add(useCompanionTicketCheckbox);
 
         confirmPaymentButton = new JButton("Confirm Payment");
         add(confirmPaymentButton);
@@ -69,14 +76,15 @@ public class PaymentInfoPanel extends JFrame {
         String expiryDate = expiryDateField.getText();
         String cvv = cvvField.getText();
         boolean cancellationInsurance = cancellationInsuranceCheckbox.isSelected();
+        boolean useCompanionTicket = useCompanionTicketCheckbox.isSelected() && user.getCompanionTicket();
 
         if (validatePaymentInfo(cardNumber, expiryDate, cvv)) {
             try {
                 double price = Payment.calculatePrice(cancellationInsurance, selectedSeat);
-                BookingInfo bookingInfo = Payment.processPayment(selectedSeat, cancellationInsurance, selectedFlight, price);
+                BookingInfo bookingInfo = Payment.processPayment(selectedSeat, cancellationInsurance, selectedFlight, price, user, useCompanionTicket);
 
                 // Show ticket/receipt in a new popup window
-                showTicketReceipt(bookingInfo);
+                showTicketReceipt(bookingInfo, useCompanionTicket);
 
                 JOptionPane.showMessageDialog(this, "Payment successful! Booking confirmed. Email notification sent.");
                 dispose(); // Close the panel
@@ -94,8 +102,7 @@ public class PaymentInfoPanel extends JFrame {
         return !cardNumber.isEmpty() && !expiryDate.isEmpty() && !cvv.isEmpty();
     }
 
-    private void showTicketReceipt(BookingInfo bookingInfo) {
-        // Create a new popup window to display the ticket/receipt
+    private void showTicketReceipt(BookingInfo bookingInfo, boolean useCompanionTicket) {
         JFrame receiptFrame = new JFrame("Ticket Receipt");
         receiptFrame.setSize(400, 300);
         receiptFrame.setLocationRelativeTo(null);
@@ -109,12 +116,17 @@ public class PaymentInfoPanel extends JFrame {
         receiptTextArea.append("Seat Type: " + bookingInfo.getSeat().getDescription() + "\n");
         receiptTextArea.append("Ticket Price: $" + bookingInfo.getTicketPrice() + "\n");
         receiptTextArea.append("Cancellation Insurance: " + (bookingInfo.getCancellationInsurance() ? "Yes" : "No") + "\n");
-        // Add more booking information as needed
-    
+
+        // Add companion ticket details if used
+        if (useCompanionTicket) {
+            Seat companionSeat = bookingInfo.getCompanionSeat();
+            receiptTextArea.append("\nCompanion Seat ID: " + companionSeat.getSeatID() + "\n");
+            receiptTextArea.append("Companion Seat Type: " + companionSeat.getDescription() + "\n");
+        }
+
         JScrollPane scrollPane = new JScrollPane(receiptTextArea);
         receiptFrame.add(scrollPane);
     
         receiptFrame.setVisible(true);
     }
-    
 }
