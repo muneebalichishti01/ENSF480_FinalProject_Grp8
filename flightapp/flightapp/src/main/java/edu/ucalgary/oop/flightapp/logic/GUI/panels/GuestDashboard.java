@@ -2,8 +2,13 @@ package edu.ucalgary.oop.flightapp.logic.GUI.panels;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.*;
+
+import edu.ucalgary.oop.flightapp.logic.BookingInfo;
+import edu.ucalgary.oop.flightapp.logic.FlightInfo;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
@@ -39,8 +44,35 @@ public class GuestDashboard extends JFrame {
     cancelFlightButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e){
-        //implementation to cancel flight would go here
-        JOptionPane.showMessageDialog(GuestDashboard.this, "Cancelling Flight...");
+        String input = JOptionPane.showInputDialog(GuestDashboard.this, "Enter Booking ID to cancel:");
+        try {
+            int bookingId = Integer.parseInt(input);
+
+            boolean found = false;
+            for (FlightInfo flight : FlightInfo.getAllFlightInfo()) {
+                for (BookingInfo booking : flight.getPassengerBookings()) {
+                    if (booking.getBookingId() == bookingId) {
+                        flight.removeBooking(booking); // Remove the booking
+                        flight.setBooking(booking.getSeat().getSeatID()); // Set the seat as available
+                        found = true;
+                        break;
+                    }
+                }
+                if (found) break;
+            }
+
+            if (found) {
+                JOptionPane.showMessageDialog(GuestDashboard.this, "Booking canceled successfully.");
+            } else {
+                JOptionPane.showMessageDialog(GuestDashboard.this, "Booking ID not found.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(GuestDashboard.this, "Please enter a valid Booking ID.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException ex) {
+            // Handle the SQLException here
+            ex.printStackTrace(); // Print or log the exception
+            JOptionPane.showMessageDialog(GuestDashboard.this, "A database error occurred.", "Error", JOptionPane.ERROR_MESSAGE);
+        } 
       }
     });
     panel.add(cancelFlightButton);
@@ -57,5 +89,6 @@ public class GuestDashboard extends JFrame {
     panel.add(logoutButton);
     
     add(panel);
+  
   }
 }

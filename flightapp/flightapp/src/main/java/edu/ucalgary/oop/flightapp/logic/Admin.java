@@ -60,16 +60,16 @@ public class Admin {
     public void addFlight(FlightInfo flight) {
         
     }
-    public void removeFlight(FlightInfo flight) {
-        flights.remove(flight);
-        Database.removeFlight(flight.getFlightId());
-    }
-    public void updateFlight(int index, FlightInfo updatedFlight) {
-        if (index >= 0 && index < flights.size()) {
-            flights.set(index, updatedFlight);
-            Database.editFlight(updatedFlight);
-        }
-    }
+    // public void removeFlight(FlightInfo flight) {
+    //     flights.remove(flight);
+    //     Database.removeFlight(flight.getFlightId());
+    // }
+    // public void updateFlight(int index, FlightInfo updatedFlight) {
+    //     if (index >= 0 && index < flights.size()) {
+    //         flights.set(index, updatedFlight);
+    //         Database.editFlight(updatedFlight);
+    //     }
+    // }
 
     // Manage Flight Attendants
     public void addFlightAttendant(FlightAttendant attendant) {
