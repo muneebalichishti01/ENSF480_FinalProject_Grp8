@@ -4,6 +4,8 @@ package edu.ucalgary.oop.flightapp.logic;
 public class BusinessSeat extends SeatDecorator {
     public BusinessSeat(Seat decoratedSeat) {
         super(decoratedSeat);
+        this.setType(3); // Business seats have type 3
+
     }
 
     public String getDescription() {

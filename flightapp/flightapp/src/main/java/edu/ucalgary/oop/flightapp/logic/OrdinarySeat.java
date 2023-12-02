@@ -3,10 +3,11 @@ package edu.ucalgary.oop.flightapp.logic;
 public class OrdinarySeat extends Seat {
     // Constructors
     public OrdinarySeat(int ID, boolean booked, int flightID, int type) {
+        
+        super(1); // Ordinary seats have type 1
         this.seatID = ID;
         this.booked = booked;
         this.flightID = flightID;
-        this.type = type;
     }
 
     // Getters and Setters

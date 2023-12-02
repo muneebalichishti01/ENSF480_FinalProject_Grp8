@@ -372,8 +372,7 @@ public class Database {
                 while (resultSet.next()) {
                     int seatId = resultSet.getInt("seatId");
                     int type = resultSet.getInt("type");
-                    boolean booked = resultSet.getBoolean("booked");
-
+                    boolean booked = resultSet.getBoolean("booked");                    
                     if(type == 1){
                         seats.add(new OrdinarySeat(seatId, booked, id, type));
                     } else if(type == 2) {

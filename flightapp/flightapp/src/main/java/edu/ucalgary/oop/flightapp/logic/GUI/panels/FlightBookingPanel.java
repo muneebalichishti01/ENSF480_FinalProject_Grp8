@@ -68,20 +68,20 @@ public class FlightBookingPanel extends JFrame {
 
     private void updateSeatMap() {
         seatMapPanel.removeAll();
-        seatGroup = new ButtonGroup(); // Reset the button group
-
+        seatGroup = new ButtonGroup();
+    
         String selectedSeatType = (String) seatTypeComboBox.getSelectedItem();
         ArrayList<Seat> seats = Database.browseSeats(selectedFlight.getFlightId());
-
+    
         for (Seat seat : seats) {
             if (seatTypeMatches(seat, selectedSeatType) && !seat.isBooked()) {
                 JRadioButton seatButton = new JRadioButton("Seat " + seat.getSeatID());
-                seatButton.addActionListener(e -> selectedSeat = seat); // Set selected seat
+                seatButton.addActionListener(e -> selectedSeat = seat);
                 seatGroup.add(seatButton);
                 seatMapPanel.add(seatButton);
             }
         }
-
+    
         seatMapPanel.revalidate();
         seatMapPanel.repaint();
     }
@@ -117,6 +117,8 @@ public class FlightBookingPanel extends JFrame {
     
     private boolean seatTypeMatches(Seat seat, String seatType) {
         int seatTypeId = seat.getType(); // Assuming getType() returns an int representing the seat type
+        System.out.println("Seat ID: " + seat.getSeatID() + ", Type: " + seatTypeId + ", Booked: " + seat.isBooked()); // Debugging
+        // Error here, seat type 1 works, but 2 and 3 don't
         switch (seatType) {
             case ORDINARY_SEAT:
                 return seatTypeId == 1; // Assuming 1 represents ordinary seats
@@ -127,6 +129,6 @@ public class FlightBookingPanel extends JFrame {
             default:
                 return false;
         }
-    }
+    }    
     
 }

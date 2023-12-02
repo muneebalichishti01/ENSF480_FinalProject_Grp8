@@ -10,6 +10,14 @@ public abstract class Seat {
     public abstract String getDescription();
     public abstract double getCost();
 
+    public Seat(int type) {
+        this.type = type;
+    }
+
+    public Seat() {
+        // Default constructor, type is undefined
+    }
+
     // Might mess up needs to be tested
     public int getSeatID() {
         return seatID;
