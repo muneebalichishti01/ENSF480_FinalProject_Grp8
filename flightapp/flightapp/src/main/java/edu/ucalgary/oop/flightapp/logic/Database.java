@@ -2,7 +2,6 @@ package edu.ucalgary.oop.flightapp.logic;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.*;
 import java.util.Date;
 
@@ -590,8 +589,6 @@ public class Database {
 
         return flightList;
     }
-
-
 }
 
    

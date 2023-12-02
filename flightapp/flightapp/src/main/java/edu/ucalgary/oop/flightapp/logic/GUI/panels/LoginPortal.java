@@ -2,9 +2,7 @@ package edu.ucalgary.oop.flightapp.logic.GUI.panels;
 
 import javax.swing.*;
 
-import edu.ucalgary.oop.flightapp.logic.Admin;
 import edu.ucalgary.oop.flightapp.logic.Database;
-import jakarta.websocket.OnError; // ?? what is this
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -71,7 +69,8 @@ public class LoginPortal extends JFrame {
                 String hashedPassword = password;
         
                 try {
-                    Connection conn = Database.getInstance().getConnection();
+                    Database.getInstance();
+                    Connection conn = Database.getConnection();
                     // Adjusted SQL query to join the users and userPasswords tables
                     String sql = "SELECT up.* FROM flightAttendants f JOIN flightAttendantPasswords up ON f.FlightAttendantId = up.FlightAttendantId WHERE f.username = ? AND up.passwordHash = ?";
                     PreparedStatement statement = conn.prepareStatement(sql);
@@ -136,7 +135,8 @@ public class LoginPortal extends JFrame {
                 String hashedPassword = password;
         
                 try {
-                    Connection conn = Database.getInstance().getConnection();
+                    Database.getInstance();
+                    Connection conn = Database.getConnection();
                     // Adjusted SQL query to join the admin and adminPasswords tables
                     String sql = "SELECT up.* FROM admins a JOIN adminPasswords up ON a.adminId = up.adminId WHERE a.username = ? AND up.passwordHash = ?";
                     PreparedStatement statement = conn.prepareStatement(sql);
@@ -324,7 +324,8 @@ public class LoginPortal extends JFrame {
                 String password = new String(passwordField.getPassword());
         
                 try {
-                    Connection conn = Database.getInstance().getConnection();
+                    Database.getInstance();
+                    Connection conn = Database.getConnection();
         
                     // Insert user details into the users table
                     String insertUserSQL = "INSERT INTO users (username, email, phoneNumber) VALUES (?, ?, ?)";
@@ -384,7 +385,8 @@ public class LoginPortal extends JFrame {
                 String password = new String(passwordField.getPassword());
         
                 try {
-                    Connection conn = Database.getInstance().getConnection();
+                    Database.getInstance();
+                    Connection conn = Database.getConnection();
         
                     // Insert user details into the users table
                     String insertUserSQL = "INSERT INTO users (username, email, phoneNumber) VALUES (?, ?, ?)";
