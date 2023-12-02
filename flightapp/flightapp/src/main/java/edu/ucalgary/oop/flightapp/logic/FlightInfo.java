@@ -102,11 +102,11 @@ public class FlightInfo {
 
     // Methods to add or remove FlightInfo to a list of all FlightInfo Objects
     public void addFlightInfo(FlightInfo flightInfo) {
-        flightInfoList.add(flightInfo);
+        // flightInfoList.add(flightInfo);
         Database.addFlight(flightInfo);
     }
     public static void removeFlightInfo(FlightInfo flightInfo) {
-        flightInfoList.remove(flightInfo);
+        // flightInfoList.remove(flightInfo);
         Database.removeFlight(flightInfo.getFlightId());
     }
 
@@ -125,20 +125,20 @@ public class FlightInfo {
         }
     }
 
-    // Method to initialize system's local storage
-    public static void initializeData() {
-        flightInfoList = Database.getAllFlights();
+    // // Method to initialize system's local storage
+    // public static void initializeData() {
+    //     flightInfoList = Database.getAllFlights();
 
-        // Getting an iterator for the ArrayList
-        Iterator<FlightInfo> iterator = flightInfoList.iterator();
+    //     // Getting an iterator for the ArrayList
+    //     Iterator<FlightInfo> iterator = flightInfoList.iterator();
 
-        // Iterating through the ArrayList using iterator
-        while (iterator.hasNext()) {
-            FlightInfo item = iterator.next();
+    //     // Iterating through the ArrayList using iterator
+    //     while (iterator.hasNext()) {
+    //         FlightInfo item = iterator.next();
 
-            item.setSeats(Database.browseSeats(item.getFlightId()));
-        }
-    }
+    //         item.setSeats(Database.browseSeats(item.getFlightId()));
+    //     }
+    // }
 
     // Override toString method to display flight information
     @Override
