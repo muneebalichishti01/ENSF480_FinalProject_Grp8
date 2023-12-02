@@ -1,62 +1,67 @@
--- Insert sample data into 'users' table
-INSERT INTO users (username, email, phoneNumber, hasCancellationInsurance) VALUES 
-('johndoe', 'john.doe@example.com', '123-456-7890', TRUE),
-('janedoe', 'jane.doe@example.com', '987-654-3210', FALSE);
+-- Insert data into `users`
+INSERT INTO users (username, email, phoneNumber, hasCreditCard, lastCompanionTicketSetDate, companionTicket) 
+VALUES 
+('john_doe', 'john.doe@example.com', '123-456-7890', TRUE, '2023-01-01', FALSE),
+('jane_smith', 'jane.smith@example.com', '098-765-4321', FALSE, '2023-02-01', TRUE);
 
--- Insert sample data into 'registeredUsers' table
-INSERT INTO registeredUsers (userId, address, creditCardNumber, loungeAccessId, promotionId, companionTicketId, lastCompanionTicketSetDate) VALUES 
-(1, '123 Main St, Anytown, AT 12345', '1111222233334444', 1, 1, 1, '2023-01-01'),
-(2, '456 Elm St, Othertown, OT 67890', '5555666677778888', 2, 2, 2, '2023-01-02');
+-- Insert data into `userPasswords`
+INSERT INTO userPasswords (userId, passwordHash) 
+VALUES 
+(1, 'hashedPasswordJohn'),
+(2, 'hashedPasswordJane');
 
--- Insert sample data into 'userPasswords' table
--- Note: Passwords should be hashed in a real application
-INSERT INTO userPasswords (userId, passwordHash) VALUES 
-(1, 'hashedpassword1'),
-(2, 'hashedpassword2');
+-- Insert data into `flightInfo`
+INSERT INTO flightInfo (flightId, flightName, destination, origin, departureDate) 
+VALUES 
+(101, 'Flight A', 'New York', 'Los Angeles', '2023-12-25'),
+(102, 'Flight B', 'San Francisco', 'Chicago', '2023-12-26'),
+(201, 'Flight C', 'Toronto', 'Calgary', '2024-01-03'),
+(202, 'Flight D', 'Vancouver', 'Edmonton', '2023-01-01');
 
--- Insert sample data into 'creditCards' table
-INSERT INTO creditCards (userId, cardNumber, expiryDate, cvv) VALUES 
-(1, '1111222233334444', '2025-12', '123'),
-(2, '5555666677778888', '2026-06', '456');
+-- Insert data into `aircrafts`
+INSERT INTO aircrafts (aircraftId) 
+VALUES 
+(201),
+(202);
 
--- Insert sample data into 'flightInfo' table
-INSERT INTO flightInfo (flightId, flightName, destination, origin, departureDate) VALUES 
-(1, 'Flight A101', 'New York', 'Los Angeles', '2023-12-15'),
-(2, 'Flight B202', 'Chicago', 'Miami', '2023-12-20');
+-- Insert data into `passengers`
+INSERT INTO passengers (flightId, name) 
+VALUES 
+(101, 'Alice Johnson'),
+(102, 'Bob Brown');
 
--- Insert sample data into 'aircrafts' table
-INSERT INTO aircrafts (aircraftId, name) VALUES 
-(1, 'Boeing 737'),
-(2, 'Airbus A320');
+-- Insert data into `flightAttendants`
+INSERT INTO flightAttendants (FlightAttendantId, username, name) 
+VALUES 
+(301, 'attendant1', 'Emma Wilson'),
+(302, 'attendant2', 'Liam Smith');
 
--- Insert sample data into 'flightAttendants' table
-INSERT INTO flightAttendants (FlightAttendantId, name, username) VALUES 
-(1, 'Alice Smith', 'asmith'),
-(2, 'Bob Johnson', 'bjohnson');
+-- Insert data into `flightAttendantPasswords`
+INSERT INTO flightAttendantPasswords (flightAttendantId, passwordHash) 
+VALUES 
+(301, 'attendantHash1'),
+(302, 'attendantHash2');
 
--- Insert sample data into 'flightAttendantPasswords' table
--- Note: Passwords should be hashed in a real application
-INSERT INTO flightAttendantPasswords (flightAttendantId, passwordHash) VALUES 
-(1, 'hashedpassword1'),
-(2, 'hashedpassword2');
+-- Insert data into `bookingInfo`
+INSERT INTO bookingInfo (flightId, ticketPrice, cancellationInsurance) 
+VALUES 
+(101, 200.00, TRUE),
+(102, 150.00, FALSE);
 
--- Insert sample data into 'bookingInfo' table
-INSERT INTO bookingInfo (bookingId, userId, flightId, ticketPrice) VALUES 
-(1, 1, 1, 300.00),
-(2, 2, 2, 450.00);
+-- Insert data into `admins`
+INSERT INTO admins (adminId, username) 
+VALUES 
+(401, 'admin1'),
+(402, 'admin2');
 
--- Insert sample data into 'payments' table
-INSERT INTO payments (paymentId, userId, amount, paymentStatus) VALUES 
-(1, 1, 300.00, 'Completed'),
-(2, 2, 450.00, 'Pending');
+-- Insert data into `adminPasswords`
+INSERT INTO adminPasswords (adminId, passwordHash) 
+VALUES 
+(401, 'adminHash1'),
+(402, 'adminHash2');
 
--- Insert sample data into 'admins' table
-INSERT INTO admins (adminId, username) VALUES 
-(1, 'admin1'),
-(2, 'admin2');
-
--- Insert sample data into 'adminPasswords' table
--- Note: Passwords should be hashed in a real application
-INSERT INTO adminPasswords (adminId, passwordHash) VALUES 
-(1, 'adminpassword1'),
-(2, 'adminpassword2');
+-- Insert data into `seats`
+INSERT INTO seats (seatId, type, occupancy, flightId, booked) 
+VALUES 
+(501, 1, FALSE, 101, FALSE),
+(502, 1, TRUE, 102, FALSE);

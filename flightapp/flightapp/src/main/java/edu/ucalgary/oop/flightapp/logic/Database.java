@@ -36,7 +36,7 @@ public class Database {
         String url = "jdbc:mysql://localhost:3306/flightinfo";
         Properties properties = new Properties();
         properties.setProperty("user", "root");
-        properties.setProperty("password", "mOckingjay");
+        properties.setProperty("password", "root");
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -415,4 +415,62 @@ public class Database {
 
         return flightList;
     }
+
+    public static ArrayList<FlightInfo> getAllFlightsWithSeats() {
+        ArrayList<FlightInfo> flightList = new ArrayList<>();
+    
+        String sql = "SELECT * FROM flightinfo";
+    
+        try (PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+    
+            while (resultSet.next()) {
+                int flightId = resultSet.getInt("flightId");
+                String flightName = resultSet.getString("flightName");
+                String destination = resultSet.getString("destination");
+                String origin = resultSet.getString("origin");
+                String departureDate = resultSet.getString("departureDate");
+    
+                FlightInfo flight = new FlightInfo(flightId, flightName, destination, origin, departureDate);
+                // Fetch seats for this flight and add them to the flight
+                flight.getSeats().addAll(getSeatsForFlight(flightId));
+                flightList.add(flight);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    
+        return flightList;
+    }
+    
+    private static ArrayList<Seat> getSeatsForFlight(int flightId) {
+        ArrayList<Seat> seats = new ArrayList<>();
+        String sql = "SELECT * FROM seats WHERE flightId = ?";
+    
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, flightId);
+    
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    int seatId = resultSet.getInt("seatId");
+                    int type = resultSet.getInt("type");
+                    boolean booked = resultSet.getBoolean("booked");
+                    
+                    Seat seat = new OrdinarySeat(seatId, booked, flightId, type); // Assuming OrdinarySeat is a concrete implementation of Seat
+                    // Decorate the seat based on its type
+                    if (type == 2) { // Assuming 2 represents a business seat
+                        seat = new BusinessSeat(seat);
+                    } else if (type == 3) { // Assuming 3 represents a comfort seat
+                        seat = new ComfortSeat(seat);
+                    }
+                    seats.add(seat);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return seats;
+    }
+    
+
 }

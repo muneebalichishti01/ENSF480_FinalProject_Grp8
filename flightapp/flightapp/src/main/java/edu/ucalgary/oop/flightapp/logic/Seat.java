@@ -31,9 +31,9 @@ public abstract class Seat {
         this.seatID = seatID;
     }
 
-    public void setBooked() {
-        boolean temp = getBooked();
-        if (temp == false) {booked = true;}
+    public void setBooked(boolean b) {
+        b = getBooked();
+        if (b == false) {booked = true;}
         else {booked = false;};
     }
 
@@ -44,5 +44,9 @@ public abstract class Seat {
     public void setType(int type) {
         this.type = type;
     }
+    public boolean isBooked() {
+        return booked;
+    }
+    
 }
 

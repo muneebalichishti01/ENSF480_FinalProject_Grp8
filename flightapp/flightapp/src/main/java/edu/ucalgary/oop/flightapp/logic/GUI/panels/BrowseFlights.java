@@ -1,86 +1,84 @@
 package edu.ucalgary.oop.flightapp.logic.GUI.panels;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.*;
 import java.util.ArrayList;
-
 import edu.ucalgary.oop.flightapp.logic.Database;
 import edu.ucalgary.oop.flightapp.logic.FlightInfo;
-import edu.ucalgary.oop.flightapp.logic.Seat;
 
 public class BrowseFlights extends JFrame {
-
+    private ArrayList<FlightInfo> flights;
+    private JTable flightTable;
+    private DefaultTableModel tableModel;
     private FlightInfo selectedFlight;
 
     public BrowseFlights() {
         setTitle("Browse Flights");
-        setSize(400, 300);
+        setSize(600, 400);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-        JPanel panel = new JPanel(new GridLayout(0, 1));
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        String[] columnNames = {"Flight ID", "Flight Name", "Destination", "Origin", "Departure Date"};
+        tableModel = new DefaultTableModel(columnNames, 0);
+        flightTable = new JTable(tableModel);
+        flightTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        flightTable.setAutoCreateRowSorter(true); // Enable sorting
 
-        JLabel selectLabel = new JLabel("Select a Flight:", SwingConstants.CENTER);
-        panel.add(selectLabel);
+        loadFlights();
 
-        ButtonGroup buttonGroup = new ButtonGroup();
+        flightTable.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                int selectedRow = flightTable.getSelectedRow();
+                if (selectedRow != -1) {
+                    selectedFlight = flights.get(flightTable.convertRowIndexToModel(selectedRow));
+                }
+            }
+        });
 
-        Database.getInstance();
-        Connection conn = Database.getConnection();
+        add(new JScrollPane(flightTable), BorderLayout.CENTER);
 
-        ArrayList<FlightInfo> temp = Database.getAllFlights();
+        JPanel buttonPanel = new JPanel();
+        JButton bookFlightButton = new JButton("Book Flight");
+        bookFlightButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (selectedFlight != null) {
+                    FlightBookingPanel bookingPanel = new FlightBookingPanel(selectedFlight);
+                    bookingPanel.setVisible(true);
+                    dispose(); // Optionally close the BrowseFlights window
+                } else {
+                    JOptionPane.showMessageDialog(BrowseFlights.this, "Please select a flight first.");
+                }
+            }
+        });
+        buttonPanel.add(bookFlightButton);
 
-        // // Display available flights as radio buttons
-        // for (FlightInfo flight : temp) {
-        //     JRadioButton radioButton = new JRadioButton(
-        //         "Flight ID: " + flight.getFlightId() + " | Destination: " + flight.getDestination() + " | Departure: " + flight.getDepartureDate());
-        //     radioButton.setActionCommand(String.valueOf(flight.getFlightId()));
-        //     radioButton.addActionListener(new ActionListener() {
-        //         @Override
-        //         public void actionPerformed(ActionEvent e) {
-        //             selectedFlight = flight;
-        //             displaySeatMap();
-        //         }
-        //     });
-        //     buttonGroup.add(radioButton);
-        //     panel.add(radioButton);
-        // }
+        JButton backButton = new JButton("Back");
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose(); // Close the window or go back to the previous menu
+            }
+        });
+        buttonPanel.add(backButton);
 
-        add(panel);
+        add(buttonPanel, BorderLayout.SOUTH);
     }
 
-    private void displaySeatMap() {
-        setTitle("Seat Map for Flight " + selectedFlight.getFlightId());
-        getContentPane().removeAll();
-
-        JPanel seatPanel = new JPanel(new GridLayout(4, 5, 10, 10));
-        seatPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-
-        // Get seat information for the selected flight
-        for (Seat seat : selectedFlight.getSeats()) {
-            JButton seatButton = new JButton("Seat " + seat.getSeatID());
-            if (seat.getBooked()) {
-                seatButton.setBackground(Color.RED); // Booked seat
-                seatButton.setEnabled(false); // Disable booking for this seat
-            } else {
-                seatButton.setBackground(Color.GREEN); // Available seat
-                seatButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        // Implement the action when the user selects a seat
-                        JOptionPane.showMessageDialog(BrowseFlights.this, "You selected Seat " + seat.getSeatID());
-                    }
-                });
-            }
-            seatPanel.add(seatButton);
+    private void loadFlights() {
+        flights = Database.getAllFlightsWithSeats();
+        for (FlightInfo flight : flights) {
+            Object[] row = new Object[]{
+                    flight.getFlightId(),
+                    flight.getFlightName(),
+                    flight.getDestination(),
+                    flight.getOrigin(),
+                    flight.getDepartureDate()
+            };
+            tableModel.addRow(row);
         }
-
-        add(seatPanel);
-        revalidate();
-        repaint();
     }
 }

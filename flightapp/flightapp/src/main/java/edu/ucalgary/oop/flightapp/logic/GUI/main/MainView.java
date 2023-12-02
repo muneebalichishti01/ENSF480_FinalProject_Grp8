@@ -1,6 +1,6 @@
 package edu.ucalgary.oop.flightapp.logic.GUI.main;
 
-import edu.ucalgary.oop.flightapp.logic.FlightInfo;
+// import edu.ucalgary.oop.flightapp.logic.FlightInfo;
 import edu.ucalgary.oop.flightapp.logic.GUI.panels.LoginPortal;
 
 import javax.swing.*;
@@ -10,7 +10,7 @@ public class MainView {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                FlightInfo.initializeData();
+                // FlightInfo.initializeData();
                 LoginPortal loginPortal = new LoginPortal();
                 loginPortal.setVisible(true);
             }

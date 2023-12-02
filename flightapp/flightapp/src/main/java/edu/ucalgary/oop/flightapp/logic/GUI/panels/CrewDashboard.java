@@ -25,11 +25,10 @@ public class CrewDashboard extends JFrame {
       @Override
       public void actionPerformed(ActionEvent e){
         //here we would implement the logic to browse flights
-        //DEMO PURPOSES, just created data to test
         ArrayList<String> availableFlights = new ArrayList<>();
-        availableFlights.add("Flight 1");
-        availableFlights.add("Flight 2");
-        availableFlights.add("Flight 3");
+        // availableFlights.add("Flight 1");
+        // availableFlights.add("Flight 2");
+        // availableFlights.add("Flight 3");
 
         String selectedFlight = (String) JOptionPane.showInputDialog(
           CrewDashboard.this,

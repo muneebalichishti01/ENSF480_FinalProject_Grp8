@@ -1,5 +1,5 @@
 -- Create schema
--- CREATE SCHEMA `flightappdatabase` ;
+-- CREATE SCHEMA `flightinfo` ;
 
 -- Users Table: Stores general user information
 CREATE TABLE users (
@@ -61,20 +61,24 @@ CREATE TABLE bookingInfo (
     FOREIGN KEY (flightId) REFERENCES flightInfo(flightId)
 );
 
+-- Admins Table: Stores admin information
 CREATE TABLE admins (
     adminId INT PRIMARY KEY,
     username VARCHAR(255) NOT NULL
 );
 
+-- Admin Passwords Table: Stores admin passwords
 CREATE TABLE adminPasswords (
     adminId INT PRIMARY KEY,
     passwordHash VARCHAR(255),
     FOREIGN KEY (adminId) REFERENCES admins(adminId)
 );
 
+-- Seats Table: Stores seat information
 CREATE TABLE seats (
     seatId INT,
     type INT, 
     occupancy BOOLEAN,
-    flightId INT
+    flightId INT,
+    booked BOOLEAN NOT NULL DEFAULT FALSE
 );
