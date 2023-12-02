@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 // public class User extends UserDashboard{
 public class User {
-    protected int userId;
+    private int userId;
     private String username;
     private String email;
     private String phoneNumber;
