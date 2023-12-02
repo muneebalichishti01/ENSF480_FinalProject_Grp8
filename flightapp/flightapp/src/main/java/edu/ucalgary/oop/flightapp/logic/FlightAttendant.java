@@ -20,10 +20,10 @@ public class FlightAttendant {
     }
 
     public String getUsername() {
-        return this.name;
+        return this.username;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 }
