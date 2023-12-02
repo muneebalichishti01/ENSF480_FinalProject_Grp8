@@ -30,14 +30,14 @@ CREATE TABLE flightInfo (
 
 -- Aircraft Table: Information about aircrafts
 CREATE TABLE aircrafts (
-    aircraftId INT PRIMARY KEY,
+    aircraftId INT PRIMARY KEY
 );
 
 CREATE TABLE passengers (
     flightId INT,
     name VARCHAR(255),
     FOREIGN KEY (flightId) REFERENCES flightInfo(flightId)
-)
+);
 
 -- Flight Attendants Table: Stores flight attendant information
 CREATE TABLE flightAttendants (
@@ -58,7 +58,6 @@ CREATE TABLE bookingInfo (
     flightId INT,
     ticketPrice DECIMAL(10, 2),
     cancellationInsurance boolean,
-    FOREIGN KEY (userId) REFERENCES users(userId),
     FOREIGN KEY (flightId) REFERENCES flightInfo(flightId)
 );
 
@@ -78,4 +77,4 @@ CREATE TABLE seats (
     type INT, 
     occupancy BOOLEAN,
     flightId INT
-)
+);
