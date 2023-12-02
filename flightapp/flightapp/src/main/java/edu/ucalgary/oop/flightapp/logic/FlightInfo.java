@@ -14,8 +14,8 @@ public class FlightInfo {
 
     // Added new variables
     private ArrayList<BookingInfo> passengerBookings;                                   // Track passengers for this flight
-    private ArrayList<Seat> seats;                                                       // Track seats for this flight
-    private static ArrayList<FlightInfo> flightInfoList = new ArrayList<FlightInfo>();  // Track all flights in the system
+    private ArrayList<Seat> seats;                                                      // Track seats for this flight
+    private static ArrayList<FlightInfo> flightInfoList;                                // Track all flights in the system
 
     // Constructor
     public FlightInfo(int flightId, String flightName, String destination, String origin, String departureDate) {
@@ -123,14 +123,10 @@ public class FlightInfo {
     }
 
     // Methods to add or remove FlightInfo to a list of all FlightInfo Objects
-    public static void addFlightInfo(FlightInfo flightInfo) {
-        if(flightInfoList.isEmpty()) {
-        // Work in progress
-        }
+    public void addFlightInfo(FlightInfo flightInfo) {
         flightInfoList.add(flightInfo);
         Database.addFlight(flightInfo);
     }
-
     public static void removeFlightInfo(FlightInfo flightInfo) {
         flightInfoList.remove(flightInfo);
         Database.removeFlight(flightInfo.getFlightId());
@@ -148,6 +144,21 @@ public class FlightInfo {
                 item.setBooked();
             }
             Database.editSeat(item);
+        }
+    }
+
+    // Method to initialize system's local storage
+    public void initializeData() {
+        flightInfoList = Database.getAllFlights();
+
+        // Getting an iterator for the ArrayList
+        Iterator<FlightInfo> iterator = flightInfoList.iterator();
+
+        // Iterating through the ArrayList using iterator
+        while (iterator.hasNext()) {
+            FlightInfo item = iterator.next();
+
+            seats = Database.browseSeats(item.getFlightId());
         }
     }
 
