@@ -91,7 +91,7 @@ CREATE TABLE payments (
 );
 
 -- Seat Types Table: Represents different seat types
--- Can remove this table
+--Can remove this table
 CREATE TABLE seatTypes (        
     seatTypeId INT PRIMARY KEY,
     description VARCHAR(255),
