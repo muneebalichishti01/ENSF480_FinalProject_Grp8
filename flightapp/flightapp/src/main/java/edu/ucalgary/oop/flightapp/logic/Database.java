@@ -1,7 +1,6 @@
 package edu.ucalgary.oop.flightapp.logic;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.Date;

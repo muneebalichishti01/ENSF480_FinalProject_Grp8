@@ -1,9 +1,6 @@
 package edu.ucalgary.oop.flightapp.logic;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
-import java.sql.SQLException;
-import java.util.HashMap;
 
 // public class User extends UserDashboard{
 public class User {
