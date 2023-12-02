@@ -33,4 +33,8 @@ public class BookingInfo {
     public double getTicketPrice() {
         return ticketPrice;
     }
+
+    public boolean getCancellationInsurance() {
+        return cancellationInsurance;
+    }
 }
