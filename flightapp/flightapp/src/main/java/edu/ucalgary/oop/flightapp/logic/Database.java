@@ -205,7 +205,7 @@ public class Database {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, seat.getSeatID());
             statement.setInt(2, seat.getType());
-            statement.setInt(3, seat.getBooked());
+            statement.setBoolean(3, seat.getBooked());
             statement.setInt(3, seat.getFlightID());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -217,7 +217,7 @@ public class Database {
     public static void editSeat(Seat seat) {
         String sql = "UPDATE seats SET occupancy = ? WHERE flightId = ? AND seatId = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, seat.getBooked());
+            statement.setBoolean(1, seat.getBooked());
             statement.setInt(2, seat.getFlightID());
             statement.setInt(3, seat.getSeatID());
             statement.executeUpdate();
@@ -511,6 +511,29 @@ public class Database {
     public static ArrayList<Seat> browseSeats(int id){
         ArrayList<Seat> seats = new ArrayList<>();
 
+        String sql = "SELECT * FROM seats WHERE flightId = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, id);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    int seatId = resultSet.getInt("seatId");
+                    int type = resultSet.getInt("type");
+                    float cost = resultSet.getFloat("cost");
+                    boolean booked = resultSet.getBoolean("booked");
+
+                    if(type == 1){
+                        seats.add(new OrdinarySeat(seatId, booked, id, type));
+                    } else if(type == 2) {
+                        seats.add(new BusinessSeat(new OrdinarySeat(seatId, booked, id, type)));
+                    } else if (type == 3) {
+                        seats.add(new ComfortSeat(new OrdinarySeat(seatId, booked, id, type)));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return seats;
     }
 }

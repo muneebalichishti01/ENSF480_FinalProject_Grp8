@@ -138,7 +138,7 @@ public class LoginPortal extends JFrame {
                 try {
                     Connection conn = Database.getInstance().getConnection();
                     // Adjusted SQL query to join the users and userPasswords tables
-                    String sql = "SELECT up.* FROM admins a JOIN userPasswords up ON a.adminId = up.adminId WHERE a.username = ? AND up.passwordHash = ?";
+                    String sql = "SELECT up.* FROM admins a JOIN adminPasswords up ON a.adminId = up.adminId WHERE a.username = ? AND up.passwordHash = ?";
                     PreparedStatement statement = conn.prepareStatement(sql);
                     statement.setString(1, username);
                     statement.setString(2, hashedPassword);
@@ -287,7 +287,7 @@ public class LoginPortal extends JFrame {
 
         signUpPanel.setLayout(new GridBagLayout());
     
-        JTextField nameField = new JTextField(20);
+        JTextField usernameField = new JTextField(20);
         JTextField emailField = new JTextField(20);
         JPasswordField passwordField = new JPasswordField(20);
         JTextField phoneField = new JTextField(20);
@@ -295,7 +295,7 @@ public class LoginPortal extends JFrame {
         JButton switchToLogin = new JButton("Back to Login");
     
         addToPanel(signUpPanel, new JLabel("Name:"), 0, 0, 1, GridBagConstraints.WEST);
-        addToPanel(signUpPanel, nameField, 1, 0, 2, GridBagConstraints.CENTER);
+        addToPanel(signUpPanel, usernameField, 1, 0, 2, GridBagConstraints.CENTER);
     
         addToPanel(signUpPanel, new JLabel("Email:"), 0, 1, 1, GridBagConstraints.WEST);
         addToPanel(signUpPanel, emailField, 1, 1, 2, GridBagConstraints.CENTER);
@@ -316,8 +316,66 @@ public class LoginPortal extends JFrame {
             }
         });
     
-        // Add sign-up logic here for signUpButton
-        // ...
+        signUpButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username = usernameField.getText();
+                String email = emailField.getText();
+                String phoneNumber = phoneField.getText();
+                String password = new String(passwordField.getPassword());
+        
+                try {
+                    Connection conn = Database.getInstance().getConnection();
+        
+                    // Insert user details into the users table
+                    String insertUserSQL = "INSERT INTO users (username, email, phoneNumber) VALUES (?, ?, ?)";
+                    PreparedStatement userStatement = conn.prepareStatement(insertUserSQL, Statement.RETURN_GENERATED_KEYS);
+                    userStatement.setString(1, username);
+                    userStatement.setString(2, email);
+                    userStatement.setString(3, phoneNumber);
+        
+                    int affectedRows = userStatement.executeUpdate();
+        
+                    if (affectedRows == 0) {
+                        throw new SQLException("Creating user failed, no rows affected.");
+                    }
+        
+                    // Get the generated userId for the new user
+                    ResultSet generatedKeys = userStatement.getGeneratedKeys();
+                    int userId;
+                    if (generatedKeys.next()) {
+                        userId = generatedKeys.getInt(1);
+                    } else {
+                        throw new SQLException("Creating user failed, no ID obtained.");
+                    }
+        
+                    // Insert user password into the userPasswords table
+                    String insertPasswordSQL = "INSERT INTO userPasswords (userId, passwordHash) VALUES (?, ?)";
+                    PreparedStatement passwordStatement = conn.prepareStatement(insertPasswordSQL);
+                    passwordStatement.setInt(1, userId);
+                    passwordStatement.setString(2, password);
+        
+                    int insertedPasswordRows = passwordStatement.executeUpdate();
+        
+                    if (insertedPasswordRows == 0) {
+                        throw new SQLException("Creating password failed, no rows affected.");
+                    }
+        
+                    JOptionPane.showMessageDialog(LoginPortal.this, "Sign-up successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    
+                    // Clear fields after successful sign-up
+                    usernameField.setText("");
+                    emailField.setText("");
+                    phoneField.setText("");
+                    passwordField.setText("");
+                    //comment for push
+        
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(LoginPortal.this, "Sign-up failed!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
     }    
 
     private void initializeGuestDashboard(){

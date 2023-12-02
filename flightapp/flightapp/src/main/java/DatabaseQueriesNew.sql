@@ -101,20 +101,21 @@ CREATE TABLE payments (
 
 -- Seat Types Table: Represents different seat types
 --Can remove this table
-CREATE TABLE seatTypes (        
-    seatTypeId INT PRIMARY KEY,
-    description VARCHAR(255),
-    cost DECIMAL(10, 2),
-    flightId INT
+CREATE TABLE seats (        
+    seatId INT PRIMARY KEY,
+    type INT,
+    cost DECIMAL(10, 2),  //get rid 
+    flightId INT,
+    booked BOOLEAN
 );
 
 CREATE TABLE admins (
     adminId INT PRIMARY KEY,
-    username VARCHAR(255) NOT NULL,
+    username VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE adminPasswords (
     adminId INT PRIMARY KEY,
     passwordHash VARCHAR(255),
-    FOREIGN KEY (adminId) REFERENCES admin(adminId)
+    FOREIGN KEY (adminId) REFERENCES admins(adminId)
 );
