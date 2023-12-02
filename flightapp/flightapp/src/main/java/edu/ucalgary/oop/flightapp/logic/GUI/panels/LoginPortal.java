@@ -229,7 +229,8 @@ public class LoginPortal extends JFrame {
                 String hashedPassword = password;
         
                 try {
-                    Connection conn = Database.getInstance().getConnection();
+                    Database.getInstance();
+                    Connection conn = Database.getConnection();
                     // Adjusted SQL query to join the users and userPasswords tables
                     String sql = "SELECT up.* FROM users u JOIN userPasswords up ON u.userId = up.userId WHERE u.username = ? AND up.passwordHash = ?";
                     PreparedStatement statement = conn.prepareStatement(sql);
