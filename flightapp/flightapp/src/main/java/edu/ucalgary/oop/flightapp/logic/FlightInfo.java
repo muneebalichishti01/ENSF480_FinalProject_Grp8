@@ -14,7 +14,7 @@ public class FlightInfo {
 
     // Added new variables
     private ArrayList<BookingInfo> passengerBookings;                                   // Track passengers for this flight
-    private ArrayList<Seat> seat;                                                       // Track seats for this flight
+    private ArrayList<Seat> seats;                                                       // Track seats for this flight
     private static ArrayList<FlightInfo> flightInfoList = new ArrayList<FlightInfo>();  // Track all flights in the system
 
     // Constructor
@@ -27,7 +27,7 @@ public class FlightInfo {
 
         // Initialize new variables
         this.passengerBookings = new ArrayList<>();
-        this.seat = new ArrayList<>();
+        this.seats = new ArrayList<>();
 
         // Initialize ArrayLists
         initializeSeats();
@@ -38,13 +38,16 @@ public class FlightInfo {
     // Method to initialize Seats
     private void initializeSeats() {
         for (int i = 0; i < 10; i++) {
-            seat.add(new OrdinarySeat(i, false, flightId, 1));                   // Add ordinary seats
+            seats.add(new OrdinarySeat(i, false, flightId, 1));                   // Add ordinary seats
+            Database.addSeat(seats.get(i));                                                   // Add ordinary seats to database
         }
         for (int i = 10; i < 15; i++) {
-            seat.add(new BusinessSeat(new OrdinarySeat(i, false, flightId, 2))); // Add business seats
+            seats.add(new BusinessSeat(new OrdinarySeat(i, false, flightId, 2))); // Add business seats
+            Database.addSeat(seats.get(i));                                                   // Add business seats to database
         }
         for (int i = 15; i < 20; i++) {
-            seat.add(new ComfortSeat(new OrdinarySeat(i, false, flightId, 3)));  // Add comfort seats
+            seats.add(new ComfortSeat(new OrdinarySeat(i, false, flightId, 3)));  // Add comfort seats
+            Database.addSeat(seats.get(i));                                                   // Add comfort seats to database
         }
     }
 
@@ -101,10 +104,10 @@ public class FlightInfo {
     }
 
     public ArrayList<Seat> getSeat() {
-        return seat;
+        return seats;
     }
-    public void setSeat(ArrayList<Seat> seat) {
-        this.seat = seat;
+    public void setSeat(ArrayList<Seat> seats) {
+        this.seats = seats;
     }
 
     // Methods to add or remove a booking to the flight
@@ -134,9 +137,9 @@ public class FlightInfo {
     }
 
     // Method to book or unbook seats
-    public void setBooking(int ID) {
+    public void setAvailability(int ID) {
         // Getting an iterator for the ArrayList
-        Iterator<Seat> iterator = seat.iterator();
+        Iterator<Seat> iterator = seats.iterator();
 
         // Iterating through the ArrayList using iterator
         while (iterator.hasNext()) {

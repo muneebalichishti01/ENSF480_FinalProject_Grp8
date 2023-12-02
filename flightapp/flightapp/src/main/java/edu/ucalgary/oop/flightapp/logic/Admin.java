@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class Admin {
     // Instance variables changed to ArrayLists
     private ArrayList<Aircraft> aircrafts;
-    private static FlightInfo flights;
     private ArrayList<FlightAttendant> flightAttendants;
     private ArrayList<User> users;
 
@@ -20,8 +19,8 @@ public class Admin {
     public ArrayList<Aircraft> getAircrafts() {
         return aircrafts;
     }
-    public static ArrayList<FlightInfo> getFlights() {
-        return flights.getAllFlightInfo();
+    public ArrayList<FlightInfo> getFlights() {
+        return FlightInfo.getAllFlightInfo();
     }
     public ArrayList<FlightAttendant> getFlightAttendants() {
         return flightAttendants;
@@ -57,19 +56,18 @@ public class Admin {
     }
 
     // Manage Flights
-    public void addFlight(FlightInfo flight) {
-        
+    public void addFlight(int flightId, String flightName, String destination, String origin, String departureDate) {
+        FlightInfo temp = new FlightInfo(flightId, flightName, destination, origin, departureDate);
     }
-    // public void removeFlight(FlightInfo flight) {
-    //     flights.remove(flight);
-    //     Database.removeFlight(flight.getFlightId());
-    // }
-    // public void updateFlight(int index, FlightInfo updatedFlight) {
-    //     if (index >= 0 && index < flights.size()) {
-    //         flights.set(index, updatedFlight);
-    //         Database.editFlight(updatedFlight);
-    //     }
-    // }
+    public void removeFlight(FlightInfo flight) {
+        FlightInfo.removeFlightInfo(flight);
+        Database.removeFlight(flight.getFlightId());
+    }
+    public void updateFlight(int flightId, String flightName, String destination, String origin, String departureDate, FlightInfo flightInfo) {
+        removeFlight(flightInfo);
+        FlightInfo temp = new FlightInfo(flightId, flightName, destination, origin, departureDate);
+        Database.editFlight(temp);
+    }
 
     // Manage Flight Attendants
     public void addFlightAttendant(FlightAttendant attendant) {

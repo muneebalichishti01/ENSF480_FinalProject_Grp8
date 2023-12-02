@@ -1,12 +1,3 @@
--- Test queries for viewing
--- SELECT * FROM users;
--- SELECT * FROM userPasswords;
--- SELECT * FROM registeredUsers;\
-
--- SELECT u.userId, u.username, u.email, u.phoneNumber, u.hasCancellationInsurance, up.passwordHash
--- FROM users u
--- JOIN userPasswords up ON u.userId = up.userId;
-
 -- Create schema
 -- CREATE SCHEMA `flightappdatabase` ;
 
@@ -110,11 +101,11 @@ CREATE TABLE seatTypes (
 
 CREATE TABLE admins (
     adminId INT PRIMARY KEY,
-    username VARCHAR(255) NOT NULL,
+    username VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE adminPasswords (
     adminId INT PRIMARY KEY,
     passwordHash VARCHAR(255),
-    FOREIGN KEY (adminId) REFERENCES admin(adminId)
+    FOREIGN KEY (adminId) REFERENCES admins(adminId)
 );

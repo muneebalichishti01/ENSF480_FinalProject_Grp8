@@ -20,13 +20,13 @@ public class Database {
     public static synchronized Database getInstance() {
         if (instance == null) {
             instance = new Database();
-            connection = instance.getConnection();
+            connection = Database.getConnection();
         }
         return instance;
     }
 
     // get connection
-    public Connection getConnection() {
+    public static Connection getConnection() {
         return connection;
     }
 
@@ -54,10 +54,10 @@ public class Database {
 //-----------------------------------DATABSE-CONNECTION--------------------------------------//
     // Initialize database connection
     public static void initializeDatabase() {
-        String url = "jdbc:mysql://localhost:3306/flightinfo";
+        String url = "jdbc:mysql://localhost:3306/flightappdatabase";
         Properties properties = new Properties();
         properties.setProperty("user", "root");
-        properties.setProperty("password", "mOckingjay");
+        properties.setProperty("password", "root");
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -196,6 +196,34 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    // Method to get all available flights
+    public static List<FlightInfo> getAvailableFlights() {
+        List<FlightInfo> availableFlights = new ArrayList<>();
+        String sql = "SELECT * FROM flightInfo WHERE /* your condition for available flights */";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                int flightId = resultSet.getInt("flightId");
+                String flightName = resultSet.getString("flightName");
+                String destination = resultSet.getString("destination");
+                String origin = resultSet.getString("origin");
+                String departureDate = resultSet.getString("departureDate");
+                // Add other fields as per your FlightInfo class
+
+                FlightInfo flight = new FlightInfo(flightId, flightName, destination, origin, departureDate);
+                // Adjust the constructor call as per your FlightInfo class
+                availableFlights.add(flight);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle exception appropriately
+        }
+
+        return availableFlights;
     }
 //----------------------------------------Flight---------------------------------------------//
 //-----------------------------------------Seat----------------------------------------------//
@@ -406,13 +434,14 @@ public class Database {
     }
 
     // Method to cancel a booking
-    public static void cancelBooking(int bookingId) throws SQLException {
+    public static boolean cancelBooking(int bookingId) throws SQLException {
         String sql = "DELETE FROM bookingInfo WHERE bookingId = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, bookingId);
-            statement.executeUpdate();
+            int affectedRows = statement.executeUpdate();
+            return affectedRows > 0;
         }
-    }
+    }    
 
 //--------------------------------------Booking Info-----------------------------------------//
 //----------------------------------------Payment--------------------------------------------//
@@ -511,8 +540,58 @@ public class Database {
     public static ArrayList<Seat> browseSeats(int id){
         ArrayList<Seat> seats = new ArrayList<>();
 
+        String sql = "SELECT * FROM seats WHERE flightId = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, id);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    int seatId = resultSet.getInt("seatId");
+                    int type = resultSet.getInt("type");
+                    boolean booked = resultSet.getBoolean("booked");
+
+                    if(type == 1){
+                        seats.add(new OrdinarySeat(seatId, booked, id, type));
+                    } else if(type == 2) {
+                        seats.add(new BusinessSeat(new OrdinarySeat(seatId, booked, id, type)));
+                    } else if (type == 3) {
+                        seats.add(new ComfortSeat(new OrdinarySeat(seatId, booked, id, type)));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return seats;
     }
+
+    public ArrayList<FlightInfo> getAllFlights() {
+        ArrayList<FlightInfo> flightList = new ArrayList<>();
+
+        String sql = "SELECT * FROM flightInfo";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                int flightId = resultSet.getInt("flightId");
+                String flightName = resultSet.getString("flightName");
+                String destination = resultSet.getString("destination");
+                String origin = resultSet.getString("origin");
+                String departureDate = resultSet.getString("departureDate");
+
+                FlightInfo flight = new FlightInfo(flightId, flightName, destination, origin, departureDate);
+                
+                flightList.add(flight);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return flightList;
+    }
+
+
 }
 
    
