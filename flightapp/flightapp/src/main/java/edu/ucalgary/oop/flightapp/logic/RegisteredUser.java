@@ -1,8 +1,6 @@
 package edu.ucalgary.oop.flightapp.logic;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 
 public class RegisteredUser extends User {

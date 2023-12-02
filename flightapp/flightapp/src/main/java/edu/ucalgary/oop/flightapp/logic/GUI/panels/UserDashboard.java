@@ -2,12 +2,7 @@ package edu.ucalgary.oop.flightapp.logic.GUI.panels;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
-
-
 import javax.swing.*;
-
-
-import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class UserDashboard extends JFrame {
