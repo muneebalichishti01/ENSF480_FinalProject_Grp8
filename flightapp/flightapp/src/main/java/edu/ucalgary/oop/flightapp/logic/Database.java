@@ -589,8 +589,6 @@ public class Database {
 
         return flightList;
     }
-
-
 }
 
    
