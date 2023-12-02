@@ -36,7 +36,8 @@ CREATE TABLE aircrafts (
 -- Flight Attendants Table: Stores flight attendant information
 CREATE TABLE flightAttendants (
     FlightAttendantId INT PRIMARY KEY,
-    username VARCHAR(255) NOT NULL
+    username VARCHAR(255) NOT NULL,
+    name VARCHAR(255)
 );
 
 CREATE TABLE flightAttendantPasswords (

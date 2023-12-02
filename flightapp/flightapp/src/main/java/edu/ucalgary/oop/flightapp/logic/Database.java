@@ -175,10 +175,11 @@ public class Database {
 //-----------------------------------Flight Attendant----------------------------------------//
     // Method to add Flight Attendant
     public static void addFlightAttendant(FlightAttendant attendant) {
-        String sql = "INSERT INTO flightAttendants (FlightAttendantId, username) VALUES (?, ?)";
+        String sql = "INSERT INTO flightAttendants (FlightAttendantId, username, name) VALUES (?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, attendant.getFlightAttendantId());
             statement.setString(2, attendant.getUsername());
+            statement.setString(2, attendant.getName());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -197,16 +198,18 @@ public class Database {
     }
 
     // Method to update Flight Attendant
-    public static void editFlightAttendant(int id, String newUsername) {
-        String sql = "UPDATE flightAttendants SET username = ? WHERE FlightAttendantId = ?";
+    public static void editFlightAttendant(int id, String newName, String newUsername) {
+        String sql = "UPDATE flightAttendants SET name = ?, username = ? WHERE FlightAttendantId = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, newUsername);
-            statement.setInt(2, id);
+            statement.setString(1, newName);
+            statement.setString(2, newUsername);
+            statement.setInt(3, id);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+    
 //-----------------------------------Flight Attendant----------------------------------------//
 //-----------------------------------------User----------------------------------------------//
     // Method to add a new User
@@ -258,7 +261,6 @@ public class Database {
         }
     }
     
-
     // Method to cancel a booking
     public static boolean cancelBooking(int bookingId) throws SQLException {
         String sql = "DELETE FROM bookingInfo WHERE bookingId = ?";
@@ -285,7 +287,6 @@ public class Database {
     }
 //----------------------------------------Payment--------------------------------------------//
     // Other methods ...
-
 
     public static List<String> browseCrew(int id) {
         List<String> crewList = new ArrayList<>();
