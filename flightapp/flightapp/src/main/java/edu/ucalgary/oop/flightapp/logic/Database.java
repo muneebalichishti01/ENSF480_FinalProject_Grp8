@@ -251,7 +251,7 @@ public class Database {
         try (PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, bookingInfo.getFlightInfo().getFlightId());
             statement.setDouble(2, bookingInfo.getTicketPrice());
-            statement.setString(3, bookingInfo.getCancellationInsurance());
+            statement.setBoolean(3, bookingInfo.getCancellationInsurance());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
