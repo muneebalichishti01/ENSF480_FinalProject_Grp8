@@ -5,7 +5,7 @@ public class BookingInfo {
     private int bookingId;
     private FlightInfo flightInfo;
     private double ticketPrice;
-    private Seat seat; // optional
+    private Seat seat;
     private boolean cancellationInsurance;
 
     // Constructors
@@ -26,9 +26,11 @@ public class BookingInfo {
         return flightInfo;
     }
 
-    // Optional
     public Seat getSeat() {
         return seat;
     }
 
+    public double getTicketPrice() {
+        return ticketPrice;
+    }
 }

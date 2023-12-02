@@ -102,7 +102,23 @@ public class FlightInfo {
         // Iterating through the ArrayList using iterator
         while (iterator.hasNext()) {
             FlightInfo item = iterator.next();
+
             item.setSeats(Database.browseSeats(item.getFlightId()));
+        }
+    }
+
+    // Method to book or unbook seats
+    public void setAvailability(int ID) {
+        // Getting an iterator for the ArrayList
+        Iterator<Seat> iterator = seats.iterator();
+
+        // Iterating through the ArrayList using iterator
+        while (iterator.hasNext()) {
+            Seat item = iterator.next();
+            if(item.getSeatID() == ID) {
+                item.setBooked();
+            }
+            Database.editSeat(item);
         }
     }
 }
