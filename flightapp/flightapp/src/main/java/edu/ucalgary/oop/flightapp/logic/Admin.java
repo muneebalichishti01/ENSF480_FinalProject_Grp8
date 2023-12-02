@@ -36,8 +36,13 @@ public class Admin {
     public void removeFlightAttendant(FlightAttendant attendant) {
         Database.removeFlightAttendant(attendant.getFlightAttendantId());
     }
+<<<<<<< HEAD
     public void updateFlightAttendant(int index, String name, String username) {
         Database.editFlightAttendant(index, name, username);
+=======
+    public void updateFlightAttendant(int index) {
+        Database.editCrew(index);
+>>>>>>> 5de12489e70d66c1c38a42d37bedda144fa350cc
     }
 
     // Print User Registration List
