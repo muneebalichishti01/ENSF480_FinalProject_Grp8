@@ -137,7 +137,7 @@ public class FlightInfo {
         while (iterator.hasNext()) {
             FlightInfo item = iterator.next();
 
-            seats = Database.browseSeats(item.getFlightId());
+            // seats = Database.browseSeats(item.getFlightId());
         }
     }
 
