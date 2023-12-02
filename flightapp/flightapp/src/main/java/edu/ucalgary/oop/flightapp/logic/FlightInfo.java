@@ -27,9 +27,7 @@ public class FlightInfo {
         this.seats = new ArrayList<>();
 
         // Initialize ArrayLists
-        initializeSeats();
-        addFlightInfo(this);
-        
+        initializeSeats();        
     }
 
     // Method to initialize Seats
@@ -82,15 +80,31 @@ public class FlightInfo {
         return seats;
     }
 
-    //GONNA GET RID OF
+    public void setSeats(ArrayList<Seat> seats) {
+        this.seats = seats;
+    }
+
     // Methods to add or remove FlightInfo to a list of all FlightInfo Objects
-    public void addFlightInfo(FlightInfo flightInfo) {
-        // flightInfoList.add(flightInfo);
-        Database.addFlight(flightInfo);
+    public static void addFlightInfo(FlightInfo flightInfo) {
+        flightInfoList.add(flightInfo);
     }
     public static void removeFlightInfo(FlightInfo flightInfo) {
-        // flightInfoList.remove(flightInfo);
-        Database.removeFlight(flightInfo.getFlightId());
+        flightInfoList.remove(flightInfo);
+    }
+
+    // Method to initialize system's local storage
+    public static void initializeData() {
+        flightInfoList = Database.getAllFlights();
+
+        // Getting an iterator for the ArrayList
+        Iterator<FlightInfo> iterator = flightInfoList.iterator();
+
+        // Iterating through the ArrayList using iterator
+        while (iterator.hasNext()) {
+            FlightInfo item = iterator.next();
+
+            item.setSeats(Database.browseSeats(item.getFlightId()));
+        }
     }
 
     // Method to book or unbook seats
@@ -107,19 +121,4 @@ public class FlightInfo {
             Database.editSeat(item);
         }
     }
-
-    // // Method to initialize system's local storage
-    // public static void initializeData() {
-    //     flightInfoList = Database.getAllFlights();
-
-    //     // Getting an iterator for the ArrayList
-    //     Iterator<FlightInfo> iterator = flightInfoList.iterator();
-
-    //     // Iterating through the ArrayList using iterator
-    //     while (iterator.hasNext()) {
-    //         FlightInfo item = iterator.next();
-
-    //         item.setSeats(Database.browseSeats(item.getFlightId()));
-    //     }
-    // }
 }

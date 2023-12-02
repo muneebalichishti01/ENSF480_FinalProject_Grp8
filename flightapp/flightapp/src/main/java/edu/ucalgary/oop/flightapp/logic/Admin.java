@@ -1,7 +1,5 @@
 package edu.ucalgary.oop.flightapp.logic;
 
-import java.util.ArrayList;
-
 public class Admin {
     // Constructor
     public Admin() {
@@ -20,14 +18,15 @@ public class Admin {
 
     // Manage Flights
     public void addFlight(FlightInfo flight) {
+        FlightInfo.addFlightInfo(flight);
         Database.addFlight(flight);
     }
     public void removeFlight(FlightInfo flight) {
+        FlightInfo.removeFlightInfo(flight);
         Database.removeFlight(flight.getFlightId());
     }
-    public void updateFlight(int flightId, String flightName, String destination, String origin, String departureDate, FlightInfo flightInfo) {
-        FlightInfo temp = new FlightInfo(flightId, flightName, destination, origin, departureDate);
-        Database.editFlight(temp);
+    public void updateFlight(FlightInfo updFlightInfo) {
+        Database.editFlight(updFlightInfo);
     }
 
     // Manage Flight Attendants
@@ -37,8 +36,13 @@ public class Admin {
     public void removeFlightAttendant(FlightAttendant attendant) {
         Database.removeFlightAttendant(attendant.getFlightAttendantId());
     }
+<<<<<<< HEAD
     public void updateFlightAttendant(int id, String username) {
         Database.editFlightAttendant(id, username);
+=======
+    public void updateFlightAttendant(int index) {
+        Database.editCrew(index);
+>>>>>>> 4ce6f782fea0be7b7c67a2cbe3daa8176d59ec49
     }
 
     // Print User Registration List
