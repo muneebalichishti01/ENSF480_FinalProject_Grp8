@@ -291,14 +291,13 @@ public class Database {
     public static List<String> browseCrew(int id) {
         List<String> crewList = new ArrayList<>();
         
-        String sql = "SELECT flightAttendants.name " + 
-                     "FROM flightAttendants " + 
-                     "JOIN flightinfo ON flightAttendants.name = flightinfo.name " +
-                     "WHERE flightinfo.flightId = ?";
+        String sql = "SELECT passengers.name " + 
+                     "FROM passengers " + 
+                     "JOIN flightAttendants ON passengers.name = flightAttendants.name " +
+                     "WHERE passengers.flightId = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
-
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     String name = resultSet.getString("name");
@@ -325,10 +324,9 @@ public class Database {
     }
 
     public static LocalDate getLastCompanionTicketDate(int userId) {
-        String sql = "SELECT lastCompanionTicketSetDate FROM registeredUsers WHERE userId = ?";
+        String sql = "SELECT lastCompanionTicketSetDate FROM users WHERE userId = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, userId);
-    
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     return resultSet.getDate("lastCompanionTicketSetDate").toLocalDate();
@@ -343,19 +341,19 @@ public class Database {
     
     public static ArrayList<String> browsePassenger(int id) {
         ArrayList<String> passengerList = new ArrayList<>();
-        
-        String sql = "SELECT users.username" +
-                     "FROM users" +
-                     "JOIN flightinfo ON users.username = flightinfo.name " +
-                     "WHERE flightinfo.flightId = ?";
-
+    
+        String sql = "SELECT users.username " +
+                     "FROM users " +
+                     "JOIN passengers ON users.username = passengers.name " +
+                     "WHERE passengers.flightId = ?";
+    
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
-
+    
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    String name = resultSet.getString("name");
-                    passengerList.add(name);
+                    String username = resultSet.getString("username");
+                    passengerList.add(username);
                 }
             }
         } catch (SQLException e) {
@@ -363,6 +361,7 @@ public class Database {
         }
         return passengerList;
     }
+    
 
     public static ArrayList<Seat> browseSeats(int id){
         ArrayList<Seat> seats = new ArrayList<>();

@@ -33,6 +33,12 @@ CREATE TABLE aircrafts (
     aircraftId INT PRIMARY KEY,
 );
 
+CREATE TABLE passengers (
+    flightId INT,
+    name VARCHAR(255),
+    FOREIGN KEY (flightId) REFERENCES flightInfo(flightId)
+)
+
 -- Flight Attendants Table: Stores flight attendant information
 CREATE TABLE flightAttendants (
     FlightAttendantId INT PRIMARY KEY,
