@@ -18,6 +18,7 @@ public class Payment {
         int bookingId = seat.getSeatID() + flightInfo.getFlightId();
         flightInfo.setAvailability(seat.getSeatID());
         BookingInfo temp = new BookingInfo(bookingId, flightInfo, price, seat, cancellationInsurance);
+        flightInfo.setAvailability(seat.getSeatID());
         Database.createBooking(temp);
         return temp;
     }
