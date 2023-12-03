@@ -75,7 +75,7 @@ public class FlightBookingPanel extends JFrame {
         ArrayList<Seat> seats = Database.browseSeats(selectedFlight.getFlightId());
     
         for (Seat seat : seats) {
-            if (seatTypeMatches(seat, selectedSeatType) && !seat.isBooked()) {
+            if (seatTypeMatches(seat, selectedSeatType) && seat.isBooked() == false) {
                 JRadioButton seatButton = new JRadioButton("Seat " + seat.getSeatID());
                 seatButton.addActionListener(e -> selectedSeat = seat);
                 seatGroup.add(seatButton);
