@@ -1,66 +1,200 @@
 -- Insert data into `users`
-INSERT INTO users (username, email, phoneNumber, hasCreditCard, lastCompanionTicketSetDate, companionTicket) VALUES 
-('john_doe', 'john.doe@example.com', '123-456-7890', TRUE, '2023-01-01', FALSE),
-('jane_smith', 'jane.smith@example.com', '098-765-4321', FALSE, '2023-02-01', TRUE),
-('alice_jones', 'alice.jones@example.com', '234-567-8901', TRUE, '2023-03-01', FALSE),
-('bob_brown', 'bob.brown@example.com', '345-678-9012', FALSE, '2023-04-01', TRUE),
-('charlie_black', 'charlie.black@example.com', '456-789-0123', TRUE, '2023-05-01', FALSE);
+INSERT INTO users (username, email, phoneNumber, hasCreditCard, lastCompanionTicketSetDate, companionTicket) VALUES
+('alexsmith', 'alex.smith@example.com', '555-123-4567', TRUE, '2023-01-01', FALSE),
+('bethjohnson', 'beth.johnson@example.com', '555-234-5678', FALSE, '2023-01-15', TRUE),
+('carolmiller', 'carol.miller@example.com', '555-345-6789', TRUE, '2023-02-01', FALSE),
+('davidthomas', 'david.thomas@example.com', '555-456-7890', FALSE, '2023-02-20', TRUE),
+('ellawilliams', 'ella.williams@example.com', '555-567-8901', TRUE, '2023-03-05', FALSE),
+('frankbrown', 'frank.brown@example.com', '555-678-9012', TRUE, '2023-03-21', TRUE),
+('gracejones', 'grace.jones@example.com', '555-789-0123', FALSE, '2023-04-01', FALSE),
+('harrygarcia', 'harry.garcia@example.com', '555-890-1234', TRUE, '2023-04-18', TRUE),
+('isabelmartinez', 'isabel.martinez@example.com', '555-901-2345', FALSE, '2023-05-01', FALSE),
+('jackdavis', 'jack.davis@example.com', '555-012-3456', TRUE, '2023-05-20', TRUE),
+('karenlopez', 'karen.lopez@example.com', '555-123-4567', FALSE, '2023-06-01', FALSE),
+('lucaswhite', 'lucas.white@example.com', '555-234-5678', TRUE, '2023-06-21', TRUE),
+('mialee', 'mia.lee@example.com', '555-345-6789', FALSE, '2023-07-05', FALSE),
+('noahwilson', 'noah.wilson@example.com', '555-456-7890', TRUE, '2023-07-20', TRUE),
+('oliviaperez', 'olivia.perez@example.com', '555-567-8901', FALSE, '2023-08-01', FALSE),
+('paulanderson', 'paul.anderson@example.com', '555-678-9012', TRUE, '2023-08-20', TRUE),
+('quinnthompson', 'quinn.thompson@example.com', '555-789-0123', FALSE, '2023-09-05', FALSE),
+('rileytaylor', 'riley.taylor@example.com', '555-890-1234', TRUE, '2023-09-21', TRUE),
+('sophiamartinez', 'sophia.martinez@example.com', '555-901-2345', FALSE, '2023-10-01', FALSE),
+('tyleehernandez', 'tyler.hernandez@example.com', '555-012-3456', TRUE, '2023-10-20', TRUE),
+('victoriaking', 'victoria.king@example.com', '555-123-4567', FALSE, '2023-11-01', FALSE),
+('williammoore', 'william.moore@example.com', '555-234-5678', TRUE, '2023-11-21', TRUE),
+('xeniayoung', 'xenia.young@example.com', '555-345-6789', FALSE, '2023-12-05', FALSE),
+('yvonnewright', 'yvonne.wright@example.com', '555-456-7890', TRUE, '2023-12-20', TRUE),
+('zacharyking', 'zachary.king@example.com', '555-567-8901', FALSE, '2024-01-01', FALSE);
 
--- Insert data into `userPasswords`
-INSERT INTO userPasswords (userId, passwordHash) VALUES 
-(1, 'hashedPasswordJohn'),
-(2, 'hashedPasswordJane'),
-(3, 'hashedPasswordAlice'),
-(4, 'hashedPasswordBob'),
-(5, 'hashedPasswordCharlie');
 
--- Insert data into `flightInfo`
-INSERT INTO flightInfo (flightId, flightName, destination, origin, departureDate) VALUES 
-(101, 'Flight A', 'New York', 'Los Angeles', '2023-12-25'),
-(102, 'Flight B', 'San Francisco', 'Chicago', '2023-12-26'),
-(103, 'Flight C', 'Toronto', 'Calgary', '2024-01-03'),
-(104, 'Flight D', 'Vancouver', 'Edmonton', '2023-01-01'),
-(105, 'Flight E', 'Miami', 'Seattle', '2023-01-15');
+INSERT INTO userPasswords (userId, passwordHash) VALUES
+(6, 'hashedPasswordDavid'),
+(7, 'hashedPasswordEmily'),
+(8, 'hashedPasswordFrank'),
+(9, 'hashedPasswordGrace'),
+(10, 'hashedPasswordHenry'),
+(11, 'hashedPasswordIsabella'),
+(12, 'hashedPasswordJacob'),
+(13, 'hashedPasswordKatherine'),
+(14, 'hashedPasswordLiam'),
+(15, 'hashedPasswordMia'),
+(16, 'hashedPasswordNoah'),
+(17, 'hashedPasswordOlivia'),
+(18, 'hashedPasswordPeter'),
+(19, 'hashedPasswordQuinn'),
+(20, 'hashedPasswordSophia'),
+(21, 'hashedPasswordThomas'),
+(22, 'hashedPasswordUrsula'),
+(23, 'hashedPasswordVictor'),
+(24, 'hashedPasswordWendy'),
+(25, 'hashedPasswordXavier');
 
--- Insert data into `aircrafts`
-INSERT INTO aircrafts (aircraftId) VALUES 
-(201),
-(202),
-(203),
-(204),
-(205);
+INSERT INTO flightInfo (flightId, flightName, destination, origin, departureDate) VALUES
+(106, 'AC-37', 'Los Angeles', 'New York', '2023-12-26'),
+(107, 'DL-42', 'Chicago', 'San Francisco', '2023-12-27'),
+(108, 'UA-23', 'Calgary', 'Toronto', '2024-01-04'),
+(109, 'WS-15', 'Edmonton', 'Vancouver', '2023-01-02'),
+(110, 'AA-88', 'Seattle', 'Miami', '2023-01-16'),
+(111, 'BA-123', 'London', 'Paris', '2023-02-05'),
+(112, 'LH-456', 'Berlin', 'Madrid', '2023-02-12'),
+(113, 'AZ-789', 'Rome', 'Athens', '2023-03-10'),
+(114, 'JL-234', 'Tokyo', 'Seoul', '2023-03-15'),
+(115, 'QF-789', 'Sydney', 'Melbourne', '2023-04-20'),
+(116, 'AI-567', 'New Delhi', 'Mumbai', '2023-04-25'),
+(117, 'CA-345', 'Beijing', 'Shanghai', '2023-05-05'),
+(118, 'TG-654', 'Bangkok', 'Singapore', '2023-05-10'),
+(119, 'EG-123', 'Cairo', 'Dubai', '2023-06-15'),
+(120, 'TK-432', 'Istanbul', 'Moscow', '2023-06-20'),
+(121, 'KQ-345', 'Nairobi', 'Johannesburg', '2023-07-25'),
+(122, 'G3-789', 'Rio de Janeiro', 'Sao Paulo', '2023-07-30'),
+(123, 'WN-123', 'New Orleans', 'Houston', '2023-08-10'),
+(124, 'AS-567', 'Las Vegas', 'Los Angeles', '2023-08-15'),
+(125, 'B6-789', 'Denver', 'Dallas', '2023-09-05');
 
--- Insert data into `passengers`
-INSERT INTO passengers (flightId, name) VALUES 
-(101, 'Alice Johnson'),
-(102, 'Bob Brown'),
-(103, 'Carol White'),
-(104, 'Dave Green'),
-(105, 'Eve Blue');
+INSERT INTO aircrafts (aircraftId) VALUES
+(206),
+(207),
+(208),
+(209),
+(210),
+(211),
+(212),
+(213),
+(214),
+(215),
+(216),
+(217),
+(218),
+(219),
+(220),
+(221),
+(222),
+(223),
+(224),
+(225),
+(226),
+(227),
+(228),
+(229),
+(230);
 
--- Insert data into `flightAttendants`
-INSERT INTO flightAttendants (FlightAttendantId, username, name) VALUES 
-(301, 'attendant1', 'Emma Wilson'),
-(302, 'attendant2', 'Liam Smith'),
-(303, 'attendant3', 'Olivia Brown'),
-(304, 'attendant4', 'Noah Johnson'),
-(305, 'attendant5', 'Sophia Davis');
+INSERT INTO passengers (flightId, name) VALUES
+(106, 'Frank Smith'),
+(107, 'Grace Davis'),
+(108, 'Henry Lee'),
+(109, 'Isabella Martinez'),
+(110, 'Jack Clark'),
+(111, 'Lily Walker'),
+(112, 'Mason Adams'),
+(113, 'Nora Turner'),
+(114, 'Oliver Garcia'),
+(115, 'Penelope Allen'),
+(116, 'Quinn Hall'),
+(117, 'Ruby Baker'),
+(118, 'Samuel Harris'),
+(119, 'Sophia Lewis'),
+(120, 'Thomas Wright'),
+(121, 'Violet Hall'),
+(122, 'William Scott'),
+(123, 'Zoe Mitchell'),
+(124, 'Alexander Young'),
+(125, 'Ava Anderson'),
+(126, 'Benjamin Hernandez'),
+(127, 'Chloe King'),
+(128, 'Daniel Moore'),
+(129, 'Ella Jackson'),
+(130, 'Finn Wilson');
 
--- Insert data into `flightAttendantPasswords`
-INSERT INTO flightAttendantPasswords (flightAttendantId, passwordHash) VALUES 
-(301, 'attendantHash1'),
-(302, 'attendantHash2'),
-(303, 'attendantHash3'),
-(304, 'attendantHash4'),
-(305, 'attendantHash5');
+INSERT INTO flightAttendants (FlightAttendantId, username, name) VALUES
+(306, 'attendant6', 'Ella White'),
+(307, 'attendant7', 'Mason Anderson'),
+(308, 'attendant8', 'Lily Garcia'),
+(309, 'attendant9', 'Oliver Thomas'),
+(310, 'attendant10', 'Chloe Martin'),
+(311, 'attendant11', 'Henry Allen'),
+(312, 'attendant12', 'Sophia Lewis'),
+(313, 'attendant13', 'Noah Turner'),
+(314, 'attendant14', 'Emma Wilson'),
+(315, 'attendant15', 'Liam Smith'),
+(316, 'attendant16', 'Isabella Martinez'),
+(317, 'attendant17', 'Jack Clark'),
+(318, 'attendant18', 'Ava Davis'),
+(319, 'attendant19', 'Ethan Harris'),
+(320, 'attendant20', 'Grace Walker'),
+(321, 'attendant21', 'Mia Hall'),
+(322, 'attendant22', 'William Scott'),
+(323, 'attendant23', 'Sophia Lee'),
+(324, 'attendant24', 'Lucas Baker'),
+(325, 'attendant25', 'Zoe Mitchell');
 
--- Insert data into `bookingInfo`
-INSERT INTO bookingInfo (flightId, ticketPrice, cancellationInsurance) VALUES 
-(101, 200.00, TRUE),
-(102, 150.00, FALSE),
-(103, 180.00, TRUE),
-(104, 170.00, FALSE),
-(105, 160.00, TRUE);
+INSERT INTO flightAttendantPasswords (flightAttendantId, passwordHash) VALUES
+(306, 'attendantHash6'),
+(307, 'attendantHash7'),
+(308, 'attendantHash8'),
+(309, 'attendantHash9'),
+(310, 'attendantHash10'),
+(311, 'attendantHash11'),
+(312, 'attendantHash12'),
+(313, 'attendantHash13'),
+(314, 'attendantHash14'),
+(315, 'attendantHash15'),
+(316, 'attendantHash16'),
+(317, 'attendantHash17'),
+(318, 'attendantHash18'),
+(319, 'attendantHash19'),
+(320, 'attendantHash20'),
+(321, 'attendantHash21'),
+(322, 'attendantHash22'),
+(323, 'attendantHash23'),
+(324, 'attendantHash24'),
+(325, 'attendantHash25');
+
+INSERT INTO bookingInfo (flightId, ticketPrice, cancellationInsurance) VALUES
+(106, 210.00, TRUE),
+(107, 155.00, FALSE),
+(108, 185.00, TRUE),
+(109, 175.00, FALSE),
+(110, 165.00, TRUE),
+(111, 215.00, FALSE),
+(112, 160.00, TRUE),
+(113, 190.00, FALSE),
+(114, 170.00, TRUE),
+(115, 180.00, FALSE),
+(116, 200.00, TRUE),
+(117, 145.00, FALSE),
+(118, 175.00, TRUE),
+(119, 160.00, FALSE),
+(120, 195.00, TRUE),
+(121, 185.00, FALSE),
+(122, 175.00, TRUE),
+(123, 210.00, FALSE),
+(124, 160.00, TRUE),
+(125, 220.00, FALSE),
+(126, 150.00, TRUE),
+(127, 200.00, FALSE),
+(128, 170.00, TRUE),
+(129, 175.00, FALSE),
+(130, 190.00, TRUE);
 
 -- Insert data into `admins`
 INSERT INTO admins (adminId, username) VALUES 
@@ -79,9 +213,29 @@ INSERT INTO adminPasswords (adminId, passwordHash) VALUES
 (405, 'adminHash5');
 
 -- Insert data into `seats`
-INSERT INTO seats (seatId, type, occupancy, flightId, booked) VALUES 
-(501, 1, FALSE, 101, FALSE),
-(502, 1, TRUE, 102, FALSE),
-(503, 2, FALSE, 103, TRUE),
-(504, 2, TRUE, 104, FALSE),
-(505, 3, FALSE, 105, TRUE);
+INSERT INTO seats (seatId, type, occupancy, flightId, booked) VALUES
+(506, 1, TRUE, 106, FALSE),
+(507, 2, FALSE, 107, TRUE),
+(508, 2, TRUE, 108, FALSE),
+(509, 3, FALSE, 109, TRUE),
+(510, 3, TRUE, 110, FALSE),
+(511, 1, FALSE, 111, TRUE),
+(512, 1, TRUE, 112, FALSE),
+(513, 2, FALSE, 113, TRUE),
+(514, 2, TRUE, 114, FALSE),
+(515, 3, FALSE, 115, TRUE),
+(516, 3, TRUE, 116, FALSE),
+(517, 1, FALSE, 117, TRUE),
+(518, 1, TRUE, 118, FALSE),
+(519, 2, FALSE, 119, TRUE),
+(520, 2, TRUE, 120, FALSE),
+(521, 3, FALSE, 121, TRUE),
+(522, 3, TRUE, 122, FALSE),
+(523, 1, FALSE, 123, TRUE),
+(524, 1, TRUE, 124, FALSE),
+(525, 2, FALSE, 125, TRUE),
+(526, 2, TRUE, 126, FALSE),
+(527, 3, FALSE, 127, TRUE),
+(528, 3, TRUE, 128, FALSE),
+(529, 1, FALSE, 129, TRUE),
+(530, 1, TRUE, 130, FALSE);
