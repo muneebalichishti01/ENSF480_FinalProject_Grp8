@@ -123,7 +123,7 @@ public class FlightBookingPanel extends JFrame {
     
     private boolean seatTypeMatches(Seat seat, String seatType) {
         int seatTypeId = seat.getType(); // Assuming getType() returns an int representing the seat type
-        System.out.println("Seat ID: " + seat.getSeatID() + ", Type: " + seatTypeId + ", Booked: " + seat.isBooked()); // Debugging
+        // System.out.println("Seat ID: " + seat.getSeatID() + ", Type: " + seatTypeId + ", Booked: " + seat.isBooked()); // Debugging
         // Error here, seat type 1 works, but 2 and 3 don't
         switch (seatType) {
             case ORDINARY_SEAT:
