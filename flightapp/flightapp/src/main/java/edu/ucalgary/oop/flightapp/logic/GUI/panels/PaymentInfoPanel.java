@@ -64,34 +64,55 @@ public class PaymentInfoPanel extends JFrame {
         add(cancelButton);
     }
 
+    private String validatePaymentInfo(String cardNumber, String expiryDate, String cvv) {
+        // Check if the card number contains only digits and has a length of 16
+        if (!isNumeric(cardNumber) || cardNumber.length() != 16) {
+            return "Invalid card number. Please enter a 16-digit card number.";
+        }
+    
+        // Check if the expiry date contains only digits and has a length of 4 (MMYY format)
+        if (!isNumeric(expiryDate) || expiryDate.length() != 4) {
+            return "Invalid expiry date. Please enter a 4-digit expiry date in MMYY format.";
+        }
+    
+        // Check if the CVV contains only digits and has a length of 3
+        if (!isNumeric(cvv) || cvv.length() != 3) {
+            return "Invalid CVV. Please enter a 3-digit CVV.";
+        }
+    
+        // All checks passed, payment information is valid
+        return null; // No error message, validation successful
+    }
+    
     private void processPayment() {
         String cardNumber = cardNumberField.getText();
         String expiryDate = expiryDateField.getText();
         String cvv = cvvField.getText();
         boolean cancellationInsurance = cancellationInsuranceCheckbox.isSelected();
-
-        if (validatePaymentInfo(cardNumber, expiryDate, cvv)) {
+    
+        String validationError = validatePaymentInfo(cardNumber, expiryDate, cvv);
+        if (validationError != null) {
+            JOptionPane.showMessageDialog(this, validationError, "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
             try {
                 double price = Payment.calculatePrice(cancellationInsurance, selectedSeat);
                 BookingInfo bookingInfo = Payment.processPayment(selectedSeat, cancellationInsurance, selectedFlight, price);
-
+    
                 // Show ticket/receipt in a new popup window
                 showTicketReceipt(bookingInfo);
-
+    
                 JOptionPane.showMessageDialog(this, "Payment successful! Booking confirmed. Email notification sent.");
                 dispose(); // Close the panel
-
+    
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, "Error processing payment: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Invalid payment details", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
-    private boolean validatePaymentInfo(String cardNumber, String expiryDate, String cvv) {
-        // Implement actual validation logic for payment information
-        return !cardNumber.isEmpty() && !expiryDate.isEmpty() && !cvv.isEmpty();
+        
+    // Helper method to check if a string contains only numeric digits
+    private boolean isNumeric(String str) {
+        return str.matches("\\d+");
     }
 
     private void showTicketReceipt(BookingInfo bookingInfo) {
@@ -100,7 +121,7 @@ public class PaymentInfoPanel extends JFrame {
         receiptFrame.setSize(400, 300);
         receiptFrame.setLocationRelativeTo(null);
         receiptFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    
+
         JTextArea receiptTextArea = new JTextArea();
         receiptTextArea.setEditable(false);
         receiptTextArea.append("Booking ID: " + bookingInfo.getBookingId() + "\n");
@@ -110,11 +131,10 @@ public class PaymentInfoPanel extends JFrame {
         receiptTextArea.append("Ticket Price: $" + bookingInfo.getTicketPrice() + "\n");
         receiptTextArea.append("Cancellation Insurance: " + (bookingInfo.getCancellationInsurance() ? "Yes" : "No") + "\n");
         // Add more booking information as needed
-    
+
         JScrollPane scrollPane = new JScrollPane(receiptTextArea);
         receiptFrame.add(scrollPane);
-    
+
         receiptFrame.setVisible(true);
     }
-    
 }

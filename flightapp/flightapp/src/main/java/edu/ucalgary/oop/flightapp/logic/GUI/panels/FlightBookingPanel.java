@@ -46,7 +46,7 @@ public class FlightBookingPanel extends JFrame {
     private void initializeComponents() {
         String[] seatTypes = {ORDINARY_SEAT, COMFORT_SEAT, BUSINESS_SEAT};
         seatTypeComboBox = new JComboBox<>(seatTypes);
-        seatMapPanel = new JPanel(new GridLayout(0, 4));
+        seatMapPanel = new JPanel(new GridLayout(0, 5));
         seatGroup = new ButtonGroup();
     }
 
