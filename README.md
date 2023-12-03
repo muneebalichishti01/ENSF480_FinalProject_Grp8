@@ -9,6 +9,9 @@
 ### Product Perspective:
 The Flight Reservation Web Application is a comprehensive online platform designed to streamline and enhance the air travel experience for various user roles within a single airline company. The goal of the system is to give travellers, flight crew and system administrators an easy to use and seamless platform for managing and booking flights. The system aims to optimise the reservation process and enhance the overall travel experience for all users involved.
 
+## In Progress:
+We currently are using GUI instead of Web-based implementation of front-end. Therefore, the instructions down below may NOT work as expected. Use .jar file to run the program of GUI.
+
 ### Using the Program:
 Start the front-end:
 ```terminal
